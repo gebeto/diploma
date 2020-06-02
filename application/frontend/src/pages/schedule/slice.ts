@@ -1,3 +1,3 @@
 import { createCRUDSlice } from '../../store/createCRUDSlice';
 
-export const studentsSlice = createCRUDSlice('students');
+export const scheduleSlice = createCRUDSlice('schedule');
