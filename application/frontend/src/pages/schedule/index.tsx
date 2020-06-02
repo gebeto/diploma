@@ -6,7 +6,7 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
 import { ScheduleList } from './ScheduleList';
 
-import { loadSchedule } from './slice';
+import { scheduleSlice, loadSchedule } from './slice';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,6 +27,10 @@ const ScheduleRaw = (props) => {
 
 	React.useEffect(() => {
 		props.loadSchedule();
+
+		return () => {
+			props.reset();
+		}
 	}, []);
 
 	return (
@@ -42,7 +46,7 @@ const ScheduleRaw = (props) => {
 
 const Schedule = connect(
 	undefined,
-	{ loadSchedule }
+	{ loadSchedule, reset: scheduleSlice.actions.reset }
 )(ScheduleRaw);
 
 

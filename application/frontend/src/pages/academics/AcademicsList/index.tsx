@@ -1,24 +1,27 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
 
-import { createAcademic } from './helpers';
-import { Academics, IAcademic } from './Academics';
+import { Academics } from './Academics';
+
+import { academicsSlice } from '../slice';
 
 
-const academics: IAcademic[] = [
-	createAcademic(),
-	createAcademic(),
-	createAcademic(),
-	createAcademic(),
-];
-
-export const AcademicsList = (props) => (
-	<Grid container spacing={2} justify="center">
-		<Grid item xs={12} md={10} lg={7} xl={7}>
-		<Academics
-			academics={academics}
-		/>
+export const AcademicsListRaw = (props) => {
+	return (
+		<Grid container spacing={2} justify="center">
+			<Grid item xs={12} md={10} lg={7} xl={7}>
+			<Academics
+				academics={props.academics}
+			/>
+			</Grid>
 		</Grid>
-	</Grid>
-);
+	);
+}
+
+export const AcademicsList = connect(
+	(state, ownProps) => ({
+		academics: academicsSlice.selectors.itemsSelector(state, ownProps),
+	})
+)(AcademicsListRaw);

@@ -103,7 +103,9 @@ function createCRUDSlice<AdditionalSelectors>(
 					}
 				};
 			},
-
+			reset: (state) => {
+				return initialState;
+			},
 			fetchingPending: (state) => {
 				return {
 					...state,

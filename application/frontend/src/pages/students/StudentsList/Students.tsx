@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		subheader: {
 			fontSize: '24px',
+		},
+		loader: {
+			textAlign: 'center',
 		}
 	}),
 );
@@ -86,9 +90,9 @@ export const Student = (props: StudentProps) => {
 	);
 }
 
-
 export interface IStudentsProps {
 	students: IStudent[];
+	isLoading?: boolean;
 }
 
 export const Students = (props: IStudentsProps) => {
@@ -101,11 +105,12 @@ export const Students = (props: IStudentsProps) => {
 				<ListSubheader className={classes.subheader} component="div">
 					<Grid container justify="space-between" alignContent="center">
 						<span>Студенти</span>
-						<IconButton><PersonAddIcon /></IconButton>
+						{/*<IconButton><PersonAddIcon /></IconButton>*/}
 					</Grid>
 				</ListSubheader>
 			}
 		>
+			{props.isLoading && <ListItem><ListItemText className={classes.loader}><CircularProgress /></ListItemText></ListItem>}
 			{props.students.map(student => (
 				<Student
 					key={student.id}

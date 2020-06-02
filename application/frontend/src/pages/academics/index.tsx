@@ -1,13 +1,21 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 
 import { AcademicsList } from './AcademicsList';
 
-const Students = (props) => {
+import { loadAcademics, academicsSlice } from './slice';
+
+const AcademicsRaw = (props) => {
+	React.useEffect(() => {
+		props.loadAcademics({});
+
+		return () => {
+			props.reset();
+		}
+	}, []);
+
 	return (
-			// <Typography variant="h2">
-			// 	Викладачі
-			// </Typography>
 		<React.Fragment>
 			<AcademicsList />
 		</React.Fragment>
@@ -15,4 +23,10 @@ const Students = (props) => {
 };
 
 
-export default Students;
+const Academics = connect(
+	undefined,
+	{ loadAcademics, reset: academicsSlice.actions.reset }
+)(AcademicsRaw)
+
+
+export default Academics;

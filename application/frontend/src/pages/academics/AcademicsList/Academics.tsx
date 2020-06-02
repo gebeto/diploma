@@ -112,11 +112,11 @@ export const Academic = (props: AcademicProps) => {
 }
 
 
-export interface IAcademicsProps {
+export interface AcademicsProps {
 	academics: IAcademic[];
 }
 
-export const Academics = (props: IAcademicsProps) => {
+export const Academics = (props: AcademicsProps) => {
 	const classes = useStyles();
 
 	return (

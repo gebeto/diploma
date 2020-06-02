@@ -1,0 +1,1 @@
+export { getAcademics } from './getAcademics';

@@ -1,4 +1,4 @@
-import { getSchedule } from './index';
+import { getSchedule } from './getSchedule';
 
 test("getSchedule returns array of days", async () => {
 	const schedule = await getSchedule();
