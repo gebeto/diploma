@@ -1,23 +1,11 @@
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
 
-export const initialState = {
-	user: null,
-}
+import { userSlice } from './slice-user';
 
-const reducer = (state = initialState, action) => {
-	// console.log("Hello state 2");
-	return state;
-}
 
-// const reducers = combineReducers({reducer});
-const reducers = reducer;
-
-const middlewares = applyMiddleware(
-	thunk,
-);
-
-const middlewaresWithDevtools = composeWithDevTools(middlewares);
-
-export const store = createStore(reducers, middlewaresWithDevtools);
+export const store = configureStore({
+	reducer: {
+		user: userSlice.reducer
+	},
+});

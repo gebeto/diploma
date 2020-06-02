@@ -109,8 +109,15 @@ const ListItemNavLink = (Props) => (
 	</ListItem>
 );
 
+export interface NavigationProps {
+	user: {
+		firstName: string;
+		middleName: string;
+		lastName: string;
+	}
+}
 
-export function Navigation(props) {
+export function Navigation(props: NavigationProps) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -191,7 +198,7 @@ export function Navigation(props) {
 						Студпост
 					</Typography>
 					<div className={classes.grow} />
-					<strong onClick={handleProfileMenuOpen}>Ярослав Ничкало</strong>
+					<strong onClick={handleProfileMenuOpen}>{props.user.firstName} {props.user.lastName}</strong>
 					<IconButton
 						edge="end"
 						aria-label="account of current user"

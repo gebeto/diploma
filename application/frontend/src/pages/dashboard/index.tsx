@@ -24,5 +24,9 @@ const Dashboard = (props) => {
 	);
 };
 
+Dashboard.reducer = (state: any, action: any) => {
+	console.log('Dashboard reducer');
+	return state;
+};
 
 export default Dashboard;

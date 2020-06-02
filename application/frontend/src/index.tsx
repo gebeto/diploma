@@ -15,7 +15,7 @@ import {
 } from "react-router-dom";
 
 import { store } from './store/';
-import { Navigation } from './components/Navigation/';
+import { Navigation, NavigationConnected } from './components/Navigation/';
 
 import Dashboard from './pages/dashboard/';
 import Chat from './pages/chat/';
@@ -29,7 +29,7 @@ import './styles.scss';
 
 const App = (props) => {
 	return (
-		<Navigation>
+		<NavigationConnected>
 			<Switch>
 				<Route exact path="/" component={Dashboard} />
 				<Route exact path="/chat/:chatId" component={Chat} />
@@ -41,7 +41,7 @@ const App = (props) => {
 					<Typography variant="h2">404, PAGE NOT FOUND</Typography>
 				</Route>
 			</Switch>
-		</Navigation>
+		</NavigationConnected>
 	);
 }
 
