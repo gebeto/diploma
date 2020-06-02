@@ -1,9 +1,29 @@
+import { API_POST, API_POST_FAKE, ResponseAll } from "../utils";
+
+
+export interface IScheduleSubject {
+	id: number;
+	title: string;
+	order: number;
+	academic: string;
+	type: string;
+	pavilion: string;
+	classroom: string;
+}
+
+export interface IScheduleDay {
+	id: number;
+	date: Date;
+	subjects: IScheduleSubject[];
+}
+
 
 let id = 0;
 
 export const createDay = (date = "08/24/2019") => ({
 	id: ++id,
-	date: new Date(date),
+	// date: new Date(date),
+	date: date,
 	subjects: [
 		{
 			id: 1,
@@ -43,3 +63,17 @@ export const createDay = (date = "08/24/2019") => ({
 		},
 	]
 });
+
+export interface Schedule {
+	id: number;
+}
+
+export const scheduleGet = (data: {}) => API_POST_FAKE<Schedule>(`/voip-trunk/all/by-user`, data)
+.then(() => ({
+	items: [
+		createDay("08/24/2019"),
+		createDay("08/25/2019"),
+		createDay("08/26/2019"),
+		createDay("08/27/2020"),
+	]
+}));

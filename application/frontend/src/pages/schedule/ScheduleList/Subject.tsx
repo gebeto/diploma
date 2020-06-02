@@ -6,16 +6,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 
-
-export interface IScheduleSubject {
-	id: number;
-	title: string;
-	order: number;
-	academic: string;
-	type: string;
-	pavilion: string;
-	classroom: string;
-}
+import { IScheduleSubject } from '../../../api/';
 
 
 export interface ScheduleSubjectProps {

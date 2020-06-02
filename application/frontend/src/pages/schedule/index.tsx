@@ -1,8 +1,12 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+
 import Typography from '@material-ui/core/Typography';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
 import { ScheduleList } from './ScheduleList';
+
+import { loadSchedule } from './slice';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -18,18 +22,28 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const Schedule = (props) => {
+const ScheduleRaw = (props) => {
 	const classes = useStyles();
+
+	React.useEffect(() => {
+		props.loadSchedule();
+	}, []);
 
 	return (
 		<React.Fragment>
 			<Typography variant="h2" className={classes.title}>
 				Розклад Занять
 			</Typography>
-			<ScheduleList />
+			<ScheduleList schedule={props.schedule} />
 		</React.Fragment>
 	);
 };
+
+
+const Schedule = connect(
+	undefined,
+	{ loadSchedule }
+)(ScheduleRaw);
 
 
 export default Schedule;

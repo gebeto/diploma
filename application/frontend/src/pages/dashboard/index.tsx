@@ -5,9 +5,9 @@ import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 
 import { ScheduleDay } from '../schedule/ScheduleList/Day';
-import { createDay } from '../schedule/ScheduleList/helpers';
+// import { createDay } from '../schedule/ScheduleList/helpers';
 
-const day = createDay("05/24/2020");
+// const day = createDay("05/24/2020");
 
 const Dashboard = (props) => {
 	return (
@@ -17,7 +17,7 @@ const Dashboard = (props) => {
 			</Typography>
 			<Grid container spacing={2}>
 				<Grid item xs={12} lg={6}>
-					<ScheduleDay title="Найближчі заняття: 12.04.2020" schedule={day} />
+					{/*<ScheduleDay title="Найближчі заняття: 12.04.2020" schedule={day} />*/}
 				</Grid>
 			</Grid>
 		</React.Fragment>

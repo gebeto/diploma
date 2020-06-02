@@ -5,7 +5,8 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import ListSubheader from '@material-ui/core/ListSubheader';
 
-import { ScheduleSubject, IScheduleSubject } from './Subject';
+import { IScheduleDay } from '../../../api/';
+import { ScheduleSubject } from './Subject';
 import { format } from 'date-fns';
 
 
@@ -27,14 +28,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export interface IScheduleDay {
-	id: number;
-	date: Date;
-	subjects: IScheduleSubject[];
-}
 
-
-export interface IScheduleDayProps {
+export interface ScheduleDayProps {
 	schedule: IScheduleDay;
 	title?: string;
 }
@@ -42,7 +37,7 @@ export interface IScheduleDayProps {
 
 const today = new Date();
 
-export const ScheduleDay = (props: IScheduleDayProps) => {
+export const ScheduleDay = (props: ScheduleDayProps) => {
 	const classes = useStyles();
 
 	return (
