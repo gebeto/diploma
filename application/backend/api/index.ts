@@ -26,6 +26,7 @@ const applyRoute = (name) => {
 
 
 applyRoute('student');
+applyRoute('schedule');
 applyRoute('auth');
 
 

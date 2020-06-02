@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../../config';
 
-import { sequelize } from '../../database/';
+import { sequelize } from '../../database/index';
 
 
 export const findByEmailForAuth = async (email: string) => {
