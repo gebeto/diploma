@@ -8,8 +8,8 @@ export const RaitAdornment = {
 };
 
 
-export const WeightAdornment = {
-	startAdornment: <InputAdornment position="start">klbs</InputAdornment>,
+export const PhoneAdornment = {
+	startAdornment: <InputAdornment position="start">+38</InputAdornment>,
 };
 
 export const LengthAdornment = {

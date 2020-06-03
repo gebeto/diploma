@@ -10,7 +10,8 @@ import {
 	InputField, BooleanField, TextareaField,
 	Form, withForm, withFormModal,
 } from '../../../../components/Form/';
-import { RaitAdornment, WeightAdornment, LengthAdornment } from './addons';
+import { PhoneAdornment } from './addons';
+
 
 export const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -26,7 +27,7 @@ export const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export const AcademicEditForm = (props) => {
+export const AcademicForm = (props) => {
 	const classes = useStyles();
 
 	return (
@@ -34,7 +35,11 @@ export const AcademicEditForm = (props) => {
 			<Grid container spacing={2}>
 
 				<Grid item container xs={12} justify="center">
-					<Avatar className={classes.large} src={props.academic.avatar} />
+					{props.academic && props.academic.avatar ?
+						<Avatar className={classes.large} src={props.academic.avatar} />
+						:
+						<Avatar className={classes.large}>Фото</Avatar>
+					}
 				</Grid>
 
 				<Grid item xs={12}>
@@ -82,6 +87,7 @@ export const AcademicEditForm = (props) => {
 						type="phone"
 						name="phone"
 						title="Номер телефону"
+						InputProps={PhoneAdornment}
 					/>
 				</Grid>
 
@@ -89,55 +95,3 @@ export const AcademicEditForm = (props) => {
 		</Form>
 	);
 }
-
-
-interface AcademicEditModalProps {
-	academic: any;
-	updateAcademic: (academic: any) => any;
-	handleClose: () => any;
-}
-
-
-const AcademicEditFormNew = (props) => (
-	<AcademicEditForm
-		{...props}
-	/>
-);
-
-
-const AcademicEditModalForm = withFormModal<AcademicEditModalProps>(
-	ModalEditFormSm,
-	props => `${props.academic.firstName} ${props.academic.lastName}`,
-	{	
-		defaultValues(props) {
-			return {
-				...props.academic,
-			};
-		},
-
-		beforeSubmit(values, props) {
-			return {
-				...values,
-			};
-		},
-
-		onAsyncSubmit(values) {
-			return new Promise(res => res({item: "HELLO"}));
-		},
-
-		onSuccess(props, data) {
-			props.updateAcademic(data.item);
-			props.handleClose();
-		},
-	}
-)(AcademicEditFormNew);
-
-export const AcademicEditModal = connect(
-	undefined,
-	{
-		updateAcademic: academic => dispatch => {
-			console.log("UPDATE", academic);
-			return academic;
-		}
-	}
-)(AcademicEditModalForm);

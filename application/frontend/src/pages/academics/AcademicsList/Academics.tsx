@@ -21,8 +21,8 @@ import ChatIcon from '@material-ui/icons/Chat';
 
 import { format } from 'date-fns';
 
-import { AcademicEditModal } from './AcademicEdit/';
-import { AcademicAddModal } from './AcademicAdd/';
+import { AcademicEditModal } from './Modal/Edit';
+import { AcademicAddModal } from './Modal/Add';
 // import { ButtonModal } from 'studpost/component/ButtonModal';
 import { ButtonModal } from '../../../components/ButtonModal';
 import { useModalArray } from '../../../components/Modal/';
