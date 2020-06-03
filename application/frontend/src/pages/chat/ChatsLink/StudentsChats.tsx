@@ -20,6 +20,7 @@ export const StudentsChats = (props) => {
 			classes={props.classes}
 			title="Студенти"
 			chats={chats.state.response}
+			chatIdPrefix="student"
 		/>
 	);
 }

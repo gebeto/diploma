@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 
 export const ExpandIcon = (props: { expanded: boolean; }) => (props.expanded ? <ExpandLess /> : <ExpandMore />);
 
-export const ChatLink = (props: { chatId: number; title: string; className?: string; onClick?: any; }) => (
+export const ChatLink = (props: { chatId: string; title: string; className?: string; onClick?: any; }) => (
 	<ListItem
 		button
 		onClick={props.onClick}

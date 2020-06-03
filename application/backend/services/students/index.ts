@@ -3,7 +3,7 @@ import { SECRET_KEY } from '../../config';
 
 import { sequelize } from '../../database/index';
 
-export { getStudents } from './getStudents';
+export * from './students';
 
 export const findByEmailForAuth = async (email: string) => {
 	const student = await sequelize.models.student.findOne({

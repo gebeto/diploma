@@ -1,5 +1,4 @@
 const chats = [];
-const chatsSubjects = [];
 const chatsStudents = [];
 
 const createChat = (() => {
@@ -14,29 +13,25 @@ const createChat = (() => {
 	}
 })();
 
-createChat(chats, "Загальний");
-createChat(chatsSubjects, "Основи компютерних мереж");
-createChat(chatsSubjects, "Охорона праці");
-createChat(chatsStudents, "Стів Джобс");
-createChat(chatsStudents, "Біл Ґєйц");
+export const a = 1;
 
-export const getChats = async () => {
-	return chats;
-}
+// createChat(chats, "Загальний");
+// createChat(chatsStudents, "Стів Джобс");
+// createChat(chatsStudents, "Біл Ґєйц");
 
-export const addChat = async (chatTitle) => {
-	return createChat(chats, chatTitle);
-}
+// export const getChats = async () => {
+// 	return chats;
+// }
+
+// export const addChat = async (chatTitle) => {
+// 	return createChat(chats, chatTitle);
+// }
 
 
-export const getSubjectsChats = async () => {
-	return chatsSubjects;
-}
+// export const getSubjectsChats = async () => {
+// 	return chatsSubjects;
+// }
 
-export const getStudentsChats = async () => {
-	return chatsStudents;
-}
-
-export const addSubjectChat = async (chatTitle) => {
-	return createChat(chatsSubjects, chatTitle);
-}
+// export const getStudentsChats = async () => {
+// 	return chatsStudents;
+// }

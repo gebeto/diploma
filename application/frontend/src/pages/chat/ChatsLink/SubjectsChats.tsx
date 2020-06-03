@@ -20,6 +20,7 @@ export const SubjectsChats = (props) => {
 			classes={props.classes}
 			title="Предмети"
 			chats={chats.state.response}
+			chatIdPrefix="subject"
 		/>
 	);
 }

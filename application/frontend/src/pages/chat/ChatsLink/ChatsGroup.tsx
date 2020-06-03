@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { ChatLink, ExpandIcon } from './ChatLink';
 
 
-export const ChatsGroup = (props: { title: string; classes: any; onClick: any; chats: any[]; }) => {
+export const ChatsGroup = (props: { title: string; classes: any; onClick: any; chats: any[]; chatIdPrefix: string; }) => {
 	const [ open, setOpen ] = React.useState(false);
 
 	const toggleOpen = React.useCallback(() => {
@@ -26,7 +26,7 @@ export const ChatsGroup = (props: { title: string; classes: any; onClick: any; c
 		}>
 			<Collapse in={open} timeout="auto" unmountOnExit>
 				{props.chats.map(chat =>
-					<ChatLink key={chat.id} title={chat.title} chatId={chat.id} onClick={props.onClick} className={props.classes.nested2} />
+					<ChatLink key={chat.id} title={chat.title} chatId={`${props.chatIdPrefix}-${chat.id}`} onClick={props.onClick} className={props.classes.nested2} />
 				)}
 			</Collapse>
 		</List>

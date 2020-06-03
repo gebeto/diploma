@@ -50,7 +50,7 @@ export const ChatsLink = (props) => {
 			</ListItem>
 			<Collapse in={open} timeout="auto" unmountOnExit>
 				<List component="div" disablePadding>
-					<ChatLink title="Загальний" chatId={1} onClick={props.onClick} className={classes.nested} />
+					<ChatLink title="Загальний" chatId="group-1" onClick={props.onClick} className={classes.nested} />
 				</List>
 				<SubjectsChats onClick={props.onClick} classes={classes} />
 				<StudentsChats onClick={props.onClick} classes={classes} />
