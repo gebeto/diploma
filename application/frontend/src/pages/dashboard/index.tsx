@@ -1,31 +1,10 @@
 import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Card from '@material-ui/core/Card';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 
-import { ScheduleDay } from '../schedule/ScheduleList/Day';
-import { formatDate } from '../schedule/ScheduleList/helpers';
+import { ScheduleNextDay } from './ScheduleNextDay'
 
-import { scheduleGetNextDay } from '../../api/';
-import { makeApiRequest } from '../../api/utils';
-
-const useNextDayApiRequest = makeApiRequest(async () => {
-	const result = await scheduleGetNextDay({});
-	const item = result.item;
-	return { ...item, date: new Date(item.date) };
-});
-
-const ScheduleNextDay = () => {
-	const req = useNextDayApiRequest();
-
-	if (req.state.isFetching) {
-		return <CircularProgress />;
-	}
-
-	return <ScheduleDay title={`Найближчі заняття: ${formatDate(req.state.response.date)}`} schedule={req.state.response} />;
-}
 
 const Dashboard = (props) => {
 	return (
@@ -34,6 +13,12 @@ const Dashboard = (props) => {
 				Доброго дня!
 			</Typography>
 			<Grid container spacing={2}>
+				<Grid item xs={12}>
+					<Alert severity="error">Захист дипломної роботи відбудеться онлайн 20.02.2020!</Alert>
+				</Grid>
+				<Grid item xs={12}>
+					<Alert severity="info">Будь ласка оберіть варіант контрольної роботи з предмету!</Alert>
+				</Grid>
 				<Grid item xs={12} lg={6}>
 					<ScheduleNextDay />
 				</Grid>
