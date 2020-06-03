@@ -8,7 +8,7 @@ import { ChatsLink, ChatLink } from './ChatsLink';
 test("ChatLink is rendering without errors", () => {
 	const chatLink = render(
 		<MemoryRouter>
-			<ChatLink chatId="111" title="ChatLinkTitle" />
+			<ChatLink chatId={111} title="ChatLinkTitle" />
 		</MemoryRouter>
 	);
 	expect(chatLink.getByText("ChatLinkTitle")).toBeInTheDocument();
