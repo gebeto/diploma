@@ -7,6 +7,10 @@ export interface ResponseAll<T> {
 	items: Array<T>;
 }
 
+export interface ResponseOne<T> {
+	item: T;
+}
+
 export interface ResponseAdd<T> {
 	success: boolean;
 	item: T;

@@ -43,7 +43,7 @@ export const createDay = (id, date = "08/24/2019") => ({
 
 export const createDays = (count) => {
 	let id = 1;
-	return (new Array(count).fill(1)).map((item, index) => createDay(++id, `01/1${index}/2020`));
+	return (new Array(count).fill(1)).map((item, index) => createDay(++id, `08/1${index}/2020`));
 }
 
 export const getSchedule = async () => {

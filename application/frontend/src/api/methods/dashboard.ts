@@ -1,4 +1,4 @@
-import { API_POST, ResponseAll, ResponseOne } from "../utils";
+import { API_POST, ResponseAll } from "../utils";
 
 
 export interface IScheduleSubject {
@@ -18,5 +18,3 @@ export interface IScheduleDay {
 }
 
 export const scheduleGet = (data: {}) => API_POST<ResponseAll<IScheduleDay>>(`/schedule/get`, data);
-
-export const scheduleGetNextDay = (data: {}) => API_POST<ResponseOne<IScheduleDay>>(`/schedule/getNextDay`, data);

@@ -3,19 +3,16 @@ import * as React from 'react';
 
 interface UseApiRequestState {
 	response: any;
-	isFetched: boolean;
 	isFetchingError: boolean;
 	isFetching: boolean;
 }
 
 const initialState: UseApiRequestState = {
-	response: undefined,
-	isFetched: false,
+	response: null,
 	isFetchingError: false,
 	isFetching: true,
 };
 
-const IS_FETCHED = 'IS_FETCHED';
 const IS_FETCHING = 'IS_FETCHING';
 const SET_RESPONSE = 'SET_RESPONSE';
 const UPDATE_RESPONSE = 'UPDATE_RESPONSE';
@@ -30,11 +27,6 @@ interface DispatchWithAction extends React.DispatchWithoutAction {
 
 function reducer(state, { type, payload }: DispatchWithAction) {
 	switch (type) {
-		case IS_FETCHED:
-			return {
-				...state,
-				isFetched: payload,
-			};
 		case IS_FETCHING:
 			return {
 				...state,
@@ -45,24 +37,25 @@ function reducer(state, { type, payload }: DispatchWithAction) {
 				...state,
 				response: payload
 			};
-		case UPDATE_RESPONSE:
-			return {
-				...state,
-				response: payload
-			};
 		case FETCHING_PENDING:
 			return {
 				...state,
+				isFetchingError: false,
 				isFetching: true,
-				isFetched: false,
-				response: payload
+				response: null,
 			};
 		case FETCHING_SUCCESS:
 			return {
 				...state,
+				isFetchingError: false,
 				isFetching: false,
-				isFetched: true,
-				response: payload
+				response: payload,
+			};
+		case FETCHING_ERROR:
+			return {
+				...state,
+				isFetching: false,
+				isFetchingError: true,
 			};
 	}
 	return state;
@@ -70,39 +63,77 @@ function reducer(state, { type, payload }: DispatchWithAction) {
 
 export function useApiRequest(requester) {
 	const [ state, dispatch ] = React.useReducer<React.Reducer<UseApiRequestState, any>>(reducer, initialState);
-	const setIsFetching = React.useCallback((isFetching) => {
+
+	const setFetching = React.useCallback((isFetching) => {
 		dispatch({type: IS_FETCHING, payload: isFetching});
-	}, [state.response]);
+	}, []);
 
 	const setResponse = React.useCallback((response) => {
 		dispatch({type: SET_RESPONSE, payload: response});
-	}, [state.response]);
-
-	const updateResponse = React.useCallback((callback: any) => {
-		dispatch({type: UPDATE_RESPONSE, payload: callback(state.response)});
-	}, [state.response]);
+	}, []);
 
 	const fetchingSuccess = React.useCallback((response) => {
 		dispatch({type: FETCHING_SUCCESS, payload: response});
-	}, [state.response]);
+	}, []);
 
 	const fetchingPending = React.useCallback(() => {
 		dispatch({type: FETCHING_PENDING});
-	}, [state.response]);
+	}, []);
+
+	const fetchingError = React.useCallback((e) => {
+		dispatch({type: FETCHING_ERROR});
+	}, []);
 
 	React.useEffect(() => {
 		fetchingPending();
-		requester().then((res) => {
-			fetchingSuccess(res);
-		});
+		requester()
+			.then(fetchingSuccess)
+			.catch(fetchingError);
 	}, [ requester ]);
 
 	return {
-		isFetched: state.isFetched,
-		isFetching: state.isFetching,
-		setIsFetching: setIsFetching,
+		state: state,
 		setResponse: setResponse,
-		updateResponse: updateResponse,
-		response: state.response,
+		setFetching: setFetching,
+	}
+}
+
+
+export const makeApiRequest = (requester) => {
+	return (...params) => {
+		const [ state, dispatch ] = React.useReducer<React.Reducer<UseApiRequestState, any>>(reducer, initialState);
+
+		const setFetching = React.useCallback((isFetching) => {
+			dispatch({type: IS_FETCHING, payload: isFetching});
+		}, []);
+
+		const setResponse = React.useCallback((response) => {
+			dispatch({type: SET_RESPONSE, payload: response});
+		}, []);
+
+		const fetchingSuccess = React.useCallback((response) => {
+			dispatch({type: FETCHING_SUCCESS, payload: response});
+		}, []);
+
+		const fetchingPending = React.useCallback(() => {
+			dispatch({type: FETCHING_PENDING});
+		}, []);
+
+		const fetchingError = React.useCallback((e) => {
+			dispatch({type: FETCHING_ERROR});
+		}, []);
+
+		React.useEffect(() => {
+			fetchingPending();
+			requester(...params)
+				.then(fetchingSuccess)
+				.catch(fetchingError);
+		}, params);
+
+		return {
+			state: state,
+			setFetching: setFetching,
+			setResponse: setResponse,
+		}
 	}
 }
