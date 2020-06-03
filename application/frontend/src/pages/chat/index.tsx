@@ -14,19 +14,24 @@ import { MessageField } from './MessageField';
 
 const useMessagesGetRequest = makeApiRequest(async (chatId) => {
 	const response = await chatsGetMessages({ chatId });
-	return response.items;
+	return response;
 });
 
 
 const ChatRaw = (props) => {
 	const chatId = props.match.params.chatId;
-
 	const messages = useMessagesGetRequest(chatId);
 
 	const handleMesssageSend = React.useCallback((message) => {
 		chatAddMessage({ chatId: chatId, userId: props.user.id, text: message }).then(res => {
-			console.log(res);
-			messages.setResponse([res.item, ...messages.state.response]);
+			// messages.setResponse([res.item, ...messages.state.response]);
+			messages.setResponse({
+				...messages.state.response,
+				messages: [
+					res.item,
+					...messages.state.response.messages,
+				]
+			});
 		});
 	}, [messages.state.response]);
 
@@ -34,7 +39,7 @@ const ChatRaw = (props) => {
 		<React.Fragment>
 			<Grid container>
 				<Grid item container xs={12} component={Paper} square elevation={0}>
-					<MessageField onMessageSend={handleMesssageSend} />
+					<MessageField messages={messages} onMessageSend={handleMesssageSend} />
 				</Grid>
 				<Grid item container xs={12} component={Paper} square elevation={0}>
 					<MessagesList messages={messages} />

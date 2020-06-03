@@ -17,16 +17,20 @@ export const subjects = [
 	},
 	{
 		id: 5,
-		title: "Архітектура і проектування програмного забезпечення",
+		title: "Архітектура і проектування ПЗ",
 	},
 	{
 		id: 6,
-		title: "Менеджмент проектів з розробки програмного забезпечення",
+		title: "Менеджмент проектів з розробки Пз",
 	},
 ];
 
 
 export const getSubjects = async () => {
 	return subjects;
+}
+
+export const getSubjectById = async (id) => {
+	return subjects.find(subject => subject.id === id);
 }
 

@@ -1,7 +1,7 @@
 import * as Router from 'koa-router';
 
 // import { getChats, getSubjectsChats, getStudentsChats, getChatMessages, addChatMessageText } from '../../services/chat/index';
-import { getChatMessages, addChatMessageText } from '../../services/chat/index';
+import { getChatInfo, getChatMessages, addChatMessageText } from '../../services/chat/index';
 import { getSubjects } from '../../services/schedule/subjects';
 import { getStudents } from '../../services/students/index';
 
@@ -31,7 +31,8 @@ studentsRouter.post('/getChatMessages', async (ctx, next) => {
 
 	if (chatType && chatId) {
 		ctx.body = {
-			items: await getChatMessages(chatType, Number(chatId)),
+			chat: await getChatInfo(chatType, Number(chatId)),
+			messages: await getChatMessages(chatType, Number(chatId)),
 		};
 	} else {
 		return;

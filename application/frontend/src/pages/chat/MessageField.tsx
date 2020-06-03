@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
 		    zIndex: 2,
 		    width: 'calc(100% - 240px)',
 		    padding: '1em',
-		    // borderTop: '1px solid #eee',
 		    borderBottom: '1px solid #eee',
 		    boxShadow: '0px 0px 20px -10px rgba(0,0,0,0.2)',
 		    [theme.breakpoints.down('xs')]: {
@@ -60,7 +59,7 @@ export const MessageField = (props) => {
 			<Grid className={classes.positionedBottom} container component={Paper} square elevation={0}>
 				<Grid item container xs={12} direction="row" alignItems="center" justify="space-between">
 					<Typography variant="h4" gutterBottom>Чат</Typography>
-					<Typography variant="body2" color="textSecondary" gutterBottom>Ничкало Ярослав</Typography>
+					<Typography variant="body2" color="textSecondary" gutterBottom>{props.messages.state.response ? props.messages.state.response.chat.title : 'Завантаження...'}</Typography>
 				</Grid>
 				<Grid item xs={12}>
 					<TextField

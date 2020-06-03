@@ -68,9 +68,15 @@ export const MessagesList = ({ messages }) => {
 
 	return (
 		<List classes={classes}>
-			{messages.state.response.map(message =>
+			{messages.state.response.messages.length ? messages.state.response.messages.map(message =>
 				<MessageItem key={message.id} message={message} />
-			)}
+			) : <ListItem>
+					<Grid container justify="center" alignItems="center" direction="column">
+						<Typography color="textSecondary">
+							Немає повідомлень
+						</Typography>
+					</Grid>
+				</ListItem>}
 		</List>
 	);
 }

@@ -8,10 +8,10 @@ import { loadStudents, studentsSlice } from './slice';
 const StudentsRaw = (props) => {
 	React.useEffect(() => {
 		props.loadStudents({});
-		return () => {
-			props.reset();
-		}
-	}, [])
+		// return () => {
+		// 	props.reset();
+		// }
+	}, []);
 
 	return (
 		<React.Fragment>
