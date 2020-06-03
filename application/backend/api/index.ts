@@ -29,6 +29,7 @@ applyRoute('dashboard');
 applyRoute('students');
 applyRoute('academics');
 applyRoute('schedule');
+applyRoute('chat');
 applyRoute('auth');
 
 

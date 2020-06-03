@@ -7,7 +7,7 @@
     "start": "ts-node index.ts",
     "dev": "nodemon --exec ts-node index.ts",
     "test": "jest",
-    "test-watch": "jest --watch --onlyChanged"
+    "test:watch": "jest --watch --onlyChanged"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.14",
