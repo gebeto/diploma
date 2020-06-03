@@ -29,7 +29,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 
 import { NavLink } from "react-router-dom";
-import { ChatsLink } from './ChatsLink';
+import { ChatsLink } from './ChatsLink/';
 
 const drawerWidth = 240;
 
