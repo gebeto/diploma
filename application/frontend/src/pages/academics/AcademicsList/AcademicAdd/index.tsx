@@ -15,7 +15,7 @@ export const AcademicAddForm = (props) => {
 		<Form onSubmit={props.onSubmit} disabled={props.isSubmitting} errorMessage={props.errorMessage}>
 			<Grid container spacing={2}>
 
-				<Grid item xs={6}>
+				<Grid item xs={12}>
 					<InputField
 						values={props.values}
 						errors={props.errors}
@@ -24,7 +24,16 @@ export const AcademicAddForm = (props) => {
 						title="Ім'я"
 					/>
 				</Grid>
-				<Grid item xs={6}>
+				<Grid item xs={12}>
+					<InputField
+						values={props.values}
+						errors={props.errors}
+						onChange={props.handleFieldChange}
+						name="middleName"
+						title="По батькові"
+					/>
+				</Grid>
+				<Grid item xs={12}>
 					<InputField
 						values={props.values}
 						errors={props.errors}

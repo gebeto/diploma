@@ -11,7 +11,7 @@ import { scheduleSlice } from '../slice';
 
 export const ScheduleListRaw = (props) => (
 	<Grid container spacing={2} alignItems="center" direction="column">
-		{props.isLoading && <CircularProgress />}
+		{props.isLoading && <Grid item xs={12}><CircularProgress /></Grid>}
 		{props.schedule.map(day => (
 			<Grid key={day.id} item xs={12} md={10} lg={6} xl={5}>
 				<ScheduleDay schedule={day} />

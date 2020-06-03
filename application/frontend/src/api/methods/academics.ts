@@ -8,6 +8,7 @@ export interface IAcademic {
 	middleName: string;
 	phone: string;
 	email: string;
+	avatar: string;
 }
 
 export const academicsGet = (data: {}) => API_POST<ResponseAll<IAcademic>>(`/academics/get`, data);

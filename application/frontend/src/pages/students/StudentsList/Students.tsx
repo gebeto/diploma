@@ -49,6 +49,7 @@ export interface IStudent {
 	lastName: string;
 	phone: string;
 	email: string;
+	avatar: string;
 }
 
 
@@ -61,7 +62,7 @@ export const Student = (props: StudentProps) => {
 	return (
 		<ListItem alignItems="flex-start" button>
 			<ListItemAvatar>
-				<Avatar>SN</Avatar>
+				<Avatar src={props.student.avatar} />
 			</ListItemAvatar>
 			<ListItemText
 				primary={`${props.student.firstName} ${props.student.lastName}`}

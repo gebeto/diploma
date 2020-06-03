@@ -62,9 +62,11 @@ const useStyles = makeStyles((theme: Theme) =>
 export interface IAcademic {
 	id: number;
 	firstName: string;
+	middleName: string;
 	lastName: string;
 	phone: string;
 	email: string;
+	avatar: string;
 }
 
 
@@ -81,10 +83,10 @@ export const Academic = (props: AcademicProps) => {
 			<AcademicEditModal academic={props.academic} isOpened={isOpened} handleClose={handleClose} />
 			<ListItem alignItems="flex-start" button onClick={handleOpen as any}>
 				<ListItemAvatar>
-					<Avatar>SN</Avatar>
+					<Avatar src={props.academic.avatar} />
 				</ListItemAvatar>
 				<ListItemText
-					primary={`${props.academic.firstName} ${props.academic.lastName}`}
+					primary={`${props.academic.firstName} ${props.academic.middleName} ${props.academic.lastName}`}
 					secondary={
 						<React.Fragment>
 							<Typography component="span" variant="body2" color="textPrimary">{props.academic.email}</Typography>

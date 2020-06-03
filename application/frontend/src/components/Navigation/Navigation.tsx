@@ -147,10 +147,10 @@ export function Navigation(props: NavigationProps) {
 				<ListItemNavLink onClick={handleDrawerClose} to="/students" title="Студенти" Icon={PeopleIcon} />
 				<ListItemNavLink onClick={handleDrawerClose} to="/academics" title="Викладачі" Icon={PeopleAltIcon} />
 			</List>
-			<Divider />
+			{/*<Divider />
 			<List>
 				<ListItemNavLink onClick={handleDrawerClose} to="/settings" title="Налаштування" Icon={SettingsIcon} />
-			</List>
+			</List>*/}
 		</div>
 	);
 

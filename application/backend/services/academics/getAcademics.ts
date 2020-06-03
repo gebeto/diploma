@@ -11,14 +11,18 @@ export function randomElement(arr) {
 
 export const createHuman = (() => {
 	let id = 0;
-	return () => ({
-		id: ++id,
-		firstName: randomElement(first),
-		middleName: randomElement(middle),
-		lastName: randomElement(last),
-		phone: randomElement(phone),
-		email: randomElement(email),
-	});
+	return () => {
+		const firstName = randomElement(first);
+		return {
+			id: ++id,
+			firstName: firstName,
+			middleName: randomElement(middle),
+			lastName: randomElement(last),
+			phone: randomElement(phone),
+			email: randomElement(email),
+			avatar: firstName[firstName.length - 1] === 'а' ? `https://randomuser.me/api/portraits/women/${id}.jpg` : `https://randomuser.me/api/portraits/men/${id}.jpg`,
+		}
+	};
 })();
 
 export const createHumans = (count) => {

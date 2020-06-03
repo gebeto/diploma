@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
 
 import { ModalEditFormSm } from '../../../../components/Modal/';
 import {
@@ -9,14 +12,32 @@ import {
 } from '../../../../components/Form/';
 import { RaitAdornment, WeightAdornment, LengthAdornment } from './addons';
 
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		small: {
+			width: theme.spacing(3),
+			height: theme.spacing(3),
+		},
+		large: {
+			width: theme.spacing(12),
+			height: theme.spacing(12),
+		},
+	}),
+);
 
 
 export const AcademicEditForm = (props) => {
+	const classes = useStyles();
+
 	return (
 		<Form onSubmit={props.onSubmit} disabled={props.isSubmitting} errorMessage={props.errorMessage}>
 			<Grid container spacing={2}>
 
-				<Grid item xs={6}>
+				<Grid item container xs={12} justify="center">
+					<Avatar className={classes.large} src={props.academic.avatar} />
+				</Grid>
+
+				<Grid item xs={12}>
 					<InputField
 						values={props.values}
 						errors={props.errors}
@@ -25,7 +46,16 @@ export const AcademicEditForm = (props) => {
 						title="Ім'я"
 					/>
 				</Grid>
-				<Grid item xs={6}>
+				<Grid item xs={12}>
+					<InputField
+						values={props.values}
+						errors={props.errors}
+						onChange={props.handleFieldChange}
+						name="middleName"
+						title="По батькові"
+					/>
+				</Grid>
+				<Grid item xs={12}>
 					<InputField
 						values={props.values}
 						errors={props.errors}
