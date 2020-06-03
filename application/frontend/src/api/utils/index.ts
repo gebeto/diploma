@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 
 export * from './useApiRequest';
 
@@ -37,18 +38,20 @@ export const API_AS_JSON = res => {
 	if (res.status >= 500) {
 		throw new Error(`Server error ${res.status}: ${res.statusText}. Please try again later or contact developers to fix this problem.`)
 	}
-	return res.json().then(handleResponseError);
+	// return res.json().then(handleResponseError);
+	return res.data;
 }
 
 export const API_AS_TEXT = res => res.text().then(handleResponseError);
 export const API_PREFIX = "/api";
 
-export const API_GET = (url) => fetch(API_PREFIX + url).then(API_AS_JSON);
+export const API_GET = (url) => axios.get(API_PREFIX + url).then(API_AS_JSON);
 
-export const API_POST = <T = any>(url: string, data?: any) => fetch(API_PREFIX + url, {
-	method: "POST",
-	body: JSON.stringify(data),
-}).then(API_AS_JSON) as Promise<T>;
+// export const API_POST = <T = any>(url: string, data?: any) => fetch(API_PREFIX + url, {
+// 	method: "POST",
+// 	body: JSON.stringify(data),
+// }).then(API_AS_JSON) as Promise<T>;
+export const API_POST = <T = any>(url: string, data?: any) => axios.post(API_PREFIX + url, data).then(API_AS_JSON) as Promise<T>;
 
 export const API_POST_FAKE = <T = any>(url: string, data?: any) => new Promise(resolve => setTimeout(() => resolve(null), 1000)) as Promise<T>;
 

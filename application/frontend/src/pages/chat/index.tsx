@@ -18,7 +18,7 @@ const Chat = (props) => {
 					<MessageField />
 				</Grid>
 				<Grid item container xs={12} component={Paper} square elevation={0}>
-					<MessagesList />
+					<MessagesList chatId={props.match.params.chatId} />
 				</Grid>
 			</Grid>
 		</React.Fragment>

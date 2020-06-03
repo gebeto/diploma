@@ -24,9 +24,19 @@ studentsRouter.post('/getStudentsChats', async (ctx, next) => {
 });
 
 studentsRouter.post('/getChatMessages', async (ctx, next) => {
-	ctx.body = {
-		items: await getChatMessages(ctx.request.body.chatId),
-	};
+	const chatTypeWithId = ctx.request.body.chatId;
+	if (!chatTypeWithId) return;
+
+	const [ full, chatType, chatId ] = /([\w\W]+?)-(\d+)/.exec(chatTypeWithId);
+
+	if (chatType && chatId) {
+		ctx.body = {
+			items: await getChatMessages(chatType, chatId),
+		};
+	} else {
+		return;
+	}
+
 	await next();
 });
 

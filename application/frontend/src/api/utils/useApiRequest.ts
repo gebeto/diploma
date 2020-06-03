@@ -102,6 +102,7 @@ export function useApiRequest(requester) {
 export const makeApiRequest = (requester) => {
 	return (...params) => {
 		const [ state, dispatch ] = React.useReducer<React.Reducer<UseApiRequestState, any>>(reducer, initialState);
+		const [ refetchKey, setRefetchKey ] = React.useState(0);
 
 		const setFetching = React.useCallback((isFetching) => {
 			dispatch({type: IS_FETCHING, payload: isFetching});
@@ -123,17 +124,22 @@ export const makeApiRequest = (requester) => {
 			dispatch({type: FETCHING_ERROR});
 		}, []);
 
+		const refetch = React.useCallback(() => {
+			setRefetchKey(Date.now());
+		}, []);
+
 		React.useEffect(() => {
 			fetchingPending();
 			requester(...params)
 				.then(fetchingSuccess)
 				.catch(fetchingError);
-		}, params);
+		}, [...params, refetchKey]);
 
 		return {
 			state: state,
 			setFetching: setFetching,
 			setResponse: setResponse,
+			refetch: refetch,
 		}
 	}
 }
