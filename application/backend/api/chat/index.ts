@@ -1,7 +1,7 @@
 import * as Router from 'koa-router';
 
 // import { getChats, getSubjectsChats, getStudentsChats, getChatMessages, addChatMessageText } from '../../services/chat/index';
-import { getChatMessages } from '../../services/chat/index';
+import { getChatMessages, addChatMessageText } from '../../services/chat/index';
 import { getSubjects } from '../../services/schedule/subjects';
 import { getStudents } from '../../services/students/index';
 
@@ -31,7 +31,25 @@ studentsRouter.post('/getChatMessages', async (ctx, next) => {
 
 	if (chatType && chatId) {
 		ctx.body = {
-			items: await getChatMessages(chatType, chatId),
+			items: await getChatMessages(chatType, Number(chatId)),
+		};
+	} else {
+		return;
+	}
+
+	await next();
+});
+
+studentsRouter.post('/addChatMessage', async (ctx, next) => {
+	const chatTypeWithId = ctx.request.body.chatId;
+	if (!chatTypeWithId) return;
+
+	const [ full, chatType, chatId ] = /([\w\W]+?)-(\d+)/.exec(chatTypeWithId);
+
+	if (chatType && chatId) {
+		ctx.body = {
+			success: true,
+			item: await addChatMessageText(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.text),
 		};
 	} else {
 		return;

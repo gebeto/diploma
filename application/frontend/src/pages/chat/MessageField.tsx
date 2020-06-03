@@ -41,6 +41,19 @@ const useStyles = makeStyles((theme: Theme) =>
 export const MessageField = (props) => {
 	const classes = useStyles();
 
+	const [ message, setMessage ] = React.useState('');
+
+	const handleChange = React.useCallback((e) => {
+		setMessage(e.target.value);
+	}, []);
+
+	const handleSubmit = React.useCallback((e) => {
+		if (message.length) {
+			setMessage('');
+			props.onMessageSend(message);
+		}
+	}, [message]);
+
 	return (
 		<React.Fragment>
 			<Grid className={classes.spacer}></Grid>
@@ -53,13 +66,20 @@ export const MessageField = (props) => {
 					<TextField
 						fullWidth
 						multiline
+						onChange={handleChange}
+						value={message}
 						rows={2}
 						label="Повідомлення"
 						variant="outlined"
 						InputProps={{
 							endAdornment: (
 								<InputAdornment position="end">
-									<SendIcon className={classes.cursorPointer} color="primary" fontSize="large" />
+									<SendIcon
+										color="primary"
+										fontSize="large"
+										onClick={handleSubmit}
+										className={classes.cursorPointer}
+									/>
 								</InputAdornment>
 							),
 						}}

@@ -15,8 +15,6 @@ import WorkIcon from '@material-ui/icons/Work';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { chatsGetMessages } from '../../api/';
-import { makeApiRequest } from '../../api/utils';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -40,16 +38,8 @@ export const MessageItem = (props: { message: any }) => {
 	);
 }
 
-const useMessagesGetRequest = makeApiRequest(async (chatId) => {
-	const response = await chatsGetMessages({ chatId });
-	return response.items;
-});
-
-export const MessagesList = (props) => {
+export const MessagesList = ({ messages }) => {
 	const classes = useStyles();
-
-	const messages = useMessagesGetRequest(props.chatId);
-	// console.log('MESS', messages);
 
 	if (messages.state.isFetching) {
 		return (
