@@ -32,3 +32,7 @@ export const ChatsGroup = (props: { title: string; classes: any; onClick: any; c
 		</List>
 	);
 }
+
+ChatsGroup.defaultProps = {
+	chats: [],
+};

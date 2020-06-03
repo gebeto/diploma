@@ -1,13 +1,21 @@
 import * as Router from 'koa-router';
 
-import { getChats, addChat, getChatMessages, addChatMessageText } from '../../services/chat/index';
+import { getChats, getSubjectsChats, getStudentsChats, getChatMessages, addChatMessageText } from '../../services/chat/index';
 
 
 const studentsRouter = new Router({ prefix: "/chat" });
 
-studentsRouter.post('/getChats', async (ctx, next) => {
+
+studentsRouter.post('/getSubjectsChats', async (ctx, next) => {
 	ctx.body = {
-		items: await getChats(),
+		items: await getSubjectsChats(),
+	};
+	await next();
+});
+
+studentsRouter.post('/getStudentsChats', async (ctx, next) => {
+	ctx.body = {
+		items: await getStudentsChats(),
 	};
 	await next();
 });

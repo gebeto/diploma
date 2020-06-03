@@ -8,7 +8,7 @@ interface UseApiRequestState {
 }
 
 const initialState: UseApiRequestState = {
-	response: null,
+	response: undefined,
 	isFetchingError: false,
 	isFetching: true,
 };
@@ -42,7 +42,7 @@ function reducer(state, { type, payload }: DispatchWithAction) {
 				...state,
 				isFetchingError: false,
 				isFetching: true,
-				response: null,
+				response: undefined,
 			};
 		case FETCHING_SUCCESS:
 			return {

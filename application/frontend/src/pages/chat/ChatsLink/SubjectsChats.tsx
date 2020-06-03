@@ -1,19 +1,25 @@
 import * as React from 'react';
 
+import { chatsSubjectsGet } from '../../../api/';
+import { makeApiRequest } from '../../../api/utils';
+
 import { ChatsGroup } from './ChatsGroup';
 
 
+const useChatsGetRequest = makeApiRequest(async () => {
+	const result = await chatsSubjectsGet({});
+	return result.items;
+});
+
+
 export const SubjectsChats = (props) => {
-	const chats = React.useMemo(() => ([
-		{id: 2, title: "Основи компютерних мереж"},
-		{id: 3, title: "Охорона праці"},
-	]), []);
+	const chats = useChatsGetRequest();
 	return (
 		<ChatsGroup
 			onClick={props.onClick}
 			classes={props.classes}
 			title="Предмети"
-			chats={chats}
+			chats={chats.state.response}
 		/>
 	);
 }

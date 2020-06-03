@@ -8,11 +8,13 @@ import { formatDate } from '../schedule/ScheduleList/helpers';
 import { scheduleGetNextDay } from '../../api/';
 import { makeApiRequest } from '../../api/utils';
 
+
 const useNextDayApiRequest = makeApiRequest(async () => {
 	const result = await scheduleGetNextDay({});
 	const item = result.item;
 	return { ...item, date: new Date(item.date) };
 });
+
 
 export const ScheduleNextDay = () => {
 	const req = useNextDayApiRequest();
