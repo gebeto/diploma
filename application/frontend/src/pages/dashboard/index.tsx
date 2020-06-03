@@ -7,21 +7,18 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { ScheduleDay } from '../schedule/ScheduleList/Day';
 import { formatDate } from '../schedule/ScheduleList/helpers';
-// import { createDay } from '../schedule/ScheduleList/helpers';
 
 import { scheduleGetNextDay } from '../../api/';
 import { makeApiRequest } from '../../api/utils';
 
-// const day = createDay("05/24/2020");
-
-const useApiRequest = makeApiRequest(async () => {
+const useNextDayApiRequest = makeApiRequest(async () => {
 	const result = await scheduleGetNextDay({});
 	const item = result.item;
 	return { ...item, date: new Date(item.date) };
 });
 
 const ScheduleNextDay = () => {
-	const req = useApiRequest();
+	const req = useNextDayApiRequest();
 
 	if (req.state.isFetching) {
 		return <CircularProgress />;

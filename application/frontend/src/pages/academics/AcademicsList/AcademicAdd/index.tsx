@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
 
 import { ModalAddFormSm } from '../../../../components/Modal/';
 import {
@@ -8,12 +9,19 @@ import {
 	Form, withForm, withFormModal,
 } from '../../../../components/Form/';
 
+import { useStyles } from '../AcademicEdit/';
 
 
 export const AcademicAddForm = (props) => {
+	const classes = useStyles();
+
 	return (
 		<Form onSubmit={props.onSubmit} disabled={props.isSubmitting} errorMessage={props.errorMessage}>
 			<Grid container spacing={2}>
+
+				<Grid item container xs={12} justify="center">
+					<Avatar className={classes.large}>Фото</Avatar>
+				</Grid>
 
 				<Grid item xs={12}>
 					<InputField

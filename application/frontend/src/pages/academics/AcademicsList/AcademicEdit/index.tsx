@@ -12,7 +12,7 @@ import {
 } from '../../../../components/Form/';
 import { RaitAdornment, WeightAdornment, LengthAdornment } from './addons';
 
-const useStyles = makeStyles((theme: Theme) =>
+export const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		small: {
 			width: theme.spacing(3),
