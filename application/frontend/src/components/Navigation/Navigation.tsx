@@ -175,7 +175,7 @@ export function Navigation(props: NavigationProps) {
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 		>
-			<MenuItem onClick={handleMenuClose} component={NavLink} to="/profile" exact>Профіль</MenuItem>
+			{/*<MenuItem onClick={handleMenuClose} component={NavLink} to="/profile" exact>Профіль</MenuItem>*/}
 			<MenuItem onClick={handleMenuClose}>Вихід</MenuItem>
 		</Menu>
 	);
