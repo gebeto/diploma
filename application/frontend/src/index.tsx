@@ -17,6 +17,7 @@ import {
 import { store } from './store/';
 import { Navigation, NavigationConnected } from './components/Navigation/';
 
+import Profile from './pages/profile/';
 import Dashboard from './pages/dashboard/';
 import Chat from './pages/chat/';
 import Schedule from './pages/schedule/';
@@ -37,6 +38,7 @@ const App = (props) => {
 				<Route exact path="/students" component={Students} />
 				<Route exact path="/academics" component={Academics} />
 				<Route exact path="/settings" component={Settings} />
+				<Route exact path="/profile" component={Profile} />
 				<Route path="*">
 					<Typography variant="h2">404, PAGE NOT FOUND</Typography>
 				</Route>
