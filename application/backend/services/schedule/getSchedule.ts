@@ -1,4 +1,4 @@
-import { academics } from '../academics/getAcademics';
+import { academics } from '../academics/academics';
 import { subjects } from './subjects';
 import { pavilions } from './pavilions';
 import { SubjectType } from './types';

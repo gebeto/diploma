@@ -1,4 +1,4 @@
-import { createHumansFabric } from '../academics/getAcademics';
+import { createHumansFabric } from '../academics/academics';
 
 const createStudents = createHumansFabric();
 

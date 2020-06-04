@@ -39,3 +39,7 @@ export const academics = createAcademics(10);
 export const getAcademics = async () => {
 	return academics;
 }
+
+export const getAcademicById = async (id) => {
+	return academics.find(academic => academic.id === id);
+}
