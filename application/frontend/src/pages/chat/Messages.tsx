@@ -25,12 +25,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const MessageItem = (props: { message: any }) => {
+	console.log(props.message);
 	return (
 		<ListItem>
 			<ListItemAvatar>
-				<Avatar>SA</Avatar>
+				<Avatar src={props.message.from.avatar} />
 			</ListItemAvatar>
-			<ListItemText primary="Slavik Nychkalo" secondary={props.message.data.text} />
+			<ListItemText primary={`${props.message.from.firstName} ${props.message.from.lastName}`} secondary={props.message.data.text} />
 			<ListItemSecondaryAction>
 				<Typography variant="overline" color="textSecondary">{props.message.time}</Typography>
 			</ListItemSecondaryAction>

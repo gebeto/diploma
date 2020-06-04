@@ -1,6 +1,8 @@
-import { createHumans } from '../academics/getAcademics';
+import { createHumansFabric } from '../academics/getAcademics';
 
-export const students = createHumans(20);
+const createStudents = createHumansFabric();
+
+export const students = createStudents(20);
 
 export const getStudents = async () => {
 	return students;

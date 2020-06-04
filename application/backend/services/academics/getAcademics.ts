@@ -9,27 +9,32 @@ export function randomElement(arr) {
 	return arr[index];
 }
 
-export const createHuman = (() => {
-	let id = 0;
-	return () => {
-		const firstName = randomElement(first);
-		return {
-			id: ++id,
-			firstName: firstName,
-			middleName: randomElement(middle),
-			lastName: randomElement(last),
-			phone: randomElement(phone),
-			email: randomElement(email),
-			avatar: firstName[firstName.length - 1] === 'а' ? `https://randomuser.me/api/portraits/women/${id}.jpg` : `https://randomuser.me/api/portraits/men/${id}.jpg`,
-		}
-	};
-})();
+export const createHumansFabric = () => {
+	const createHuman = (() => {
+		let id = 0;
+		return () => {
+			const firstName = randomElement(first);
+			return {
+				id: ++id,
+				firstName: firstName,
+				middleName: randomElement(middle),
+				lastName: randomElement(last),
+				phone: randomElement(phone),
+				email: randomElement(email),
+				avatar: firstName[firstName.length - 1] === 'а' ? `https://randomuser.me/api/portraits/women/${id}.jpg` : `https://randomuser.me/api/portraits/men/${id}.jpg`,
+			}
+		};
+	})();
+	const createHumans = (count) => {
+		return (new Array(count).fill(1)).map(() => createHuman());
+	}
 
-export const createHumans = (count) => {
-	return (new Array(count).fill(1)).map(() => createHuman());
+	return createHumans;
 }
 
-const academics = createHumans(10);
+const createAcademics = createHumansFabric();
+
+const academics = createAcademics(10);
 
 export const getAcademics = async () => {
 	return academics;

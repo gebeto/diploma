@@ -1,3 +1,5 @@
+import { getStudentById, students } from '../students/index';
+
 export enum MessageType {
 	text = "text",
 	variantSingle = "variant_single",
@@ -16,17 +18,20 @@ export interface IMessage {
 
 export const createTextMessage = (() => {
 	let id = 0;
-	return (userId, text) => {
+	return (user, text) => {
 		const createDate = new Date();
 		const createDateString = createDate.toISOString();
 		const [ date, other ] = createDateString.split("T");
 		const [ time, ...rest ] = other.split(".");
 		return {
 			id: ++id,
-			userId: userId,
+			firstName: user.firstName,
+			lastName: user.lastName,
 			time: time.split(':').splice(0, 2).join(':'),
 			date: date,
 			type: MessageType.text,
+
+			from: user,
 			data: {
 				text,
 			}
@@ -36,8 +41,8 @@ export const createTextMessage = (() => {
 
 const groupChats: Record<number, IMessage[]> = {
 	1: [
-		createTextMessage(1, "Сьогодні захист дипломного проекту, хто піде в армію?"),
-		createTextMessage(1, "Привіт всім!"),
+		createTextMessage(students[0], "Сьогодні захист дипломного проекту, хто піде в армію?"),
+		createTextMessage(students[0], "Привіт всім!"),
 	],
 };
 const studentChats: Record<number, IMessage[]> = {};
@@ -60,7 +65,8 @@ export const addChatMessage = async (chatType: string, chatId: number, message: 
 }
 
 export const addChatMessageText = async (chatType: string, chatId: number, userId: number, text: string) => {
-	const newMessage = createTextMessage(userId, text);
+	const user = await getStudentById(userId);
+	const newMessage = createTextMessage(user, text);
 	await addChatMessage(chatType, chatId, newMessage);
 	return newMessage;
 }
