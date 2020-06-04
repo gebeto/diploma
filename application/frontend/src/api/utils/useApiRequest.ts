@@ -99,10 +99,13 @@ export function useApiRequest(requester) {
 }
 
 
-export const makeApiRequest = (requester) => {
-	return (...params) => {
-		const [ state, dispatch ] = React.useReducer<React.Reducer<UseApiRequestState, any>>(reducer, initialState);
-		const [ refetchKey, setRefetchKey ] = React.useState(0);
+export const makeBasicApiRequest = (requester, isFetching = false) => {
+	const initState = {
+		...initialState,
+		isFetching: isFetching,
+	};
+	return () => {
+		const [ state, dispatch ] = React.useReducer<React.Reducer<UseApiRequestState, any>>(reducer, initState);
 
 		const setFetching = React.useCallback((isFetching) => {
 			dispatch({type: IS_FETCHING, payload: isFetching});
@@ -114,6 +117,7 @@ export const makeApiRequest = (requester) => {
 
 		const fetchingSuccess = React.useCallback((response) => {
 			dispatch({type: FETCHING_SUCCESS, payload: response});
+			return response;
 		}, []);
 
 		const fetchingPending = React.useCallback(() => {
@@ -122,24 +126,41 @@ export const makeApiRequest = (requester) => {
 
 		const fetchingError = React.useCallback((e) => {
 			dispatch({type: FETCHING_ERROR});
+			return e;
 		}, []);
 
-		const refetch = React.useCallback(() => {
-			setRefetchKey(Date.now());
-		}, []);
-
-		React.useEffect(() => {
+		const fetch = React.useCallback((...params) => {
 			fetchingPending();
-			requester(...params)
+			return requester(...params)
 				.then(fetchingSuccess)
 				.catch(fetchingError);
-		}, [...params, refetchKey]);
+		}, []);
 
 		return {
 			state: state,
 			setFetching: setFetching,
 			setResponse: setResponse,
-			refetch: refetch,
+			fetch: fetch,
+		}
+	}
+}
+
+
+export const makeApiRequest = (requester) => {
+	const useBasicApiReq = makeBasicApiRequest(requester, true);
+
+	return (...params) => {
+		const state = useBasicApiReq();
+
+		React.useEffect(() => {
+			state.fetch(...params);
+		}, params);
+
+		return {
+			state: state.state,
+			setFetching: state.setFetching,
+			setResponse: state.setResponse,
+			refetch: state.fetch,
 		}
 	}
 }

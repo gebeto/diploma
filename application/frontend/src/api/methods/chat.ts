@@ -7,3 +7,4 @@ export const chatsGetMessages = (data: { chatId: string; }) => API_POST<Response
 export const chatAddMessage = (data: { chatId: string; userId: string; text: string; }) => API_POST<ResponseOne<any>>(`/chat/addChatMessage`, data);
 export const chatAddMessageVariants = (data: { chatId: string; userId: string; title: string; variants: any[]; }) => API_POST<ResponseOne<any>>(`/chat/addChatMessageVariants`, data);
 export const chatGetVariants = (data: { variantsId: number; }) => API_POST<ResponseOne<any>>(`/chat/getVariants`, data);
+export const chatVariantMark = (data: { userId: number; variantsId: number; variantId: number; }) => API_POST<ResponseOne<any>>(`/chat/markVariantsVariant`, data);

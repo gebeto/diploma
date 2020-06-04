@@ -3,7 +3,7 @@ import * as Router from 'koa-router';
 // import { getChats, getSubjectsChats, getStudentsChats, getChatMessages, addChatMessageText } from '../../services/chat/index';
 import { getChatInfo, getChatMessages, addChatMessageText, addChatMessageVariants, getVariantsById, getVariants } from '../../services/chat/index';
 import { getSubjects } from '../../services/schedule/subjects';
-import { getStudents } from '../../services/students/index';
+import { getStudents, getStudentById } from '../../services/students/index';
 
 
 const studentsRouter = new Router({ prefix: "/chat" });
@@ -83,6 +83,35 @@ studentsRouter.post('/getVariants', async (ctx, next) => {
 	if (!variantsId) return;
 	const variants = await getVariantsById(variantsId);
 	if (!variants) return;
+
+	ctx.body = {
+		item: variants,
+	};
+
+	await next();
+});
+
+
+studentsRouter.post('/markVariantsVariant', async (ctx, next) => {
+	const b = ctx.request.body;
+	const userId = b.userId;
+	const variantsId = b.variantsId;
+	const variantId = b.variantId;
+	if (!userId || !variantsId || !variantId) return;
+
+	const variants = await getVariantsById(variantsId);
+	if (!variants) return;
+
+	const user = await getStudentById(userId);
+	if (!user) return;
+
+	variants.variants.forEach(v => {
+		if (v.id === variantId) {
+			v.selectedBy = user;
+		} else if (v.selectedBy && v.selectedBy.id === userId) {
+			delete v.selectedBy;
+		}
+	})
 
 	ctx.body = {
 		item: variants,
