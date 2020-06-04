@@ -58,12 +58,12 @@ export const MoreChatMenu = (props) => {
 				<MenuItem onClick={handleAddVariantOpen as any}>Додати вибір варіантів</MenuItem>
 			</Menu>
 			
-			{isAddVariantOpened && <AddVariants
+			<AddVariants
 				isOpened={isAddVariantOpened}
 				handleClose={handleAddVariantCloseModal}
 				onSubmit={handleAddVariantSubmit}
 				onMessageSend={props.onMessageSend}
-			/>}
+			/>
 		</React.Fragment>
 	);
 }

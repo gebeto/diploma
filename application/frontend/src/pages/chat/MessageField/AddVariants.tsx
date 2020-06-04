@@ -4,6 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import InputBase from '@material-ui/core/InputBase';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -36,6 +39,7 @@ const CHANGE_TITLE = "CHANGE_TITLE";
 const CHANGE_VARIANT = "CHANGE_VARIANT";
 const ADD_VARIANT = "ADD_VARIANT";
 const REMOVE_VARIANT = "REMOVE_VARIANT";
+const RESET = "RESET";
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -59,6 +63,8 @@ const reducer = (state, action) => {
 				...state,
 				variants: state.variants.filter((item, index) => index === action.payload ? false : true)
 			};
+		case RESET:
+			return initialState;
 	}
 	return state;
 }
@@ -70,23 +76,24 @@ const IndexedInput = (props) => {
 		props.onChange(props.index, e.target.value);
 	}, [props.index]);
 
-	return (
-		<InputBase
-			value={props.value}
-			onChange={handleChange}
-		/>
-	);
-}
-
-const IndexedIconButton = (props) => {
-	const handleClick = React.useCallback((e) => {
-		props.onClick(props.index);
+	const handleDelete = React.useCallback((e) => {
+		props.onDelete(props.index);
 	}, [props.index]);
 
 	return (
-		<IconButton onClick={handleClick}>
-			{props.children}
-		</IconButton>
+		<OutlinedInput
+			fullWidth
+			value={props.value}
+			onChange={handleChange}
+			placeholder={`Варіант ${props.index + 1}`}
+			endAdornment={
+				<InputAdornment position="end">
+					<IconButton onClick={handleDelete}>
+						<DeleteIcon />
+					</IconButton>
+				</InputAdornment>
+			}
+		/>
 	);
 }
 
@@ -113,8 +120,12 @@ export const AddVariants = (props) => {
 		dispatch({ type: ADD_VARIANT });
 	}, []);
 
+	const handleExited = React.useCallback(() => {
+		dispatch({ type: RESET });
+	}, [props.handleClose]);
+
 	return (
-		<ModalAddFormSm isOpened={props.isOpened} handleClose={props.handleClose} onSubmit={onSubmit}>
+		<ModalAddFormSm isOpened={props.isOpened} handleClose={props.handleClose} handleExited={handleExited} onSubmit={onSubmit}>
 			<Grid container spacing={2}>
 				<Grid item xs={12}>
 					<TextField
@@ -130,19 +141,17 @@ export const AddVariants = (props) => {
 					<Paper variant="outlined">
 						<List>
 							{state.variants.map((variant, index) =>
-								<ListItem key={index} button>
-									<IndexedInput value={variant.title} index={index} onChange={handleVariantChange} />
-									<ListItemSecondaryAction>
-										<IndexedIconButton index={index} onClick={handleVariantRemove}>
-											<DeleteIcon />
-										</IndexedIconButton>
-									</ListItemSecondaryAction>
+								<ListItem key={index}>
+									<IndexedInput
+										value={variant.title}
+										index={index}
+										onChange={handleVariantChange}
+										onDelete={handleVariantRemove}
+									/>
 								</ListItem>
 							)}
 							<ListItem button onClick={handleVariantAdd}>
-								<IconButton size="small">
-									<AddIcon fontSize="small" />
-								</IconButton>
+								<Button fullWidth variant="outlined" color="primary" size="large">Додати варіант</Button>
 							</ListItem>
 						</List>
 					</Paper>
