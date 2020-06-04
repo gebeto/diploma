@@ -22,17 +22,32 @@ const useStyles = makeStyles((theme: Theme) =>
 		root: {
 			width: '100%',
 		},
-		bold: {
+		marginTopABit: {
+			// marginTop: '4px',
+			marginTop: '8px',
+			borderRadius: '5px',
+			backgroundColor: theme.palette.background.paper,
+			'&:first-child': {
+				marginTop: 0,
+			}
+		},
+		author: {
 			fontWeight: 500,
 			[theme.breakpoints.down('xs')]: {
 				fontWeight: 700,
 			},
 		},
-		marginTopABit: {
-			marginTop: '4px',
-			borderRadius: '5px',
-			backgroundColor: theme.palette.background.paper,
-		}
+		avatar: {
+			marginRight: theme.spacing(2),
+			marginBottom: theme.spacing(1),
+		},
+		titleAndTime: {
+			display: 'flex',
+			flexDirection: 'column',
+		},
+		time: {
+			lineHeight: '1',
+		},
 	}),
 );
 

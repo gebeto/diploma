@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme: Theme) =>
 		card: {
 			maxWidth: '400px',
 			marginTop: '0.3em',
-			marginRight: '1em',
+			// marginRight: '1em',
 		},
 		paddingBottom0: {
 			paddingBottom: 0,
 		},
 		cardTitle: {
 			[theme.breakpoints.down('xs')]: {
-				fontSize: '1.1em',
+				fontSize: '1.2em',
 				fontWeight: 600,
 			},
 		},
