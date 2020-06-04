@@ -9,8 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import { chatsGetMessages, chatAddMessage } from '../../api/';
 import { makeApiRequest } from '../../api/utils';
 
-import { MessagesList } from './Messages';
-import { MessageField } from './MessageField';
+import { MessagesList } from './Messages/';
+import { MessageField } from './MessageField/';
 
 
 const useMessagesGetRequest = makeApiRequest(async (chatId) => {
@@ -23,16 +23,14 @@ const ChatRaw = (props) => {
 	const chatId = props.match.params.chatId;
 	const messages = useMessagesGetRequest(chatId);
 
-	const handleMesssageSend = React.useCallback((message) => {
-		chatAddMessage({ chatId: chatId, userId: props.user.id, text: message }).then(res => {
-			// messages.setResponse([res.item, ...messages.state.response]);
-			messages.setResponse({
-				...messages.state.response,
-				messages: [
-					res.item,
-					...messages.state.response.messages,
-				]
-			});
+	const handleMesssageSend = React.useCallback(async (sendingMessage) => {
+		const res = await sendingMessage;
+		messages.setResponse({
+			...messages.state.response,
+			messages: [
+				res.item,
+				...messages.state.response.messages,
+			]
 		});
 	}, [messages.state.response]);
 
@@ -40,7 +38,12 @@ const ChatRaw = (props) => {
 		<React.Fragment>
 			<Grid container>
 				<Grid item container xs={12} component={Paper} square elevation={0}>
-					<MessageField messages={messages} onMessageSend={handleMesssageSend} />
+					<MessageField
+						chatId={chatId}
+						user={props.user}
+						messages={messages}
+						onMessageSend={handleMesssageSend}
+					/>
 				</Grid>
 				<Grid item container xs={12} component={Paper} square elevation={0}>
 					<MessagesList messages={messages} />

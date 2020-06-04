@@ -2,8 +2,8 @@ import { getStudentById, students } from '../students/index';
 
 export enum MessageType {
 	text = "text",
-	variantSingle = "variant_single",
-	variantMultiple = "variant_multiple",
+	variant = "variant",
+	variantMultiple = "variantMultiple",
 }
 
 export interface IMessageDataText {
@@ -16,9 +16,9 @@ export interface IMessage {
 	data: IMessageDataText;
 }
 
-export const createTextMessage = (() => {
+export const createMessage = (() => {
 	let id = 0;
-	return (user, text) => {
+	return (user, message) => {
 		const createDate = new Date();
 		const createDateString = createDate.toISOString();
 		const [ date, other ] = createDateString.split("T");
@@ -29,20 +29,37 @@ export const createTextMessage = (() => {
 			lastName: user.lastName,
 			time: time.split(':').splice(0, 2).join(':'),
 			date: date,
-			type: MessageType.text,
 
 			from: user,
-			data: {
-				text,
-			}
+
+			...message,
 		}
 	}
 })();
 
+const createMessageText = (text) => {
+	return {
+		type: MessageType.text,
+		data: {
+			text
+		}
+	}
+}
+
+const createMessagePoll = (title: string, variants: any[]) => {
+	return {
+		type: MessageType.variant,
+		data: {
+			title: title,
+			variants: variants,
+		}
+	}
+}
+
 const groupChats: Record<number, IMessage[]> = {
 	1: [
-		createTextMessage(students[0], "Сьогодні захист дипломного проекту, хто піде в армію?"),
-		createTextMessage(students[0], "Привіт всім!"),
+		createMessage(students[0], createMessageText("Сьогодні захист дипломного проекту, хто піде в армію?")),
+		createMessage(students[0], createMessageText("Привіт всім!")),
 	],
 };
 const studentChats: Record<number, IMessage[]> = {};
@@ -66,7 +83,14 @@ export const addChatMessage = async (chatType: string, chatId: number, message: 
 
 export const addChatMessageText = async (chatType: string, chatId: number, userId: number, text: string) => {
 	const user = await getStudentById(userId);
-	const newMessage = createTextMessage(user, text);
+	const newMessage = createMessage(user, createMessageText(text));
+	await addChatMessage(chatType, chatId, newMessage);
+	return newMessage;
+}
+
+export const addChatMessagePoll = async (chatType: string, chatId: number, userId: number, title: string, variants: any[]) => {
+	const user = await getStudentById(userId);
+	const newMessage = createMessage(user, createMessagePoll(title, variants));
 	await addChatMessage(chatType, chatId, newMessage);
 	return newMessage;
 }

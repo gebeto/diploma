@@ -6,25 +6,32 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SendIcon from '@material-ui/icons/Send';
+
+import { MoreChatMenu } from './MoreChatMenu';
+
+import { chatAddMessage } from '../../../api/';
+
+// chatAddMessagePoll
 
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		positionedBottom: {
-		    position: 'fixed',
-		    top: '64px',
-		    right: '0',
-		    zIndex: 2,
-		    width: 'calc(100% - 240px)',
-		    padding: '1em',
-		    borderBottom: '1px solid #eee',
-		    boxShadow: '0px 0px 20px -10px rgba(0,0,0,0.2)',
-		    [theme.breakpoints.down('xs')]: {
-		    	width: '100%',
-		    }
+			position: 'fixed',
+			top: '64px',
+			right: '0',
+			zIndex: 2,
+			width: 'calc(100% - 240px)',
+			padding: '1em',
+			borderBottom: '1px solid #eee',
+			boxShadow: '0px 0px 20px -10px rgba(0,0,0,0.2)',
+			[theme.breakpoints.down('xs')]: {
+				width: '100%',
+			}
 		},
 		cursorPointer: {
 			cursor: 'pointer',
@@ -37,6 +44,8 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
+
+
 export const MessageField = (props) => {
 	const classes = useStyles();
 
@@ -46,10 +55,12 @@ export const MessageField = (props) => {
 		setMessage(e.target.value);
 	}, []);
 
-	const handleSubmit = React.useCallback((e) => {
+	const handleSubmit = React.useCallback(async (e) => {
 		if (message.length) {
 			setMessage('');
-			props.onMessageSend(message);
+			props.onMessageSend(
+				chatAddMessage({ chatId: props.chatId, userId: props.user.id, text: message })
+			);
 		}
 	}, [message]);
 
@@ -58,7 +69,14 @@ export const MessageField = (props) => {
 			<Grid className={classes.spacer}></Grid>
 			<Grid className={classes.positionedBottom} container component={Paper} square elevation={0}>
 				<Grid item container xs={12} direction="row" alignItems="center" justify="space-between">
-					<Typography variant="h4" gutterBottom>Чат</Typography>
+					<Typography variant="h4" gutterBottom>
+						Чат
+						<MoreChatMenu
+							onMessageSend={props.onMessageSend}
+							chatId={props.chatId}
+							user={props.user}
+						/>
+					</Typography>
 					<Typography variant="body2" color="textSecondary" gutterBottom>{props.messages.state.response ? props.messages.state.response.chat.title : 'Завантаження...'}</Typography>
 				</Grid>
 				<Grid item xs={12}>

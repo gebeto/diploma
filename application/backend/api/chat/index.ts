@@ -1,7 +1,7 @@
 import * as Router from 'koa-router';
 
 // import { getChats, getSubjectsChats, getStudentsChats, getChatMessages, addChatMessageText } from '../../services/chat/index';
-import { getChatInfo, getChatMessages, addChatMessageText } from '../../services/chat/index';
+import { getChatInfo, getChatMessages, addChatMessageText, addChatMessagePoll } from '../../services/chat/index';
 import { getSubjects } from '../../services/schedule/subjects';
 import { getStudents } from '../../services/students/index';
 
@@ -51,6 +51,25 @@ studentsRouter.post('/addChatMessage', async (ctx, next) => {
 		ctx.body = {
 			success: true,
 			item: await addChatMessageText(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.text),
+		};
+	} else {
+		return;
+	}
+
+	await next();
+});
+
+studentsRouter.post('/addChatMessageVariants', async (ctx, next) => {
+	const chatTypeWithId = ctx.request.body.chatId;
+	if (!chatTypeWithId) return;
+
+	const [ full, chatType, chatId ] = /([\w\W]+?)-(\d+)/.exec(chatTypeWithId);
+
+	// if (chatType && chatId && chatType === "subject") {
+	if (chatType && chatId) {
+		ctx.body = {
+			success: true,
+			item: await addChatMessagePoll(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.title, ctx.request.body.variants),
 		};
 	} else {
 		return;

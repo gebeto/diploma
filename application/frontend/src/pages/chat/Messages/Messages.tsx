@@ -15,6 +15,18 @@ import WorkIcon from '@material-ui/icons/Work';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import { MessageItemText } from './MessageItemText';
+import { MessageItemVariant } from './MessageItemVariant';
+
+const MessageItem = (props) => {
+	if (props.message.type === "variant") {
+		return <MessageItemVariant message={props.message} />
+	} else if (props.message.type === "text") {
+		return <MessageItemText message={props.message} />
+	}
+
+	return <MessageItemText message={props.message} />
+}
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -23,21 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
 		}
 	}),
 );
-
-export const MessageItem = (props: { message: any }) => {
-	console.log(props.message);
-	return (
-		<ListItem>
-			<ListItemAvatar>
-				<Avatar src={props.message.from.avatar} />
-			</ListItemAvatar>
-			<ListItemText primary={`${props.message.from.firstName} ${props.message.from.lastName}`} secondary={props.message.data.text} />
-			<ListItemSecondaryAction>
-				<Typography variant="overline" color="textSecondary">{props.message.time}</Typography>
-			</ListItemSecondaryAction>
-		</ListItem>
-	);
-}
 
 export const MessagesList = ({ messages }) => {
 	const classes = useStyles();
