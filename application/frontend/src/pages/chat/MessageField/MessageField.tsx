@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 			cursor: 'pointer',
 		},
 		spacer: {
-			height: '140px',
+			height: '150px',
 			width: '100%',
 		}
 	}),

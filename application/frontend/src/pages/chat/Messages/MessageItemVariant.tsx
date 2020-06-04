@@ -130,29 +130,15 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		paddingBottom0: {
 			paddingBottom: 0,
-		}
+		},
+		cardTitle: {
+			[theme.breakpoints.down('xs')]: {
+				fontSize: '1.1em',
+				fontWeight: 600,
+			},
+		},
 	}),
 );
-
-
-export const MessageItemVariant1 = (props: { message: any }) => {
-	return (
-		<ListItemText>
-			<Typography variant="body1">
-				{props.message.data.title}
-				<br />
-				<Button size="small" color="primary">Обрати варіант</Button>
-			</Typography>
-			<Typography component="ul" variant="body2">
-				{props.message.data.variants.map(item =>
-					<li key={item.title}>
-						{item.by ? <del>{item.title}</del> : item.title}
-					</li>
-				)}
-			</Typography>
-		</ListItemText>
-	);
-}
 
 
 export const MessageItemVariant2 = (props) => {
@@ -177,7 +163,7 @@ export const MessageItemVariant2 = (props) => {
 			<Typography variant="body2" component="div">
 				<Card className={classes.card}>
 					<CardContent className={classes.paddingBottom0}>
-						<Typography gutterBottom variant="h6" component="h6">
+						<Typography gutterBottom variant="h6" component="h6" className={classes.cardTitle}>
 							{props.message.data.title}
 						</Typography>
 						<Typography gutterBottom variant="body2" color="textSecondary" component="p">
