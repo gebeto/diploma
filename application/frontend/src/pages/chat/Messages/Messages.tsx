@@ -18,20 +18,49 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { MessageItemText } from './MessageItemText';
 import { MessageItemVariant } from './MessageItemVariant';
 
-const MessageItem = (props) => {
-	if (props.message.type === "variant") {
-		return <MessageItemVariant message={props.message} />
-	} else if (props.message.type === "text") {
-		return <MessageItemText message={props.message} />
-	}
+const components = {
+	default: MessageItemText,
+	variant: MessageItemVariant,
+	text: MessageItemText,
+}
 
-	return <MessageItemText message={props.message} />
+const MessageItem = (props) => {
+	const MessageComponent = components[props.message.type] || components.default;
+
+	return (
+		<ListItem className={props.classes.marginTopABit}>
+			<ListItemAvatar>
+				<Avatar src={props.message.from.avatar} />
+			</ListItemAvatar>
+			<ListItemText>
+				<Typography variant="body1" component="div" className={props.classes.bold}>
+					{props.message.from.firstName} {props.message.from.lastName}
+				</Typography>
+				<MessageComponent message={props.message} />
+			</ListItemText>
+			<ListItemSecondaryAction>
+				<Typography variant="overline" color="textSecondary">{props.message.time}</Typography>
+			</ListItemSecondaryAction>
+		</ListItem>
+	);
 }
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
 			width: '100%',
+			// backgroundColor: 'red',
+		},
+		bold: {
+			fontWeight: 500,
+			[theme.breakpoints.down('xs')]: {
+				fontWeight: 700,
+			},
+		},
+		marginTopABit: {
+			marginTop: '4px',
+			borderRadius: '5px',
+			backgroundColor: theme.palette.background.paper,
 		}
 	}),
 );
@@ -67,7 +96,7 @@ export const MessagesList = ({ messages }) => {
 	return (
 		<List classes={classes}>
 			{messages.state.response.messages.length ? messages.state.response.messages.map(message =>
-				<MessageItem key={message.id} message={message} />
+				<MessageItem classes={classes} key={message.id} message={message} />
 			) : <ListItem>
 					<Grid container justify="center" alignItems="center" direction="column">
 						<Typography color="textSecondary">

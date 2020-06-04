@@ -15,7 +15,7 @@ const createModalEditForm = (maxWidth) => {
 	const ModalEditForm = (props) => (
 		<Dialog
 			fullWidth
-			scroll="body"
+			// scroll="body"
 			open={props.isOpened}
 			onDoubleClick={handleDoubleClickPrevent}
 			onExited={props.handleExited}

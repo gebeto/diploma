@@ -38,7 +38,7 @@ const ChatRaw = (props) => {
 	return (
 		<React.Fragment>
 			<Grid container>
-				<Grid item container xs={12} component={Paper} square elevation={0}>
+				<Grid item container xs={12}>
 					<MessageField
 						chatId={chatId}
 						user={props.user}
@@ -46,7 +46,7 @@ const ChatRaw = (props) => {
 						onMessageSend={handleMesssageSend}
 					/>
 				</Grid>
-				<Grid item container xs={12} component={Paper} square elevation={0}>
+				<Grid item container xs={12}>
 					<MessagesList messages={messages} />
 				</Grid>
 			</Grid>

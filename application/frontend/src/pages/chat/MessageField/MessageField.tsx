@@ -37,9 +37,8 @@ const useStyles = makeStyles((theme: Theme) =>
 			cursor: 'pointer',
 		},
 		spacer: {
-			height: '160px',
+			height: '140px',
 			width: '100%',
-			backgroundColor: 'transparent',
 		}
 	}),
 );

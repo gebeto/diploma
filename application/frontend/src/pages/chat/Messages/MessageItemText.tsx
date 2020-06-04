@@ -13,14 +13,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 export const MessageItemText = (props: { message: any }) => {
 	return (
-		<ListItem>
-			<ListItemAvatar>
-				<Avatar src={props.message.from.avatar} />
-			</ListItemAvatar>
-			<ListItemText primary={`${props.message.from.firstName} ${props.message.from.lastName}`} secondary={props.message.data.text} />
-			<ListItemSecondaryAction>
-				<Typography variant="overline" color="textSecondary">{props.message.time}</Typography>
-			</ListItemSecondaryAction>
-		</ListItem>
+		<Typography variant="body2">
+			{props.message.data.text}
+		</Typography>
 	);
 }
