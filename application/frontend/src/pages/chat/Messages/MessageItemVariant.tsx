@@ -27,6 +27,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 
+import { ModalReadonlyXs } from '../../../components/Modal/';
+
 const options = [
 	'None',
 	'Atria',
@@ -44,16 +46,16 @@ const options = [
 	'Umbriel',
 ];
 
-export interface ConfirmationDialogRawProps {
-	// classes: Record<'paper', string>;
+export interface VariantDialogProps {
 	id: string;
-	keepMounted: boolean;
 	value: string;
+	title: string;
 	open: boolean;
 	onClose: (value?: string) => void;
 }
 
-function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
+
+function VariantDialog(props: VariantDialogProps) {
 	const { onClose, value: valueProp, open, ...other } = props;
 	const [value, setValue] = React.useState(valueProp);
 	const radioGroupRef = React.useRef<HTMLElement>(null);
@@ -64,23 +66,46 @@ function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
 		}
 	}, [valueProp, open]);
 
-	const handleEntering = () => {
+	const handleEntering = React.useCallback(() => {
 		if (radioGroupRef.current != null) {
 			radioGroupRef.current.focus();
 		}
-	};
+	}, [radioGroupRef]);
 
-	const handleCancel = () => {
+	const handleCancel = React.useCallback(() => {
 		onClose();
-	};
+	}, [value]);
 
-	const handleOk = () => {
+	const handleOk = React.useCallback(() => {
 		onClose(value);
-	};
+	}, [value]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setValue((event.target as HTMLInputElement).value);
+		const value = (event.target as HTMLInputElement).value;
+		setValue(value);
+		console.log(value);
 	};
+
+	return (
+		<ModalReadonlyXs
+			dividers
+			title={props.title}
+			isOpened={open}
+			handleClose={handleCancel}
+		>
+			<RadioGroup
+				ref={radioGroupRef}
+				aria-label="ringtone"
+				name="ringtone"
+				value={value}
+				onChange={handleChange}
+			>
+				{options.map((option) => (
+					<FormControlLabel value={option} key={option} control={<Radio />} label={option} />
+				))}
+			</RadioGroup>
+		</ModalReadonlyXs>
+	);
 
 	return (
 		<Dialog
@@ -93,7 +118,7 @@ function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
 			fullWidth
 			{...other}
 		>
-			<DialogTitle id="confirmation-dialog-title">Phone Ringtone</DialogTitle>
+			<DialogTitle id="confirmation-dialog-title">{props.title}</DialogTitle>
 			<DialogContent dividers>
 				<RadioGroup
 					ref={radioGroupRef}
@@ -141,7 +166,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export const MessageItemVariant2 = (props) => {
+export const MessageItemVariant = (props) => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState('Dione');
@@ -175,16 +200,13 @@ export const MessageItemVariant2 = (props) => {
 					</CardActions>
 				</Card>
 			</Typography>
-			<ConfirmationDialogRaw
+			<VariantDialog
 				id="ringtone-menu"
-				keepMounted
 				open={open}
 				onClose={handleClose}
 				value={value}
+				title={props.message.data.title}
 			/>
 		</React.Fragment>
 	);
 }
-
-
-export const MessageItemVariant = MessageItemVariant2;

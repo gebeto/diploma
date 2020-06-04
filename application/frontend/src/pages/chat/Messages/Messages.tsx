@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
 			width: '100%',
-			// backgroundColor: 'red',
 		},
 		bold: {
 			fontWeight: 500,
@@ -70,7 +69,7 @@ export const MessagesList = ({ messages }) => {
 
 	if (messages.state.isFetching) {
 		return (
-			<List classes={classes}>
+			<List className={classes.root}>
 				<ListItem>
 					<Grid container justify="center" alignItems="center" direction="column">
 						<CircularProgress />
@@ -82,7 +81,7 @@ export const MessagesList = ({ messages }) => {
 
 	if (messages.state.isFetchingError) {
 		return (
-			<List classes={classes}>
+			<List className={classes.root}>
 				<ListItem>
 					<Grid container justify="center" alignItems="center" direction="column">
 						Помилка завантаження!
@@ -94,7 +93,7 @@ export const MessagesList = ({ messages }) => {
 	}
 
 	return (
-		<List classes={classes}>
+		<List className={classes.root}>
 			{messages.state.response.messages.length ? messages.state.response.messages.map(message =>
 				<MessageItem classes={classes} key={message.id} message={message} />
 			) : <ListItem>

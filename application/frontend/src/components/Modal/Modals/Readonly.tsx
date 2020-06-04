@@ -23,7 +23,7 @@ const createModalReadonly = (maxWidth) => {
 			maxWidth={maxWidth}
 		>
 			<DialogTitle>{props.title}</DialogTitle>
-			<DialogContent>
+			<DialogContent dividers={props.dividers}>
 				{props.children}
 			</DialogContent>
 			<DialogActions>
@@ -38,6 +38,7 @@ const createModalReadonly = (maxWidth) => {
 
 
 export const ModalReadonly = createModalReadonly("sm");
+export const ModalReadonlyXs = createModalReadonly("xs");
 export const ModalReadonlySm = createModalReadonly("sm");
 export const ModalReadonlyMd = createModalReadonly("md");
 export const ModalReadonlyLg = createModalReadonly("lg");
