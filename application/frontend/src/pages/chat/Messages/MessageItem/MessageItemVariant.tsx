@@ -13,93 +13,12 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import Checkbox from '@material-ui/core/Checkbox';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import Dialog from '@material-ui/core/Dialog';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 
-import { ModalReadonlyXs } from '../../../components/Modal/';
-import { chatGetVariants } from '../../../api/';
-import { makeApiRequest } from '../../../api/utils';
-
-const options = [
-	'None',
-	'Atria',
-	'Callisto',
-	'Dione',
-	'Ganymede',
-	'Hangouts Call',
-	'Luna',
-	'Oberon',
-	'Phobos',
-	'Pyxis',
-	'Sedna',
-	'Titania',
-	'Triton',
-	'Umbriel',
-];
-
-export interface VariantDialogProps {
-	id: string;
-	title: string;
-	variantsId: number;
-	open: boolean;
-	onClose: () => void;
-}
-
-const useVariantsApiRequest = makeApiRequest(async (variantsId: number) => {
-	const response = await chatGetVariants({ variantsId });
-	return response.item;
-});
-
-function VariantDialog(props: VariantDialogProps) {
-	const [ value, setValue ] = React.useState(null);
-	const radioGroupRef = React.useRef<HTMLElement>(null);
-
-	const variants = useVariantsApiRequest(props.variantsId);
-
-	const handleCancel = React.useCallback(() => {
-		props.onClose();
-	}, [value]);
-
-	const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-		const value = (event.target as HTMLInputElement).value;
-		setValue(Number(value));
-		console.log(value);
-	}, []);
-
-	return (
-		<ModalReadonlyXs
-			dividers
-			title={props.title}
-			isOpened={props.open}
-			handleClose={handleCancel}
-		>
-			<RadioGroup
-				ref={radioGroupRef}
-				aria-label="ringtone"
-				name="ringtone"
-				value={value}
-				onChange={handleChange}
-			>
-				{variants.state.isFetching ? <Grid container justify="center"><CircularProgress /></Grid> : variants.state.response.variants.map((option) => (
-					<FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.title} />
-				))}
-			</RadioGroup>
-		</ModalReadonlyXs>
-	);
-}
+import { VariantDialog } from './VariantModal';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({

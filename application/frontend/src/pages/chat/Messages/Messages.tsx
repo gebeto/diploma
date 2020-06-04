@@ -15,35 +15,7 @@ import WorkIcon from '@material-ui/icons/Work';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { MessageItemText } from './MessageItemText';
-import { MessageItemVariant } from './MessageItemVariant';
-
-const components = {
-	default: MessageItemText,
-	variant: MessageItemVariant,
-	text: MessageItemText,
-}
-
-const MessageItem = (props) => {
-	const MessageComponent = components[props.message.type] || components.default;
-
-	return (
-		<ListItem className={props.classes.marginTopABit}>
-			<ListItemAvatar>
-				<Avatar src={props.message.from.avatar} />
-			</ListItemAvatar>
-			<ListItemText>
-				<Typography variant="body1" component="div" className={props.classes.bold}>
-					{props.message.from.firstName} {props.message.from.lastName}
-				</Typography>
-				<MessageComponent message={props.message} />
-			</ListItemText>
-			<ListItemSecondaryAction>
-				<Typography variant="overline" color="textSecondary">{props.message.time}</Typography>
-			</ListItemSecondaryAction>
-		</ListItem>
-	);
-}
+import { MessageItem } from './MessageItem/'
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
