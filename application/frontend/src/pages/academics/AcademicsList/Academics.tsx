@@ -86,7 +86,7 @@ export const Academic = (props: AcademicProps) => {
 					<Avatar src={props.academic.avatar} />
 				</ListItemAvatar>
 				<ListItemText
-					primary={`${props.academic.firstName} ${props.academic.middleName} ${props.academic.lastName}`}
+					primary={`${props.academic.lastName} ${props.academic.firstName} ${props.academic.middleName}`}
 					secondary={
 						<React.Fragment>
 							<Typography component="span" variant="body2" color="textPrimary">{props.academic.email}</Typography>

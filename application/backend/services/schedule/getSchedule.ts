@@ -1,3 +1,8 @@
+import { academics } from '../academics/getAcademics';
+import { subjects } from './subjects';
+import { pavilions } from './pavilions';
+import { SubjectType } from './types';
+
 export const createDay = (id, date = "08/24/2019") => ({
 	id: id,
 	date: new Date(date),
@@ -5,37 +10,37 @@ export const createDay = (id, date = "08/24/2019") => ({
 		{
 			id: 1,
 			order: 1,
-			title: "Архітектура і проектування програмного забезпечення",
-			academic: "Фоменко А.В.",
-			pavilion: "XXIX",
-			type: "лекція",
+			subject: subjects[1],
+			academic: academics[0],
+			pavilion: pavilions[5],
+			type: SubjectType.lecture,
 			classroom: "303",
 		},
 		{
 			id: 2,
 			order: 2,
-			title: "Архітектура і проектування програмного забезпечення",
-			academic: "Фоменко А.В.",
-			pavilion: "XXIX",
-			type: "лекція",
+			subject: subjects[1],
+			academic: academics[0],
+			pavilion: pavilions[5],
+			type: SubjectType.practice,
 			classroom: "303",
 		},
 		{
 			id: 3,
 			order: 3,
-			title: "Менеджмент проектів з розробки програмного забезпечення",
-			academic: "Федорчук Є.Н.",
-			pavilion: "XXIX",
-			type: "лекція",
+			subject: subjects[2],
+			academic: academics[1],
+			pavilion: pavilions[5],
+			type: SubjectType.lecture,
 			classroom: "303",
 		},
 		{
 			id: 4,
 			order: 4,
-			title: "Менеджмент проектів з розробки програмного забезпечення",
-			academic: "Федорчук Є.Н.",
-			pavilion: "XXIX",
-			type: "лекція",
+			subject: subjects[2],
+			academic: academics[1],
+			pavilion: pavilions[5],
+			type: SubjectType.practice,
 			classroom: "303",
 		},
 	]

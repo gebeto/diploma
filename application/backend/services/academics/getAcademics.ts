@@ -34,7 +34,7 @@ export const createHumansFabric = () => {
 
 const createAcademics = createHumansFabric();
 
-const academics = createAcademics(10);
+export const academics = createAcademics(10);
 
 export const getAcademics = async () => {
 	return academics;

@@ -31,13 +31,13 @@ export const ScheduleSubject = (props: ScheduleSubjectProps) => {
 				<Avatar>{props.subject.order}</Avatar>
 			</ListItemAvatar>
 			<ListItemText
-				primary={props.subject.title}
+				primary={props.subject.subject.title}
 				secondary={
 					<React.Fragment>
-						<Typography component="span" variant="body2" color="textPrimary">{props.subject.academic}</Typography>
+						<Typography component="span" variant="body2" color="textPrimary">{props.subject.academic.lastName} {props.subject.academic.firstName[0]}.{props.subject.academic.middleName[0]}.</Typography>
 						{' '} {orderTimes[props.subject.order]}
 						<br />
-						{props.subject.type} | {props.subject.pavilion} н.к. | {props.subject.classroom}
+						{props.subject.type} | {props.subject.pavilion.title} н.к. | {props.subject.classroom}
 					</React.Fragment>
 				}
 			/>

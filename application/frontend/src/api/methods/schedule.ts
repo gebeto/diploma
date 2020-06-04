@@ -1,14 +1,24 @@
 import { API_POST, ResponseAll, ResponseOne } from "../utils";
+import { IAcademic } from './academics';
 
+export interface ISubject {
+	id: number;
+	title: string;
+}
+
+export interface IPavilion {
+	id: number;
+	title: string;
+}
 
 export interface IScheduleSubject {
 	id: number;
-	title: string;
-	order: number;
-	academic: string;
 	type: string;
-	pavilion: string;
+	order: number;
 	classroom: string;
+	subject: ISubject;
+	academic: IAcademic;
+	pavilion: IPavilion;
 }
 
 export interface IScheduleDay {

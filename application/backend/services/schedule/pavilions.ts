@@ -1,0 +1,17 @@
+export const pavilions = [
+	{ id: 1, title: "I", },
+	{ id: 2, title: "II", },
+	{ id: 3, title: "III", },
+	{ id: 4, title: "IV", },
+	{ id: 5, title: "V", },
+	{ id: 6, title: "VI", },
+	{ id: 7, title: "VII", },
+	{ id: 8, title: "VIII", },
+	{ id: 9, title: "IX", },
+	{ id: 10, title: "X", },
+	{ id: 11, title: "XI", },
+	{ id: 12, title: "XII", },
+	{ id: 13, title: "XIII", },
+	{ id: 14, title: "XIV", },
+	{ id: 15, title: "XV", },
+];
