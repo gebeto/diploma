@@ -41,7 +41,7 @@ export const MoreChatMenu = (props) => {
 			})
 		);
 		(handleAddVariantCloseModal as any)();
-	}, []);
+	}, [props.onMessageSend]);
 
 	return (
 		<React.Fragment>

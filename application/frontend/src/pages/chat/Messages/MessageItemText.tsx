@@ -12,7 +12,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 
 export const MessageItemText = (props: { message: any }) => {
-	console.log(props.message);
 	return (
 		<ListItem>
 			<ListItemAvatar>
