@@ -1,4 +1,5 @@
 import { getStudentById, students } from '../students/index';
+import { getVariantsById, createVariants } from './variants';
 
 export enum MessageType {
 	text = "text",
@@ -46,12 +47,12 @@ const createMessageText = (text) => {
 	}
 }
 
-const createMessagePoll = (title: string, variants: any[]) => {
+const createMessageVariants = (id: number, title: string) => {
 	return {
 		type: MessageType.variant,
 		data: {
+			id: id,
 			title: title,
-			variants: variants,
 		}
 	}
 }
@@ -88,9 +89,10 @@ export const addChatMessageText = async (chatType: string, chatId: number, userI
 	return newMessage;
 }
 
-export const addChatMessagePoll = async (chatType: string, chatId: number, userId: number, title: string, variants: any[]) => {
+export const addChatMessageVariants = async (chatType: string, chatId: number, userId: number, title: string, variants: any[]) => {
 	const user = await getStudentById(userId);
-	const newMessage = createMessage(user, createMessagePoll(title, variants));
+	const newVariants = await createVariants(title, variants);
+	const newMessage = createMessage(user, createMessageVariants(newVariants.id, newVariants.title));
 	await addChatMessage(chatType, chatId, newMessage);
 	return newMessage;
 }

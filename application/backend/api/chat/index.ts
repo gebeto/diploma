@@ -1,7 +1,7 @@
 import * as Router from 'koa-router';
 
 // import { getChats, getSubjectsChats, getStudentsChats, getChatMessages, addChatMessageText } from '../../services/chat/index';
-import { getChatInfo, getChatMessages, addChatMessageText, addChatMessagePoll } from '../../services/chat/index';
+import { getChatInfo, getChatMessages, addChatMessageText, addChatMessageVariants, getVariantsById, getVariants } from '../../services/chat/index';
 import { getSubjects } from '../../services/schedule/subjects';
 import { getStudents } from '../../services/students/index';
 
@@ -65,15 +65,28 @@ studentsRouter.post('/addChatMessageVariants', async (ctx, next) => {
 
 	const [ full, chatType, chatId ] = /([\w\W]+?)-(\d+)/.exec(chatTypeWithId);
 
-	// if (chatType && chatId && chatType === "subject") {
 	if (chatType && chatId) {
 		ctx.body = {
 			success: true,
-			item: await addChatMessagePoll(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.title, ctx.request.body.variants),
+			item: await addChatMessageVariants(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.title, ctx.request.body.variants),
 		};
 	} else {
 		return;
 	}
+
+	await next();
+});
+
+
+studentsRouter.post('/getVariants', async (ctx, next) => {
+	const variantsId = ctx.request.body.variantsId;
+	if (!variantsId) return;
+	const variants = await getVariantsById(variantsId);
+	if (!variants) return;
+
+	ctx.body = {
+		item: variants,
+	};
 
 	await next();
 });

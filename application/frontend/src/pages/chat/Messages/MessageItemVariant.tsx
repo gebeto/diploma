@@ -13,6 +13,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import Checkbox from '@material-ui/core/Checkbox';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -28,6 +30,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 
 import { ModalReadonlyXs } from '../../../components/Modal/';
+import { chatGetVariants } from '../../../api/';
+import { makeApiRequest } from '../../../api/utils';
 
 const options = [
 	'None',
@@ -48,49 +52,38 @@ const options = [
 
 export interface VariantDialogProps {
 	id: string;
-	value: string;
 	title: string;
+	variantsId: number;
 	open: boolean;
-	onClose: (value?: string) => void;
+	onClose: () => void;
 }
 
+const useVariantsApiRequest = makeApiRequest(async (variantsId: number) => {
+	const response = await chatGetVariants({ variantsId });
+	return response.item;
+});
 
 function VariantDialog(props: VariantDialogProps) {
-	const { onClose, value: valueProp, open, ...other } = props;
-	const [value, setValue] = React.useState(valueProp);
+	const [ value, setValue ] = React.useState(null);
 	const radioGroupRef = React.useRef<HTMLElement>(null);
 
-	React.useEffect(() => {
-		if (!open) {
-			setValue(valueProp);
-		}
-	}, [valueProp, open]);
-
-	const handleEntering = React.useCallback(() => {
-		if (radioGroupRef.current != null) {
-			radioGroupRef.current.focus();
-		}
-	}, [radioGroupRef]);
+	const variants = useVariantsApiRequest(props.variantsId);
 
 	const handleCancel = React.useCallback(() => {
-		onClose();
+		props.onClose();
 	}, [value]);
 
-	const handleOk = React.useCallback(() => {
-		onClose(value);
-	}, [value]);
-
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = (event.target as HTMLInputElement).value;
-		setValue(value);
+		setValue(Number(value));
 		console.log(value);
-	};
+	}, []);
 
 	return (
 		<ModalReadonlyXs
 			dividers
 			title={props.title}
-			isOpened={open}
+			isOpened={props.open}
 			handleClose={handleCancel}
 		>
 			<RadioGroup
@@ -100,44 +93,11 @@ function VariantDialog(props: VariantDialogProps) {
 				value={value}
 				onChange={handleChange}
 			>
-				{options.map((option) => (
-					<FormControlLabel value={option} key={option} control={<Radio />} label={option} />
+				{variants.state.isFetching ? <Grid container justify="center"><CircularProgress /></Grid> : variants.state.response.variants.map((option) => (
+					<FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.title} />
 				))}
 			</RadioGroup>
 		</ModalReadonlyXs>
-	);
-
-	return (
-		<Dialog
-			disableBackdropClick
-			disableEscapeKeyDown
-			maxWidth="xs"
-			onEntering={handleEntering}
-			aria-labelledby="confirmation-dialog-title"
-			open={open}
-			fullWidth
-			{...other}
-		>
-			<DialogTitle id="confirmation-dialog-title">{props.title}</DialogTitle>
-			<DialogContent dividers>
-				<RadioGroup
-					ref={radioGroupRef}
-					aria-label="ringtone"
-					name="ringtone"
-					value={value}
-					onChange={handleChange}
-				>
-					{options.map((option) => (
-						<FormControlLabel value={option} key={option} control={<Radio />} label={option} />
-					))}
-				</RadioGroup>
-			</DialogContent>
-			<DialogActions>
-				<Button autoFocus onClick={handleCancel} color="primary">
-					Закрити
-				</Button>
-			</DialogActions>
-		</Dialog>
 	);
 }
 
@@ -169,19 +129,14 @@ const useStyles = makeStyles((theme: Theme) =>
 export const MessageItemVariant = (props) => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
-	const [value, setValue] = React.useState('Dione');
 
-	const handleClickListItem = () => {
+	const handleOpenModal = React.useCallback(() => {
 		setOpen(true);
-	};
+	}, []);
 
-	const handleClose = (newValue?: string) => {
+	const handleCloseModal = React.useCallback(() => {
 		setOpen(false);
-
-		if (newValue) {
-			setValue(newValue);
-		}
-	};
+	}, []);
 
 	return (
 		<React.Fragment>
@@ -196,17 +151,17 @@ export const MessageItemVariant = (props) => {
 						</Typography>
 					</CardContent>
 					<CardActions>
-						<Button size="small" color="primary" onClick={handleClickListItem}>Обрати варіант</Button>
+						<Button size="small" color="primary" onClick={handleOpenModal}>Обрати варіант</Button>
 					</CardActions>
 				</Card>
 			</Typography>
-			<VariantDialog
+			{open && <VariantDialog
 				id="ringtone-menu"
 				open={open}
-				onClose={handleClose}
-				value={value}
+				onClose={handleCloseModal}
 				title={props.message.data.title}
-			/>
+				variantsId={props.message.data.id}
+			/>}
 		</React.Fragment>
 	);
 }
