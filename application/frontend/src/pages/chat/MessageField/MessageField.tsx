@@ -58,10 +58,10 @@ export const MessageField = (props) => {
 		if (message.length) {
 			setMessage('');
 			props.onMessageSend(
-				chatAddMessage({ chatId: props.chatId, userId: props.user.id, text: message })
+				chatAddMessage({ chatId: props.chatId, text: message })
 			);
 		}
-	}, [message]);
+	}, [message, props.onMessageSend]);
 
 	return (
 		<React.Fragment>

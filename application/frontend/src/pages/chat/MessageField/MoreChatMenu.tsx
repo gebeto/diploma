@@ -35,7 +35,7 @@ export const MoreChatMenu = (props) => {
 		props.onMessageSend(
 			chatAddMessageVariants({
 				chatId: props.chatId,
-				userId: props.user.id,
+				// userId: props.user.id,
 				title: values.title,
 				variants: values.variants
 			})

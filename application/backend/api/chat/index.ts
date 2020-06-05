@@ -50,7 +50,8 @@ studentsRouter.post('/addChatMessage', async (ctx, next) => {
 	if (chatType && chatId) {
 		ctx.body = {
 			success: true,
-			item: await addChatMessageText(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.text),
+			// item: await addChatMessageText(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.text),
+			item: await addChatMessageText(chatType, Number(chatId), ctx.state.user.id, ctx.request.body.text),
 		};
 	} else {
 		return;
@@ -68,7 +69,8 @@ studentsRouter.post('/addChatMessageVariants', async (ctx, next) => {
 	if (chatType && chatId) {
 		ctx.body = {
 			success: true,
-			item: await addChatMessageVariants(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.title, ctx.request.body.variants),
+			// item: await addChatMessageVariants(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.title, ctx.request.body.variants),
+			item: await addChatMessageVariants(chatType, Number(chatId), ctx.state.user.id, ctx.request.body.title, ctx.request.body.variants),
 		};
 	} else {
 		return;
@@ -94,7 +96,8 @@ studentsRouter.post('/getVariants', async (ctx, next) => {
 
 studentsRouter.post('/markVariantsVariant', async (ctx, next) => {
 	const b = ctx.request.body;
-	const userId = b.userId;
+	// const userId = b.userId;
+	const userId = ctx.state.user.id;
 	const variantsId = b.variantsId;
 	const variantId = b.variantId;
 	if (!userId || !variantsId || !variantId) return;

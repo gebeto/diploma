@@ -54,8 +54,8 @@ const useVariantsApiRequest = makeApiRequest(async (variantsId: number) => {
 	return response.item;
 });
 
-const useVariantsSelectingApiRequest = makeBasicApiRequest(async (userId: number, variantsId: number, variantId: number) => {
-	const response = await chatVariantMark({ userId, variantsId, variantId });
+const useVariantsSelectingApiRequest = makeBasicApiRequest(async (variantsId: number, variantId: number) => {
+	const response = await chatVariantMark({ variantsId, variantId });
 	return response.item;
 });
 
@@ -70,7 +70,7 @@ export const VariantDialogRaw = (props: VariantDialogProps) => {
 	const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = Number((event.target as HTMLInputElement).value);
 		setValue(Number(value));
-		variantsSelecting.fetch(props.user.id, variants.state.response.id, value).then(res => {
+		variantsSelecting.fetch(variants.state.response.id, value).then(res => {
 			variants.setResponse(res);
 		});
 	}, [props.variantsId, variants.state]);

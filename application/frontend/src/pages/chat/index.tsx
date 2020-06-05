@@ -25,7 +25,7 @@ const ChatRaw = (props) => {
 
 	const handleMesssageSend = React.useCallback(async (sendingMessage) => {
 		const res = await sendingMessage;
-		console.log(messages.state);
+		console.log('STAT', messages.state);
 		messages.setResponse({
 			...messages.state.response,
 			messages: [
