@@ -1,1 +1,1 @@
-export { getAcademics } from './academics';
+export * from './academics';

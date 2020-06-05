@@ -8,6 +8,9 @@ import { Form, withForm, withFormModal } from '../../../../components/Form/';
 
 import { AcademicForm } from './Form';
 
+import { academicsUpdate } from '../../../../api/';
+import { updateAcademic } from '../../slice';
+
 
 interface AcademicEditModalProps {
 	academic: any;
@@ -33,7 +36,7 @@ const AcademicEditModalForm = withFormModal<AcademicEditModalProps>(
 		},
 
 		onAsyncSubmit(values) {
-			return new Promise(res => res({ success: true, item: "HELLO" }));
+			return academicsUpdate(values);
 		},
 
 		onSuccess(props, data) {
@@ -45,9 +48,5 @@ const AcademicEditModalForm = withFormModal<AcademicEditModalProps>(
 
 export const AcademicEditModal = connect(
 	undefined,
-	{
-		updateAcademic: academic => dispatch => {
-			return academic;
-		}
-	}
+	{ updateAcademic }
 )(AcademicEditModalForm);

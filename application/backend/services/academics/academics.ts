@@ -25,22 +25,25 @@ const defaultModify = (h: IHuman) => h;
 export const createHumansFabric = <T extends IHuman>(modify = defaultModify) => {
 	const createHuman = (() => {
 		let id = 0;
-		return () => {
-			const firstName = randomElement(first);
-			return modify({
-				id: ++id,
+		return (override?: any) => {
+			const firstName = override && override.firstName || randomElement(first);
+			const newId = ++id
+			return override ? { id: newId, avatar: getAvatarUrl(override.firstName, newId), ...override } : modify({
+				id: newId,
 				firstName: firstName,
 				middleName: randomElement(middle),
 				lastName: randomElement(last),
 				phone: randomElement(phone),
 				email: randomElement(email),
-				avatar: firstName[firstName.length - 1] === 'а' ? `https://randomuser.me/api/portraits/women/${id}.jpg` : `https://randomuser.me/api/portraits/men/${id}.jpg`,
+				avatar: getAvatarUrl(firstName, id),
 			}) as T;
 		};
 	})();
 	const createHumans = (count) => {
 		return (new Array(count).fill(1)).map(() => createHuman());
 	}
+
+	createHumans.one = createHuman as any;
 
 	return createHumans;
 }
@@ -55,4 +58,22 @@ export const getAcademics = async () => {
 
 export const getAcademicById = async (id) => {
 	return academics.find(academic => academic.id === id);
+}
+
+export const addAcademic = (academic) => {
+	const newAcademic = createAcademics.one(academic);
+	academics.push(newAcademic);
+	return newAcademic;
+}
+
+export const updateAcademic = (academic) => {
+	const oldAcademic = academics.find(a => a.id === academic.id);
+	if (oldAcademic) {
+		oldAcademic.firstName = academic.firstName;
+		oldAcademic.middleName = academic.middleName;
+		oldAcademic.lastName = academic.lastName;
+		oldAcademic.phone = academic.phone;
+		oldAcademic.email = academic.email;
+	}
+	return oldAcademic;
 }

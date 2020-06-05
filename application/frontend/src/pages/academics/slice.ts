@@ -1,6 +1,6 @@
 import { batch } from 'react-redux';
 import { createCRUDSlice } from '../../store/createCRUDSlice';
-import { academicsGet } from '../../api/';
+import { academicsGet, academicsAdd } from '../../api/';
 
 export const academicsSlice = createCRUDSlice('academics');
 
@@ -15,4 +15,12 @@ export const loadAcademics = () => (dispatch) => {
 		console.error(err);
 		dispatch(academicsSlice.actions.fetchingError());
 	});
+}
+
+export const addAcademic = (academic) => (dispatch) => {
+	dispatch(academicsSlice.actions.added(academic));
+}
+
+export const updateAcademic = (academic) => (dispatch) => {
+	dispatch(academicsSlice.actions.updated(academic));
 }

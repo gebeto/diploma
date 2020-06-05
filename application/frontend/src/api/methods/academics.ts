@@ -1,4 +1,4 @@
-import { API_POST, ResponseAll } from "../utils";
+import { API_POST, ResponseAll, ResponseOne } from "../utils";
 
 
 export interface IAcademic {
@@ -12,3 +12,5 @@ export interface IAcademic {
 }
 
 export const academicsGet = (data: {}) => API_POST<ResponseAll<IAcademic>>(`/academics/get`, data);
+export const academicsAdd = (data: any) => API_POST<ResponseOne<IAcademic>>(`/academics/add`, data);
+export const academicsUpdate = (data: any) => API_POST<ResponseOne<IAcademic>>(`/academics/update`, data);
