@@ -17,14 +17,14 @@ app.use(json());
 app.use(bodyParser());
 
 // Configure JWT
-// app.use(
-// 	jwt({
-// 		secret: SECRET_KEY,
-// 	})
-// 	.unless({
-// 		path: [/^\/auth/, "/"]
-// 	})
-// );
+app.use(
+	jwt({
+		secret: SECRET_KEY,
+	})
+	.unless({
+		path: [/^\/auth/, "/"]
+	})
+);
 
 app.use(async (ctx, next) => {
 	try {

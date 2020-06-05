@@ -9,12 +9,23 @@ export function randomElement(arr) {
 	return arr[index];
 }
 
-export const createHumansFabric = () => {
+export interface IHuman {
+	id: number;
+	firstName: string;
+	middleName: string;
+	lastName: string;
+	phone: string;
+	email: string;
+	avatar: string;
+}
+
+const defaultModify = (h: IHuman) => h;
+export const createHumansFabric = <T extends IHuman>(modify = defaultModify) => {
 	const createHuman = (() => {
 		let id = 0;
 		return () => {
 			const firstName = randomElement(first);
-			return {
+			return modify({
 				id: ++id,
 				firstName: firstName,
 				middleName: randomElement(middle),
@@ -22,7 +33,7 @@ export const createHumansFabric = () => {
 				phone: randomElement(phone),
 				email: randomElement(email),
 				avatar: firstName[firstName.length - 1] === 'а' ? `https://randomuser.me/api/portraits/women/${id}.jpg` : `https://randomuser.me/api/portraits/men/${id}.jpg`,
-			}
+			}) as T;
 		};
 	})();
 	const createHumans = (count) => {

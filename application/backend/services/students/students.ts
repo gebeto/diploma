@@ -1,8 +1,23 @@
-import { createHumansFabric } from '../academics/academics';
+import { createHumansFabric, IHuman } from '../academics/academics';
 
-const createStudents = createHumansFabric();
+interface IStudent extends IHuman {
+	password: string;
+}
 
-export const students = createStudents(20);
+const createStudents = createHumansFabric<IStudent>((s) => ({ ...s, password: 'test' }));
+
+export const students = [
+	...createStudents(20),
+	{
+		id: 100,
+		firstName: "Ярослав",
+		middleName: "Володимирович",
+		lastName: "Ничкало",
+		phone: "0970067238",
+		email: "yaroslav.nychkalo@gmail.com",
+		password: "test",
+	} as IStudent
+];
 
 export const getStudents = async () => {
 	return students;

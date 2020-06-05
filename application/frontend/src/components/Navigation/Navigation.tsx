@@ -30,6 +30,7 @@ import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/sty
 
 import { NavLink } from "react-router-dom";
 import { ChatsLink } from '../../pages/chat/ChatsLink/';
+import { ApiClient } from '../../api/utils/ApiClient';
 
 const drawerWidth = 240;
 
@@ -165,6 +166,12 @@ export function Navigation(props: NavigationProps) {
 	};
 
 	const menuId = 'primary-search-account-menu';
+	const handleLogout = React.useCallback(() => {
+		handleMenuClose();
+		ApiClient.getInstance().logout().then(r => {
+			window.location.reload();
+		});
+	}, []);
 	const renderMenu = (
 		<Menu
 			anchorEl={anchorEl}
@@ -176,7 +183,7 @@ export function Navigation(props: NavigationProps) {
 			onClose={handleMenuClose}
 		>
 			{/*<MenuItem onClick={handleMenuClose} component={NavLink} to="/profile" exact>Профіль</MenuItem>*/}
-			<MenuItem onClick={handleMenuClose}>Вихід</MenuItem>
+			<MenuItem onClick={handleLogout}>Вихід</MenuItem>
 		</Menu>
 	);
 

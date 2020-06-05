@@ -16,6 +16,7 @@ import {
 
 import { store } from './store/';
 import { Navigation, NavigationConnected } from './components/Navigation/';
+import { Auth } from './components/Auth/';
 
 import Dashboard from './pages/dashboard/';
 import Chat from './pages/chat/';
@@ -49,9 +50,11 @@ const App = (props) => {
 ReactDOM.render(
 	(
 		<Provider store={store}>
-			<HashRouter>
-				<App />
-			</HashRouter>
+			<Auth>
+				<HashRouter>
+					<App />
+				</HashRouter>
+			</Auth>
 		</Provider>
 	),
 	document.getElementById('root')
