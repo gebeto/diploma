@@ -9,5 +9,4 @@ COPY yarn.lock ./
 RUN yarn
 COPY . .
 
-RUN mkdir /frontend/dist
 RUN yarn build

@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../../config';
 
 // import { sequelize, Student } from '../../database/';
-import { bcryptHash, bcryptCompare } from './bcrypt';
+import { bcryptHash, bcryptCompare } from './crypt';
 import { getStudents, getStudentByEmailAndPassword } from '../students/index';
 
 
