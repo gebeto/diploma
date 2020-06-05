@@ -37,7 +37,12 @@ export const useInput = () => {
 const useAuthApiRequest = makeBasicApiRequest(async (email: string, password: string) => {
 	const login = await ApiClient.getInstance().login(email, password);
 	return login;
-})
+});
+
+const authError = {
+	error: true,
+	helperText: "Невірний пароль або такого акаунту не існує!"
+}
 
 export const AuthRaw = (props) => {
 	const isAuth = ApiClient.getInstance().isAuthorized();
@@ -51,7 +56,7 @@ export const AuthRaw = (props) => {
 		auth.fetch(login, password).then(res => {
 			props.userReceived(res.user);
 		});
-	}, [login, password])
+	}, [login, password]);
 
 	const classes = useStyles();
 
@@ -63,7 +68,16 @@ export const AuthRaw = (props) => {
 						<Typography variant="h1" component="h1" align="center">Вхід</Typography>
 					</Grid>
 					<Grid item xs={12}>
-						<TextField value={login} onChange={handleLoginChange} fullWidth label="Логін" variant="outlined" type="text" name="email" />
+						<TextField 
+							value={login}
+							onChange={handleLoginChange}
+							fullWidth
+							label="Логін"
+							variant="outlined"
+							type="text"
+							name="email"
+							{...(auth.state.isFetchingError ? authError : null)}
+						/>
 					</Grid>
 					<Grid item xs={12}>
 						<TextField value={password} onChange={handlePasswordChange} fullWidth label="Пароль" variant="outlined" type="password" name="password" />

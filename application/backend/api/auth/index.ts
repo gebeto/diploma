@@ -9,6 +9,7 @@ const authRouter = new Router({ prefix: "/auth" });
 
 authRouter.post('/login', async (ctx, next) => {
 	const student = await getStudentByEmailAndPassword(ctx.request.body.email, ctx.request.body.password);
+	if (!student) return;
 	// const token = await generateTokenForStudent(ctx.request.body.email, ctx.request.body.password);
 	const token = await generateTokenForStudent(student);
 

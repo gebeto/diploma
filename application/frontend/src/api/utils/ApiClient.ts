@@ -43,7 +43,8 @@ export class ApiClient {
 			localStorage.setItem("token", this.token);
 			return response;
 		} catch(err) {
-			console.log("ERRR", err);
+			console.error("FETCH ERROR", err);
+			throw err;
 		}
 		return null;
 	}
