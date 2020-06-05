@@ -9,6 +9,8 @@ export function randomElement(arr) {
 	return arr[index];
 }
 
+export const getAvatarUrl = (firstName, id) => firstName[firstName.length - 1] === 'а' ? `https://randomuser.me/api/portraits/women/${id}.jpg` : `https://randomuser.me/api/portraits/men/${id}.jpg`
+
 export interface IHuman {
 	id: number;
 	firstName: string;

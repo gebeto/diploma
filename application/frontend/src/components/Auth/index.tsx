@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 
 import { ApiClient } from '../../api/utils/ApiClient';
 import { makeBasicApiRequest } from '../../api/utils/';
+import { userSlice } from '../../store/slice-user';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -35,7 +36,7 @@ export const useInput = () => {
 
 const useAuthApiRequest = makeBasicApiRequest(async (email: string, password: string) => {
 	const login = await ApiClient.getInstance().login(email, password);
-	return login.token;
+	return login;
 })
 
 export const AuthRaw = (props) => {
@@ -47,7 +48,10 @@ export const AuthRaw = (props) => {
 	const [ password, handlePasswordChange ] = useInput();
 
 	const handleLogin = React.useCallback(() => {
-		auth.fetch(login, password).then(console.log);
+		auth.fetch(login, password).then(res => {
+			console.log('REX', res);
+			props.userReceived(res.user);
+		});
 	}, [login, password])
 
 	const classes = useStyles();
@@ -78,6 +82,7 @@ export const AuthRaw = (props) => {
 export const Auth = connect(
 	(state) => ({
 		user: state.user,
-	})
+	}),
+	{ userReceived: userSlice.actions.userReceived }
 )(AuthRaw)
 

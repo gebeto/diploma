@@ -60,7 +60,7 @@ export interface StudentProps {
 
 export const Student = (props: StudentProps) => {
 	return (
-		<ListItem alignItems="flex-start" button>
+		<ListItem alignItems="flex-start">
 			<ListItemAvatar>
 				<Avatar src={props.student.avatar} />
 			</ListItemAvatar>

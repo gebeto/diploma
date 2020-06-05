@@ -215,7 +215,7 @@ export function Navigation(props: NavigationProps) {
 						color="inherit"
 					>
 						{/*<AccountCircle />*/}
-						<Avatar alt="Avatar" src="https://material-ui.com/static/images/avatar/1.jpg" />
+						<Avatar alt="Avatar" src={props.user.avatar} />
 					</IconButton>
 				</Toolbar>
 			</AppBar>

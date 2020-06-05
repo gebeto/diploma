@@ -42,7 +42,7 @@ export class ApiClient {
 			this.token = response.token;
 			localStorage.setItem("token", this.token);
 			console.log('RESSS', response);
-			return response.token
+			return response;
 		} catch(err) {
 			console.log("ERRR", err);
 		}

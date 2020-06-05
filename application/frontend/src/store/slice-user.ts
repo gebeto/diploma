@@ -8,10 +8,11 @@ export const userSlice = createSlice({
 		firstName: 'Ярослав',
 		middleName: 'Володимирович',
 		lastName: 'Ничкало',
-		token: 'TOKEN',
+		avatar: '',
+		phone: '',
+		email: '',
 	},
 	reducers: {
-		tokenReceived: (state, payload: any) => ({ ...state, token: payload }),
-		tokenRemoved: (state, payload: any) => ({ ...state, token: null }),
+		userReceived: (state, action) => ({ ...state, ...action.payload }),
 	}
 })
