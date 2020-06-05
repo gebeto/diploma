@@ -1,17 +1,22 @@
-import { getChats, addChat } from './chats';
+import { getChatInfo } from './chats';
 
 
-test("One chat by default", async () => {
-	const chats = await getChats();
-	expect(chats.length).toBe(1);
+test("Chat info for group", async () => {
+	const info = await getChatInfo("group", 1);
+	expect(info.title).toBe("Загальний");
 });
 
-test("addChat returns chat object", async () => {
-	const newChat = await addChat("Test");
-	expect(newChat.title).toBe("Test");
+test("Chat info for student", async () => {
+	const info = await getChatInfo("student", 1);
+	expect(info).not.toBe(null);
 });
 
-test("Two chats after adding new chat", async () => {
-	const chats = await getChats();
-	expect(chats.length).toBe(2);
+test("Chat info for subject", async () => {
+	const info = await getChatInfo("subject", 1);
+	expect(info.title).toBe("Основи програмування");
+});
+
+test("Chat info for unknown type", async () => {
+	const info = await getChatInfo("any", 1);
+	expect(info).toBe(undefined);
 });

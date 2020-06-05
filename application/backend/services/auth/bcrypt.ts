@@ -1,8 +1,10 @@
-import * as bcrypt from 'bcrypt';
+// import * as bcrypt from 'bcrypt';
+import Bcrypt from 'bcrypt';
 
+Bcrypt.hash()
 
 export const bcryptHash = (text): Promise<string> => new Promise((resolve, reject) => {
-	bcrypt.hash(text, 5, (err, result) => {
+	Bcrypt.hash(text, 5, (err, result) => {
 		if (err) reject(err);
 		resolve(result);
 	})
@@ -10,7 +12,7 @@ export const bcryptHash = (text): Promise<string> => new Promise((resolve, rejec
 
 
 export const bcryptCompare = (text, hash): Promise<boolean> => new Promise((resolve, reject) => {
-	bcrypt.compare(text, hash, (err, result) => {
+	Bcrypt.compare(text, hash, (err, result) => {
 		if (err) reject(err);
 		resolve(result);
 	})
