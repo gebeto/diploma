@@ -49,7 +49,6 @@ export const AuthRaw = (props) => {
 
 	const handleLogin = React.useCallback(() => {
 		auth.fetch(login, password).then(res => {
-			console.log('REX', res);
 			props.userReceived(res.user);
 		});
 	}, [login, password])

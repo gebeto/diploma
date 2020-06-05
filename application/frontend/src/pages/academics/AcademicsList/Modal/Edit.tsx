@@ -47,7 +47,6 @@ export const AcademicEditModal = connect(
 	undefined,
 	{
 		updateAcademic: academic => dispatch => {
-			console.log("UPDATE", academic);
 			return academic;
 		}
 	}

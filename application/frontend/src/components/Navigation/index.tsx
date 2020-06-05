@@ -5,7 +5,6 @@ export { Navigation }
 
 export const NavigationConnected = connect(
 	state => {
-		console.log(state);
 		return {
 			user: state.user,
 		}

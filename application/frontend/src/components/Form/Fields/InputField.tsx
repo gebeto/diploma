@@ -7,19 +7,6 @@ import TextField from '@material-ui/core/TextField';
 // import * as sss from '@material-ui/core/styles';
 import { InputAddonPrepend } from './addons';
 
-// console.log('STYLES', sss);
-
-// const useStyles = makeStyles({
-// 	root: {
-// 		fontSize: '0.8rem',
-// 	},
-// });
-
-// const useStylesLabel = makeStyles({
-// 	root: {
-// 		fontSize: '0.8rem',
-// 	},
-// });
 
 export const InputField = ({
 	name, title, values, errors,

@@ -2,7 +2,6 @@ import * as React from 'react';
 import axios from 'axios';
 
 import { ApiClient } from './ApiClient';
-console.log(ApiClient);
 
 export * from './useApiRequest';
 

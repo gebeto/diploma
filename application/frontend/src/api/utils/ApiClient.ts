@@ -41,7 +41,6 @@ export class ApiClient {
 			const response = await this.POST<any>("/auth/login", { email, password });
 			this.token = response.token;
 			localStorage.setItem("token", this.token);
-			console.log('RESSS', response);
 			return response;
 		} catch(err) {
 			console.log("ERRR", err);

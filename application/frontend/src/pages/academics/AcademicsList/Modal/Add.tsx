@@ -47,7 +47,6 @@ export const AcademicAddModal = connect(
 	undefined,
 	{
 		addAcademic: academic => dispatch => {
-			console.log("ADD", academic);
 			return academic;
 		}
 	}
