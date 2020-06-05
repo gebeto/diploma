@@ -1,5 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const getUser = () => {
+	const us = localStorage.getItem("user");
+	if (us) {
+		return JSON.parse(us);
+	}
+	return null;
+}
+
+const saveUser = (user) => {
+	localStorage.setItem("user", JSON.stringify(user));
+	return user;
+}
 
 export const userSlice = createSlice({
 	name: 'user',
@@ -11,8 +23,9 @@ export const userSlice = createSlice({
 		avatar: '',
 		phone: '',
 		email: '',
+		...getUser(),
 	},
 	reducers: {
-		userReceived: (state, action) => ({ ...state, ...action.payload }),
+		userReceived: (state, action) => saveUser({ ...state, ...action.payload }),
 	}
 })
