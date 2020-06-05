@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const ScheduleRaw = (props) => {
+export const ScheduleRaw = (props) => {
 	const classes = useStyles();
 
 	React.useEffect(() => {
@@ -44,7 +44,7 @@ const ScheduleRaw = (props) => {
 };
 
 
-const Schedule = connect(
+export const Schedule = connect(
 	undefined,
 	{ loadSchedule, reset: scheduleSlice.actions.reset }
 )(ScheduleRaw);

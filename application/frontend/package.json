@@ -8,6 +8,9 @@
     "watch": "yarn dev -- --watch",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:api": "jest --testPathPattern=src/api",
+    "test:components": "jest --testPathPattern=src/components",
+    "test:pages": "jest --testPathPattern=src/pages",
     "build": "webpack --env.type production"
   },
   "keywords": [],

@@ -3,12 +3,13 @@ import * as ReactDOM from 'react-dom';
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-import { ChatsLink, ChatLink } from './ChatsLink';
+import { ChatsLink } from './ChatsLink';
+import { ChatLink } from './ChatLink';
 
 test("ChatLink is rendering without errors", () => {
 	const chatLink = render(
 		<MemoryRouter>
-			<ChatLink chatId={111} title="ChatLinkTitle" />
+			<ChatLink chatId="group-111" title="ChatLinkTitle" />
 		</MemoryRouter>
 	);
 	expect(chatLink.getByText("ChatLinkTitle")).toBeInTheDocument();

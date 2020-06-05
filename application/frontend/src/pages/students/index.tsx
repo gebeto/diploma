@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { StudentsList } from './StudentsList';
 import { loadStudents, studentsSlice } from './slice';
 
-const StudentsRaw = (props) => {
+export const StudentsRaw = (props) => {
 	React.useEffect(() => {
 		props.loadStudents({});
 		// return () => {
@@ -20,7 +20,7 @@ const StudentsRaw = (props) => {
 	);
 };
 
-const Students = connect(
+export const Students = connect(
 	undefined,
 	{ loadStudents, reset: studentsSlice.actions.reset }
 )(StudentsRaw);

@@ -56,6 +56,8 @@ export const withForm = <P extends any>({
 		isSubmitting: false,
 	});
 
+	const CC = Component as any;
+
 	class WithForm extends React.Component<P, withFormState> {
 		static displayName = `withForm(${Component.name || Component.displayName})`;
 
@@ -159,7 +161,7 @@ export const withForm = <P extends any>({
 
 		render() {
 			return (
-				<Component
+				<CC
 					{...this.props as P}
 					// {...this.state}
 					disabled={disabled}
@@ -188,16 +190,18 @@ export const withForm = <P extends any>({
 export const withFormModal = <P extends any>(Modal: any, title: any, options: withFormInterface<P>) => <T extends Partial<withFormHocProps> & Partial<P>>(FormComponent: React.ComponentType<T>) => {
 	const titleIsFunction = typeof title === "function";
 
+	const FCC = FormComponent as any;
+
 	return withForm(options)((props) => (
 		<Modal
 			title={titleIsFunction ? title(props) : title}
-			isOpened={props.isOpened}
-			handleClose={props.handleClose}
+			isOpened={(props as any).isOpened}
+			handleClose={(props as any).handleClose}
 			handleExited={props.reset}
 			onSubmit={props.onSubmit}
 			isLoading={props.isSubmitting}
 		>
-			<FormComponent {...props} />
+			<FCC {...props} />
 		</Modal>
 	));
 };

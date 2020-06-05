@@ -28,5 +28,4 @@ export interface IScheduleDay {
 }
 
 export const scheduleGet = (data: {}) => API_POST<ResponseAll<IScheduleDay>>(`/schedule/get`, data);
-
 export const scheduleGetNextDay = (data: {}) => API_POST<ResponseOne<IScheduleDay>>(`/schedule/getNextDay`, data);

@@ -19,7 +19,7 @@ const useMessagesGetRequest = makeApiRequest(async (chatId) => {
 });
 
 
-const ChatRaw = (props) => {
+export const ChatRaw = (props) => {
 	const chatId = props.match.params.chatId;
 	const messages = useMessagesGetRequest(chatId);
 
@@ -54,7 +54,7 @@ const ChatRaw = (props) => {
 	);
 };
 
-const Chat = connect(
+export const Chat = connect(
 	state => ({
 		user: state.user,
 	})

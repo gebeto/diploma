@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './styles.scss';
+// import './styles.scss';
 
 
 export const defaultShouldRefresh = (oldProps, props) => false;

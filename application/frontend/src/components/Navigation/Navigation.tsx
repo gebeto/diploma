@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const ListItemNavLink = (Props) => (
+export const ListItemNavLink = (Props) => (
 	<ListItem
 		button
 		onClick={Props.onClick}
@@ -111,14 +111,16 @@ const ListItemNavLink = (Props) => (
 );
 
 export interface NavigationProps {
+	children?: any;
 	user: {
 		firstName: string;
 		middleName: string;
 		lastName: string;
+		avatar: string;
 	}
 }
 
-export function Navigation(props: NavigationProps) {
+export const Navigation = (props: NavigationProps) => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

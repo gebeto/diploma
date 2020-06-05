@@ -6,7 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import { ScheduleNextDay } from './ScheduleNextDay'
 
 
-const Dashboard = (props) => {
+export const Dashboard = (props) => {
 	return (
 		<React.Fragment>
 			<Typography variant="h4" gutterBottom>

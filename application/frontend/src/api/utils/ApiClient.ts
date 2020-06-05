@@ -2,7 +2,9 @@ import * as React from 'react';
 import axios from 'axios';
 
 
-export const API_PREFIX = "/api";
+export const API = {
+	PREFIX: "/api",
+};
 
 export const API_AS_JSON = res => {
 	if (res.status >= 500) {
@@ -43,7 +45,7 @@ export class ApiClient {
 			localStorage.setItem("token", this.token);
 			return response;
 		} catch(err) {
-			console.error("FETCH ERROR", err);
+			// console.error("FETCH ERROR", err);
 			throw err;
 		}
 		return null;
@@ -55,7 +57,7 @@ export class ApiClient {
 	}
 
 	public async POST<T>(url, data) {
-		return axios.post(API_PREFIX + url, data, {
+		return axios.post(API.PREFIX + url, data, {
 			headers: {
 				"Authorization": `Bearer ${this.token}`,
 			}
@@ -63,7 +65,7 @@ export class ApiClient {
 	}
 
 	public async GET<T>(url) {
-		return axios.get(API_PREFIX + url, {
+		return axios.get(API.PREFIX + url, {
 			headers: {
 				"Authorization": `Bearer ${this.token}`,
 			}

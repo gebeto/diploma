@@ -6,7 +6,7 @@ import { AcademicsList } from './AcademicsList';
 
 import { loadAcademics, academicsSlice } from './slice';
 
-const AcademicsRaw = (props) => {
+export const AcademicsRaw = (props) => {
 	React.useEffect(() => {
 		props.loadAcademics({});
 
@@ -23,7 +23,7 @@ const AcademicsRaw = (props) => {
 };
 
 
-const Academics = connect(
+export const Academics = connect(
 	undefined,
 	{ loadAcademics, reset: academicsSlice.actions.reset }
 )(AcademicsRaw)
