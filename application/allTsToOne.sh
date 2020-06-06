@@ -1,0 +1,1 @@
+find . -name '*.tsx' -o -name '*.tsx' | grep -v 'node_modules' | grep -v 'test.ts' | xargs -I % sh -c 'echo "Файл: %" | sed "s/\.\/src\///"; echo ""; cat %; echo "\n\n"' > ../SOURCES.tsx
