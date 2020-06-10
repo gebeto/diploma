@@ -96,7 +96,6 @@ studentsRouter.post('/getVariants', async (ctx, next) => {
 
 studentsRouter.post('/markVariantsVariant', async (ctx, next) => {
 	const b = ctx.request.body;
-	// const userId = b.userId;
 	const userId = ctx.state.user.id;
 	const variantsId = b.variantsId;
 	const variantId = b.variantId;
@@ -117,8 +116,11 @@ studentsRouter.post('/markVariantsVariant', async (ctx, next) => {
 	})
 
 	ctx.body = {
+		success: true,
 		item: variants,
 	};
+
+	(ctx as any).io.emit(`variants ${variantsId}`, variants);
 
 	await next();
 });

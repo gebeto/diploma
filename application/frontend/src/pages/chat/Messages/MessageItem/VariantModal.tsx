@@ -12,6 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
+import { useSocket } from "use-socketio";
+
 import { ModalReadonlyXs } from '../../../../components/Modal/';
 import { chatGetVariants, chatVariantMark } from '../../../../api/';
 import { makeBasicApiRequest, makeApiRequest } from '../../../../api/utils';
@@ -74,6 +76,18 @@ export const VariantDialogRaw = (props: VariantDialogProps) => {
 			variants.setResponse(res);
 		});
 	}, [props.variantsId, variants.state]);
+
+	// props.variantsId
+	const variantsIO = useSocket(`variants ${props.variantsId}`, newVariants => {
+		variants.setResponse(newVariants);
+		// messages.setResponse({
+		// 	...messages.state.response,
+		// 	messages: [
+		// 		newMessage,
+		// 		...messages.state.response.messages,
+		// 	]
+		// });
+	});
 
 	return (
 		<ModalReadonlyXs
