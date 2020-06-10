@@ -8,6 +8,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import { ApiClient } from '../../api/utils/ApiClient';
 import { makeBasicApiRequest } from '../../api/utils/';
 import { userSlice } from '../../store/slice-user';
@@ -21,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		fields: {
 			width: '100%',
 		},
+		backdrop: {
+			zIndex: 10000,
+		}
 	}),
 );
 
@@ -87,6 +93,9 @@ export const AuthRaw = (props) => {
 					</Grid>
 				</Grid>
 			</Grid>
+			<Backdrop className={classes.backdrop} open={auth.state.isFetching}>
+				<CircularProgress color="inherit" />
+			</Backdrop>
 		</Box>
 	);
 }
