@@ -1,7 +1,7 @@
 import * as Router from 'koa-router';
 
-// const apiRouter = new Router({ prefix: "/api" });
-const apiRouter = new Router();
+const apiRouter = new Router({ prefix: "/api" });
+// const apiRouter = new Router();
 
 
 apiRouter.get('/', async (ctx, next) => {

@@ -4,6 +4,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux'
 
 import Typography from '@material-ui/core/Typography';
+import Dialog from '@material-ui/core/Dialog';
 
 import {
 	HashRouter,
@@ -28,6 +29,27 @@ import Settings from './pages/settings/';
 import './styles.scss';
 
 
+import { SocketIOProvider, useSocket } from "use-socketio";
+ 
+// const Twitter = () => {
+// 	const [items, setItems] = React.useState([]);
+ 
+// 	const { socket, subscribe, unsubscribe } = useSocket("message", newMessage => {
+// 		console.log('AAA', newMessage);
+// 		setItems([newMessage, ...items])
+// 	});
+
+// 	return (
+// 		<Dialog open={items.length}>
+// 			<ul>
+// 				{items.map(item => (
+// 					<li key={item.id}>{item.text}</li>
+// 				))}
+// 			</ul>
+// 		</Dialog>
+// 	);
+// };
+
 const App = (props) => {
 	return (
 		<NavigationConnected>
@@ -50,11 +72,13 @@ const App = (props) => {
 ReactDOM.render(
 	(
 		<Provider store={store}>
-			<Auth>
-				<HashRouter>
-					<App />
-				</HashRouter>
-			</Auth>
+			<SocketIOProvider url="/">
+				<Auth>
+					<HashRouter>
+						<App />
+					</HashRouter>
+				</Auth>
+			</SocketIOProvider>
 		</Provider>
 	),
 	document.getElementById('root')

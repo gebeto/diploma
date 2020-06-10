@@ -1,3 +1,4 @@
+// import { sequelize } from '../../database/index';
 import { createHumansFabric, getAvatarUrl, IHuman } from '../academics/academics';
 
 interface IStudent extends IHuman {
@@ -9,15 +10,26 @@ const createStudents = createHumansFabric<IStudent>((s) => ({ ...s, password: 't
 export const students = [
 	...createStudents(20),
 	{
-		id: 50,
+		id: 49,
 		firstName: "Ярослав",
 		middleName: "Володимирович",
 		lastName: "Ничкало",
 		phone: "0970067238",
-		avatar: getAvatarUrl("Ярослав", 50),
+		avatar: getAvatarUrl("Ярослав", 49),
 		email: "yaroslav_nychkalo@gmail.com",
 		password: "test",
-	} as IStudent
+	} as IStudent,
+	{
+		id: 50,
+		firstName: "Петро",
+		middleName: "Миронович",
+		lastName: "Порошенко",
+		phone: "0939758432",
+		// avatar: getAvatarUrl("Петро", 50),
+		avatar: "https://pbs.twimg.com/profile_images/622151044831776768/BQ5ifWI__400x400.png",
+		email: "petro_poroshenko@gmail.com",
+		password: "test",
+	} as IStudent,
 ];
 
 export const getStudents = async () => {

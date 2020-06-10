@@ -12,6 +12,7 @@ import { makeApiRequest } from '../../api/utils';
 import { MessagesList } from './Messages/';
 import { MessageField } from './MessageField/';
 
+import { useSocket } from "use-socketio";
 
 const useMessagesGetRequest = makeApiRequest(async (chatId) => {
 	const response = await chatsGetMessages({ chatId });
@@ -23,17 +24,16 @@ export const ChatRaw = (props) => {
 	const chatId = props.match.params.chatId;
 	const messages = useMessagesGetRequest(chatId);
 
-	const handleMesssageSend = React.useCallback(async (sendingMessage) => {
-		const res = await sendingMessage;
-		console.log('STAT', messages.state);
+	// const { socket, subscribe, unsubscribe } = useSocket(`message ${chatId}`, newMessage => {
+	const messageIO = useSocket(`message ${chatId}`, newMessage => {
 		messages.setResponse({
 			...messages.state.response,
 			messages: [
-				res.item,
+				newMessage,
 				...messages.state.response.messages,
 			]
 		});
-	}, [messages.state.response]);
+	});
 
 	return (
 		<React.Fragment>
@@ -43,7 +43,6 @@ export const ChatRaw = (props) => {
 						chatId={chatId}
 						user={props.user}
 						messages={messages}
-						onMessageSend={handleMesssageSend}
 					/>
 				</Grid>
 				<Grid item container xs={12}>

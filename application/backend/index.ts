@@ -4,12 +4,34 @@ import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
 import * as jwt from 'koa-jwt';
 
+import * as http from 'http';
+import * as socket from 'socket.io';
+
 import { SECRET_KEY, PORT } from './config';
 
 import ApiRouter from './api/';
 
 
 const app = new Koa();
+
+const server = http.createServer(app.callback())
+const io = socket(server);
+
+io.on('connection', function(socket){
+	// console.log('a user connected');
+	// socket.broadcast.emit('type', msg);
+	// io.emit('type', msg);
+	socket.on('disconnect', () => {
+		// console.log('user disconnected');
+	});
+});
+
+app.use(async (ctx, next) => {
+	ctx.io = io;
+	await next();
+});
+
+// server.listen(3000)
 
 // Configure koa
 app.use(logger());
@@ -22,7 +44,7 @@ app.use(
 		secret: SECRET_KEY,
 	})
 	.unless({
-		path: [/^\/auth/, "/"]
+		path: [/^\/api\/auth/, "/"]
 	})
 );
 
@@ -44,7 +66,7 @@ app.use(ApiRouter.routes()).use(ApiRouter.allowedMethods());
 
 
 // Run server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 	console.log("App is started.");
 });
 

@@ -48,11 +48,11 @@ studentsRouter.post('/addChatMessage', async (ctx, next) => {
 	const [ full, chatType, chatId ] = /([\w\W]+?)-(\d+)/.exec(chatTypeWithId);
 
 	if (chatType && chatId) {
+		const message = await addChatMessageText(chatType, Number(chatId), ctx.state.user.id, ctx.request.body.text);
 		ctx.body = {
 			success: true,
-			// item: await addChatMessageText(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.text),
-			item: await addChatMessageText(chatType, Number(chatId), ctx.state.user.id, ctx.request.body.text),
 		};
+		(ctx as any).io.emit(`message ${chatTypeWithId}`, message);
 	} else {
 		return;
 	}
@@ -67,11 +67,11 @@ studentsRouter.post('/addChatMessageVariants', async (ctx, next) => {
 	const [ full, chatType, chatId ] = /([\w\W]+?)-(\d+)/.exec(chatTypeWithId);
 
 	if (chatType && chatId) {
+		const message = await addChatMessageVariants(chatType, Number(chatId), ctx.state.user.id, ctx.request.body.title, ctx.request.body.variants);
 		ctx.body = {
 			success: true,
-			// item: await addChatMessageVariants(chatType, Number(chatId), ctx.request.body.userId, ctx.request.body.title, ctx.request.body.variants),
-			item: await addChatMessageVariants(chatType, Number(chatId), ctx.state.user.id, ctx.request.body.title, ctx.request.body.variants),
 		};
+		(ctx as any).io.emit(`message ${chatTypeWithId}`, message);
 	} else {
 		return;
 	}

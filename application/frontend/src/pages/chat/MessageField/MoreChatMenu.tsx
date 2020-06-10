@@ -30,18 +30,14 @@ export const MoreChatMenu = (props) => {
 		(handleAddVariantOpenModal as any)();
 	}, []);
 
-	const handleAddVariantSubmit = React.useCallback((values) => {
-		console.log(values);
-		props.onMessageSend(
-			chatAddMessageVariants({
-				chatId: props.chatId,
-				// userId: props.user.id,
-				title: values.title,
-				variants: values.variants
-			})
-		);
+	const handleAddVariantSubmit = React.useCallback(async (values) => {
+		chatAddMessageVariants({
+			chatId: props.chatId,
+			title: values.title,
+			variants: values.variants
+		});
 		(handleAddVariantCloseModal as any)();
-	}, [props.onMessageSend]);
+	}, []);
 
 	return (
 		<React.Fragment>
@@ -62,7 +58,6 @@ export const MoreChatMenu = (props) => {
 				isOpened={isAddVariantOpened}
 				handleClose={handleAddVariantCloseModal}
 				onSubmit={handleAddVariantSubmit}
-				onMessageSend={props.onMessageSend}
 			/>
 		</React.Fragment>
 	);

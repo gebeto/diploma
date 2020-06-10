@@ -11,15 +11,15 @@ services:
       POSTGRES_USER: database
       POSTGRES_PASSWORD: database
 
-  pgadmin:
-    image: dpage/pgadmin4
-    ports:
-      - 333:80
-    volumes:
-      - "./pgadmin-servers.json:/pgadmin4/servers.json:ro"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin
-      PGADMIN_DEFAULT_PASSWORD: admin
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   ports:
+  #     - 333:80
+  #   volumes:
+  #     - "./pgadmin-servers.json:/pgadmin4/servers.json:ro"
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin
+  #     PGADMIN_DEFAULT_PASSWORD: admin
 
   backend:
     tty: true

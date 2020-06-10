@@ -57,11 +57,9 @@ export const MessageField = (props) => {
 	const handleSubmit = React.useCallback(async (e) => {
 		if (message.length) {
 			setMessage('');
-			props.onMessageSend(
-				chatAddMessage({ chatId: props.chatId, text: message })
-			);
+			chatAddMessage({ chatId: props.chatId, text: message })
 		}
-	}, [message, props.onMessageSend]);
+	}, [message]);
 
 	return (
 		<React.Fragment>
@@ -71,7 +69,6 @@ export const MessageField = (props) => {
 					<Typography variant="h4" gutterBottom>
 						Чат
 						<MoreChatMenu
-							onMessageSend={props.onMessageSend}
 							chatId={props.chatId}
 							user={props.user}
 						/>

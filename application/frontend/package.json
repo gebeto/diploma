@@ -63,6 +63,7 @@
     "style-loader": "^1.0.0",
     "styles-loader": "^2.0.0",
     "ts-jest": "^26.0.0",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.3",
+    "use-socketio": "^2.0.3"
   }
 }
