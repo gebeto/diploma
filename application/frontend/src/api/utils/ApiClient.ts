@@ -26,6 +26,10 @@ export class ApiClient {
 		}
 	}
 
+	public static getToken(): string {
+		return ApiClient.getInstance().token;
+	}
+
 	public static getInstance(): ApiClient {
 		if (!ApiClient.instance) {
 			ApiClient.instance = new ApiClient();

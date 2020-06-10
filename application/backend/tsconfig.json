@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "compilerOptions": {
-        "outDir": "./dist",
+        // "outDir": "./dist",
         "lib": ["es5", "es6"],
         "target": "es6",
         "module": "commonjs",
@@ -12,5 +12,5 @@
         // "esModuleInterop": true,
         // "forceConsistentCasingInFileNames": true
     },
-    "include": ["./src/**/*"]
+    // "include": ["./src/**/*"]
 }

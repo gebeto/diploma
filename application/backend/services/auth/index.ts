@@ -22,10 +22,16 @@ export const generateTokenForStudentEmailPassword = async (email: string, passwo
 
 export const generateTokenForStudent = async (student) => {	
 	const token = jwt.sign({
-		id: student.id
+		id: student.id,
+		groupId: 1,
 	}, SECRET_KEY);
 	
 	return token;
+}
+
+export const decodeToken = async (token) => {	
+	const decoded = jwt.verify(token, SECRET_KEY);
+	return decoded;
 }
 
 interface IStudent {

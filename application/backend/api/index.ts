@@ -12,7 +12,6 @@ apiRouter.get('/', async (ctx, next) => {
 
 apiRouter.get('/info', async (ctx, next) => {
 	ctx.body = ctx.state;
-	console.log("INFO!!!!!");
 	await next();
 });
 

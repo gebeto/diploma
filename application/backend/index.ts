@@ -9,7 +9,9 @@ import * as socket from 'socket.io';
 
 import { SECRET_KEY, PORT } from './config';
 
-import ApiRouter from './api/';
+import ApiRouter from './api/index';
+
+import { decodeToken } from './services/auth/index';
 
 
 const app = new Koa();
@@ -17,26 +19,12 @@ const app = new Koa();
 const server = http.createServer(app.callback())
 const io = socket(server);
 
-io.on('connection', function(socket){
-	// console.log('a user connected');
-	// socket.broadcast.emit('type', msg);
-	// io.emit('type', msg);
-	socket.on('disconnect', () => {
-		// console.log('user disconnected');
-	});
-});
-
-app.use(async (ctx, next) => {
-	ctx.io = io;
-	await next();
-});
-
-// server.listen(3000)
 
 // Configure koa
 app.use(logger());
 app.use(json());
 app.use(bodyParser());
+
 
 // Configure JWT
 app.use(
@@ -48,6 +36,37 @@ app.use(
 	})
 );
 
+
+// Configure socket.io
+io.on('connection', async (socket) => {
+	socket.emit('auth');
+
+	socket.on('auth', async (token) => {
+		try {
+			const decoded: any = await decodeToken(token);
+			if (!decoded) {
+				throw new Error("Bad token");
+			}
+			socket.join(`group-${decoded.groupId}`);
+		} catch(err) {
+			socket.disconnect(true);
+			console.error(err);
+			return;
+		}
+	});
+
+	socket.on('disconnect', async () => {});
+});
+
+app.use(async (ctx, next) => {
+	if (ctx.state.user !== undefined) {
+		ctx.io = io.to(`group-${ctx.state.user.groupId}`);
+	}
+	await next();
+});
+
+
+// Configure errors handling
 app.use(async (ctx, next) => {
 	try {
 		await next();
@@ -57,9 +76,9 @@ app.use(async (ctx, next) => {
 			error: err.message,
 			status: ctx.status,
 		};
-		// ctx.app.emit('error', err, ctx);
 	}
 });
+
 
 // Apply routes
 app.use(ApiRouter.routes()).use(ApiRouter.allowedMethods());
@@ -69,4 +88,3 @@ app.use(ApiRouter.routes()).use(ApiRouter.allowedMethods());
 server.listen(PORT, () => {
 	console.log("App is started.");
 });
-
