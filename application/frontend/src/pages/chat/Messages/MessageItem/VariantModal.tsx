@@ -74,19 +74,12 @@ export const VariantDialogRaw = (props: VariantDialogProps) => {
 		setValue(Number(value));
 		variantsSelecting.fetch(variants.state.response.id, value).then(res => {
 			variants.setResponse(res);
+			setValue(null);
 		});
 	}, [props.variantsId, variants.state]);
 
-	// props.variantsId
 	const variantsIO = useSocket(`variants ${props.variantsId}`, newVariants => {
 		variants.setResponse(newVariants);
-		// messages.setResponse({
-		// 	...messages.state.response,
-		// 	messages: [
-		// 		newMessage,
-		// 		...messages.state.response.messages,
-		// 	]
-		// });
 	});
 
 	return (
