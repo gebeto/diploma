@@ -156,11 +156,15 @@ export const makeApiRequest = (requester) => {
 			state.fetch(...params);
 		}, params);
 
+		const refetch = React.useCallback(() => {
+			state.fetch(...params);
+		}, params);
+
 		return {
 			state: state.state,
 			setFetching: state.setFetching,
 			setResponse: state.setResponse,
-			refetch: state.fetch,
+			refetch: refetch,
 		}
 	}
 }

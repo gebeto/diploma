@@ -69,7 +69,7 @@ export const AuthRaw = (props) => {
 	return (isAuth ? props.children :
 		<Box height="70vh" boxSizing="border-box">
 			<Grid className={classes.wrapper} container alignItems="center" justify="center">
-				<Grid className={classes.fields} container item xs={10} sm={3} spacing={3} direction="column">
+				<Grid className={classes.fields} container item xs={10} sm={5} md={3} xl={2} spacing={3} direction="column">
 					<Grid item xs={12}>
 						<Typography variant="h1" component="h1" align="center">Вхід</Typography>
 					</Grid>

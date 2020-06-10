@@ -51,10 +51,10 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-export const MessagesList = ({ messages }) => {
+export const MessagesList = (props) => {
 	const classes = useStyles();
 
-	if (messages.state.isFetching) {
+	if (props.messages.state.isFetching) {
 		return (
 			<List className={classes.root}>
 				<ListItem>
@@ -66,13 +66,13 @@ export const MessagesList = ({ messages }) => {
 		);
 	}
 
-	if (messages.state.isFetchingError) {
+	if (props.messages.state.isFetchingError) {
 		return (
 			<List className={classes.root}>
 				<ListItem>
 					<Grid container justify="center" alignItems="center" direction="column">
 						Помилка завантаження!
-						<Button color="primary" onClick={messages.refetch}>Спробувати знову</Button>
+						<Button color="primary" onClick={props.messages.refetch}>Спробувати знову</Button>
 					</Grid>
 				</ListItem>
 			</List>
@@ -81,7 +81,7 @@ export const MessagesList = ({ messages }) => {
 
 	return (
 		<List className={classes.root}>
-			{messages.state.response.messages.length ? messages.state.response.messages.map(message =>
+			{props.messages.state.response.messages.length ? props.messages.state.response.messages.map(message =>
 				<MessageItem classes={classes} key={message.id} message={message} />
 			) : <ListItem>
 					<Grid container justify="center" alignItems="center" direction="column">

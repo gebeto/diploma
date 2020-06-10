@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -14,8 +15,6 @@ import SendIcon from '@material-ui/icons/Send';
 import { MoreChatMenu } from './MoreChatMenu';
 
 import { chatAddMessage } from '../../../api/';
-
-// chatAddMessagePoll
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -44,8 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-
-export const MessageField = (props) => {
+export const MessageFieldRaw = (props) => {
 	const classes = useStyles();
 
 	const [ message, setMessage ] = React.useState('');
@@ -101,4 +99,11 @@ export const MessageField = (props) => {
 			</Grid>
 		</React.Fragment>
 	);
-}
+};
+
+
+export const MessageField = connect(
+	state => ({
+		user: state.user,
+	})
+)(MessageFieldRaw);

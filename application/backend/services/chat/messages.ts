@@ -59,6 +59,8 @@ const createMessageVariants = (id: number, title: string) => {
 
 const groupChats: Record<number, IMessage[]> = {
 	1: [
+		createMessage(students[students.length - 2], createMessageText("Берци вже купив, збираю сумку")),
+		createMessage(students[1], createMessageText("Буду пробувати подаватися на магістратуру а там далі буде видно.")),
 		createMessage(students[0], createMessageText("Сьогодні захист дипломного проекту, хто піде в армію?")),
 		createMessage(students[0], createMessageText("Привіт всім!")),
 	],

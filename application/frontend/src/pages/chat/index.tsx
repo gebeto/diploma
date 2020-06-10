@@ -14,14 +14,16 @@ import { MessageField } from './MessageField/';
 
 import { useSocket } from "use-socketio";
 
+
 const useMessagesGetRequest = makeApiRequest(async (chatId) => {
 	const response = await chatsGetMessages({ chatId });
 	return response;
 });
 
 
-export const ChatRaw = (props) => {
+export const Chat = (props) => {
 	const chatId = props.match.params.chatId;
+	
 	const messages = useMessagesGetRequest(chatId);
 
 	const messageIO = useSocket(`message ${chatId}`, newMessage => {
@@ -38,11 +40,7 @@ export const ChatRaw = (props) => {
 		<React.Fragment>
 			<Grid container>
 				<Grid item container xs={12}>
-					<MessageField
-						chatId={chatId}
-						user={props.user}
-						messages={messages}
-					/>
+					<MessageField messages={messages} chatId={chatId} />
 				</Grid>
 				<Grid item container xs={12}>
 					<MessagesList messages={messages} />
@@ -52,10 +50,5 @@ export const ChatRaw = (props) => {
 	);
 };
 
-export const Chat = connect(
-	state => ({
-		user: state.user,
-	})
-)(ChatRaw);
 
 export default Chat;
