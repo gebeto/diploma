@@ -24,7 +24,6 @@ export const ChatRaw = (props) => {
 	const chatId = props.match.params.chatId;
 	const messages = useMessagesGetRequest(chatId);
 
-	// const { socket, subscribe, unsubscribe } = useSocket(`message ${chatId}`, newMessage => {
 	const messageIO = useSocket(`message ${chatId}`, newMessage => {
 		messages.setResponse({
 			...messages.state.response,
