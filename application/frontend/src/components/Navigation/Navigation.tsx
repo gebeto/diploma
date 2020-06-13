@@ -92,6 +92,10 @@ const useStyles = makeStyles((theme: Theme) =>
 		grow: {
 			flexGrow: 1,
 		},
+		flexMiddle: {
+			display: 'flex',
+			alignItems: 'center',
+		}
 	}),
 );
 
@@ -207,18 +211,12 @@ export const Navigation = (props: NavigationProps) => {
 						Студпост
 					</Typography>
 					<div className={classes.grow} />
-					<strong onClick={handleProfileMenuOpen}>{props.user.firstName} {props.user.lastName}</strong>
-					<IconButton
-						edge="end"
-						aria-label="account of current user"
-						aria-controls={menuId}
-						aria-haspopup="true"
-						onClick={handleProfileMenuOpen}
-						color="inherit"
-					>
-						{/*<AccountCircle />*/}
-						<Avatar alt="Avatar" src={props.user.avatar} />
-					</IconButton>
+					<strong className={classes.flexMiddle} onClick={handleProfileMenuOpen}>
+						{props.user.firstName} {props.user.lastName}
+						<IconButton edge="end">
+							<Avatar alt="Avatar" src={props.user.avatar} />
+						</IconButton>
+					</strong>
 				</Toolbar>
 			</AppBar>
 			<nav className={classes.drawer} aria-label="mailbox folders">
