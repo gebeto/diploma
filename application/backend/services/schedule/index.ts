@@ -1,2 +1,1 @@
-export { getSchedule } from './getSchedule';
-export { getNextScheduleDay } from './getNextScheduleDay';
+export * from './schedule';
