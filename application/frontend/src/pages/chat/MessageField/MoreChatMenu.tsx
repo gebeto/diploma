@@ -37,7 +37,7 @@ export const MoreChatMenu = (props) => {
 			variants: values.variants
 		});
 		(handleAddVariantCloseModal as any)();
-	}, []);
+	}, [props.chatId]);
 
 	return (
 		<React.Fragment>

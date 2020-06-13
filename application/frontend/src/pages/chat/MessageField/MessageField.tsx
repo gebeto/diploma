@@ -57,7 +57,7 @@ export const MessageFieldRaw = (props) => {
 			setMessage('');
 			chatAddMessage({ chatId: props.chatId, text: message })
 		}
-	}, [message]);
+	}, [message, props.chatId]);
 
 	return (
 		<React.Fragment>
