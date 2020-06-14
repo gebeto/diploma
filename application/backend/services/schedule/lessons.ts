@@ -46,6 +46,6 @@ export const getSchedule = async () => {
 }
 
 export const getNextScheduleDay = async () => {
-	return schedule[-1];
+	return schedule[schedule.length - 1];
 }
 

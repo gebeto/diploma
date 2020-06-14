@@ -34,10 +34,13 @@ export const ScheduleListRaw = (props) => {
 
 const mapStateToPropsFabric = () => {
 	const scheduleSelector = scheduleSlice.selectors.makeGetScheduleSelector();
-	return (state, ownProps) => ({
-		isLoading: state.schedule.isFetching,
-		schedule: scheduleSelector(state, ownProps),
-	});
+	return (state, ownProps) => {
+		const schedule = scheduleSelector(state, ownProps);
+		return {
+			isLoading: state.schedule.isFetching,
+			schedule,
+		}
+	};
 }
 
 export const ScheduleList = connect(

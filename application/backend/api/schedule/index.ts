@@ -19,8 +19,14 @@ scheduleRouter.post('/get', async (ctx, next) => {
 
 
 scheduleRouter.post('/getNextDay', async (ctx, next) => {
+	const lessonsAll = (await getSchedule());
+	const lessons = lessonsAll.slice(lessonsAll.length - 4);
 	ctx.body = {
-		item: await getNextScheduleDay(),
+		item: {
+			id: 1,
+			date: lessons[0].date,
+			lessons: lessons,
+		},
 	};
 	await next();
 });

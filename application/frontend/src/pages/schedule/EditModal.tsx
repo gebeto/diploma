@@ -8,7 +8,9 @@ import Avatar from '@material-ui/core/Avatar';
 
 import { ModalEditFormSm } from '../../components/Modal/';
 import {
-	InputField, BooleanField, TextareaField, SelectField,
+	InputField, BooleanField,
+	TextareaField, SelectField,
+	DateField,
 	Form, withForm, withFormModal,
 } from '../../components/Form/';
 
@@ -52,7 +54,7 @@ export const LessonForm = (props) => {
 			<Grid container spacing={2}>
 
 				<Grid item xs={12}>
-					<InputField
+					<DateField
 						values={props.values}
 						errors={props.errors}
 						onChange={props.handleFieldChange}

@@ -28,7 +28,7 @@ export const scheduleSlice = createCRUDSlice(
 						.map(i => grouped[i]).map(item => ({
 							...item,
 							date: new Date(item.date),
-							lessons: item.lessons.sort((a, b) => a.order - b.order),
+							lessons: item.lessons.map(i => ({...i, date: new Date(i.date)})).sort((a, b) => a.order - b.order),
 						}))
 						.sort((a, b) => a.date - b.date);
 				}

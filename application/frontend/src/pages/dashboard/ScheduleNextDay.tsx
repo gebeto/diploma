@@ -12,7 +12,12 @@ import { makeApiRequest } from '../../api/utils';
 const useNextDayApiRequest = makeApiRequest(async () => {
 	const result = await scheduleGetNextDay({});
 	const item = result.item;
-	return { ...item, date: new Date(item.date) };
+	return {
+		schedule: {
+			...item,
+			date: new Date(item.date)
+		}
+	};
 });
 
 
@@ -23,5 +28,13 @@ export const ScheduleNextDay = () => {
 		return <CircularProgress />;
 	}
 
-	return <ScheduleDay title={`Найближчі заняття: ${formatDate(req.state.response.date)}`} schedule={req.state.response} />;
+	return null;
+
+	return (
+		<ScheduleDay
+			title={`Найближчі заняття: ${formatDate(req.state.response.schedule.date)}`}
+			schedule={req.state.response.schedule}
+			handleEditLesson={() => {}}
+		/>
+	);
 }
