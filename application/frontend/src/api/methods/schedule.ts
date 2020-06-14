@@ -6,26 +6,37 @@ export interface ISubject {
 	title: string;
 }
 
+export interface ISubjectType {
+	id: number;
+	title: string;
+}
+
 export interface IPavilion {
 	id: number;
 	title: string;
 }
 
-export interface IScheduleSubject {
+export interface IScheduleLesson {
 	id: number;
-	type: string;
 	order: number;
 	classroom: string;
-	subject: ISubject;
-	academic: IAcademic;
-	pavilion: IPavilion;
+	type: ISubjectType.id;
+	subject: ISubject.id;
+	academic: IAcademic.id;
+	pavilion: IPavilion.id;
 }
 
 export interface IScheduleDay {
 	id: number;
 	date: Date;
-	subjects: IScheduleSubject[];
+	lessons: IScheduleLesson[];
 }
 
-export const scheduleGet = (data: {}) => API_POST<ResponseAll<IScheduleDay>>(`/schedule/get`, data);
+export const scheduleGet = (data: {}) => API_POST<{
+	schedule: IScheduleDay[];
+	academics: IAcademic[];
+	subjects: ISubject[];
+	pavilions: IPavilion[];
+	subjectTypes: ISubjectType[];
+}>(`/schedule/get`, data);
 export const scheduleGetNextDay = (data: {}) => API_POST<ResponseOne<IScheduleDay>>(`/schedule/getNextDay`, data);

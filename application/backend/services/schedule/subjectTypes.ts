@@ -1,4 +1,4 @@
-export const SubjectTypes = [
+export const subjectTypes = [
 	{
 		id: 1,
 		title: "Лекція",

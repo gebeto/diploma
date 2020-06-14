@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ListSubheader from '@material-ui/core/ListSubheader';
 
 import { IScheduleDay } from '../../../api/';
-import { ScheduleSubject } from './Subject';
+import { ScheduleLesson } from './Lesson';
 import { formatDate } from './helpers';
 
 
@@ -51,10 +51,10 @@ export const ScheduleDay = (props: ScheduleDayProps) => {
 				</ListSubheader>
 			}
 		>
-			{props.schedule.subjects.map(subject => (
-				<ScheduleSubject
-					key={subject.id}
-					subject={subject}
+			{props.schedule.lessons.map(lesson => (
+				<ScheduleLesson
+					key={lesson.id}
+					lesson={lesson}
 				/>
 			))}
 		</List>

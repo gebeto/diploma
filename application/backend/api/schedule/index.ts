@@ -1,13 +1,18 @@
 import * as Router from 'koa-router';
 
-import { getSchedule, getNextScheduleDay } from '../../services/schedule/index';
+import {
+	getSchedule, getNextScheduleDay,
+	academics, subjects, pavilions, subjectTypes,
+} from '../../services/schedule/index';
 
 
 const scheduleRouter = new Router({ prefix: "/schedule" });
 
 scheduleRouter.post('/get', async (ctx, next) => {
 	ctx.body = {
-		items: await getSchedule(),
+		schedule: await getSchedule(),
+
+		academics, subjects, pavilions, subjectTypes
 	};
 	await next();
 });
