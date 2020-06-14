@@ -25,7 +25,7 @@ export const ScheduleListRaw = (props) => {
 			{props.isLoading && <Grid item xs={12}><CircularProgress /></Grid>}
 			{props.schedule.map(day => (
 				<Grid className={classes.fullWidth} key={day.id} item xs={12} md={10} lg={6} xl={5}>
-					<ScheduleDay schedule={day} />
+					<ScheduleDay schedule={day} handleEditLesson={props.handleEditLesson} />
 				</Grid>
 			))}
 		</Grid>

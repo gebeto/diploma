@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export interface ScheduleDayProps {
 	schedule: IScheduleDay;
 	title?: string;
+	handleEditLesson: any;
 }
 
 
@@ -55,6 +56,7 @@ export const ScheduleDay = (props: ScheduleDayProps) => {
 				<ScheduleLesson
 					key={lesson.id}
 					lesson={lesson}
+					handleEditLesson={props.handleEditLesson}
 				/>
 			))}
 		</List>

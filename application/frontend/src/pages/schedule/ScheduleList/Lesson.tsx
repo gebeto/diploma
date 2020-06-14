@@ -22,6 +22,7 @@ export interface ScheduleLessonProps {
 	academic: IAcademic;
 	pavilion: IPavilion;
 	subjectType: ISubjectType;
+	handleEditLesson?: any;
 }
 
 const orderTimes = {
@@ -36,8 +37,12 @@ const orderTimes = {
 };
 
 export const ScheduleLessonRaw = (props: ScheduleLessonProps) => {
+	const handleClick = () => {
+		props.handleEditLesson(props.lesson);
+	}
+
 	return (
-		<ListItem alignItems="flex-start" button>
+		<ListItem alignItems="flex-start" button onClick={handleClick}>
 			<ListItemAvatar>
 				<Avatar>{props.lesson.order}</Avatar>
 			</ListItemAvatar>

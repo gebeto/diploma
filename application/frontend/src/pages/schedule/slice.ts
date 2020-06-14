@@ -24,11 +24,13 @@ export const scheduleSlice = createCRUDSlice(
 				[ defaultSelectors.itemsSelector ],
 				(items) => {
 					const grouped = items.reduce(lessonsGrouper, {});
-					return Object.keys(grouped).map(i => grouped[i]).map(item => ({
-						...item,
-						date: new Date(item.date),
-						lessons: item.lessons.sort((a, b) => a.order - b.order),
-					}));
+					return Object.keys(grouped)
+						.map(i => grouped[i]).map(item => ({
+							...item,
+							date: new Date(item.date),
+							lessons: item.lessons.sort((a, b) => a.order - b.order),
+						}))
+						.sort((a, b) => a.date - b.date);
 				}
 			),
 			
@@ -58,3 +60,14 @@ export const loadSchedule = () => (dispatch) => {
 		dispatch(scheduleSlice.actions.fetchingError());
 	});
 }
+
+export const updateLesson = (lesson) => (dispatch) => {
+	dispatch(
+		scheduleSlice.actions.updated({
+			id: lesson.id,
+			date: lesson.date,
+			order: lesson.order,
+			classroom: lesson.classroom,
+		})
+	);
+};
