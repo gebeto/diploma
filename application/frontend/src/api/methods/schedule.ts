@@ -39,4 +39,7 @@ export const scheduleGet = (data: {}) => API_POST<{
 	pavilions: IPavilion[];
 	subjectTypes: ISubjectType[];
 }>(`/schedule/get`, data);
+
 export const scheduleGetNextDay = (data: {}) => API_POST<ResponseOne<IScheduleDay>>(`/schedule/getNextDay`, data);
+
+export const lessonUpdate = (data: any) => API_POST<ResponseOne<IScheduleLesson>>(`/schedule/update-lesson`, data);

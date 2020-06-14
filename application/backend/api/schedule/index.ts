@@ -26,4 +26,20 @@ scheduleRouter.post('/getNextDay', async (ctx, next) => {
 });
 
 
+scheduleRouter.post('/update-lesson', async (ctx, next) => {
+	const item = (await getSchedule()).find(i => i.id === ctx.request.body.id);
+
+	item.classroom = ctx.request.body.classroom;
+	item.order = Number(ctx.request.body.order);
+	item.date = ctx.request.body.date;
+	item.type = Number(ctx.request.body.type);
+
+	ctx.body = {
+		success: true,
+		item: item,
+	};
+	await next();
+});
+
+
 export default scheduleRouter;

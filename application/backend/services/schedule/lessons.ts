@@ -21,16 +21,6 @@ export const createLesson = (order, date, subject, academic, pavilion, subjectTy
 
 export const createDay = (date = "08/24/2019") => {
 	const d = new Date(date);
-	// return {
-	// 	id: d,
-	// 	date: d,
-	// 	lessons: [
-	// 		createLesson(1, 1, subjects[1], academics[0], pavilions[5], subjectTypes[0], "303"),
-	// 		createLesson(2, 2, subjects[1], academics[0], pavilions[5], subjectTypes[1], "303"),
-	// 		createLesson(3, 3, subjects[2], academics[1], pavilions[5], subjectTypes[0], "303"),
-	// 		createLesson(4, 4, subjects[2], academics[1], pavilions[5], subjectTypes[1], "303"),
-	// 	]
-	// }
 	return [
 		createLesson(1, d, subjects[1], academics[0], pavilions[5], subjectTypes[0], "303"),
 		createLesson(2, d, subjects[1], academics[0], pavilions[5], subjectTypes[1], "303"),
@@ -49,10 +39,13 @@ export const createDays = (count) => {
 	return result;
 }
 
+const schedule = createDays(4);
+
 export const getSchedule = async () => {
-	return createDays(4);
+	return schedule;
 }
 
 export const getNextScheduleDay = async () => {
-	return createDay((new Date()).toISOString());
+	return schedule[-1];
 }
+

@@ -68,6 +68,7 @@ export const updateLesson = (lesson) => (dispatch) => {
 			date: lesson.date,
 			order: lesson.order,
 			classroom: lesson.classroom,
+			type: lesson.type,
 		})
 	);
 };
