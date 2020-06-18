@@ -22,32 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
 		root: {
 			width: '100%',
 		},
-		marginTopABit: {
-			// marginTop: '4px',
-			marginTop: '8px',
-			borderRadius: '5px',
-			backgroundColor: theme.palette.background.paper,
-			'&:first-child': {
-				marginTop: 0,
-			}
-		},
-		author: {
-			fontWeight: 500,
-			[theme.breakpoints.down('xs')]: {
-				fontWeight: 700,
-			},
-		},
-		avatar: {
-			marginRight: theme.spacing(2),
-			marginBottom: theme.spacing(1),
-		},
-		titleAndTime: {
-			display: 'flex',
-			flexDirection: 'column',
-		},
-		time: {
-			lineHeight: '1',
-		},
 	}),
 );
 
@@ -81,8 +55,8 @@ export const MessagesList = (props) => {
 
 	return (
 		<List className={classes.root}>
-			{props.messages.state.response.messages.length ? props.messages.state.response.messages.map(message =>
-				<MessageItem classes={classes} key={message.id} message={message} />
+			{props.messages.state.response.messages.length ? props.messages.state.response.messages.map((message, index, arr) =>
+				<MessageItem key={message.id} message={message} stacked={message.from.id === (arr[index - 1] && arr[index - 1].from.id)} />
 			) : <ListItem>
 					<Grid container justify="center" alignItems="center" direction="column">
 						<Typography color="textSecondary">

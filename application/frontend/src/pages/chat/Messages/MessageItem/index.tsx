@@ -1,8 +1,10 @@
 import * as React from 'react';
 
+import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -18,53 +20,62 @@ const components = {
 	text: MessageItemText,
 }
 
-export const MessageItem1 = (props) => {
+
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		author: {
+			fontWeight: 500,
+			[theme.breakpoints.down('xs')]: {
+				fontWeight: 700,
+			},
+		},
+		avatar: {
+			marginRight: theme.spacing(2),
+			marginBottom: theme.spacing(1),
+		},
+		titleAndTime: {
+			display: 'flex',
+			flexDirection: 'column',
+		},
+		time: {
+			lineHeight: '1',
+		},
+		messageItem: {
+			marginTop: isStacked => isStacked ? '0px' : '8px',
+			paddingTop: isStacked => isStacked ? '0px' : undefined,
+			borderRadius: '5px',
+			backgroundColor: theme.palette.background.paper,
+			'&:first-child': {
+				marginTop: 0,
+			}
+		},
+		messageItemText: {
+			marginTop: isStacked => isStacked ? '0px' : undefined,
+		}
+	}),
+);
+
+
+export const MessageItem = (props) => {
 	const MessageComponent = components[props.message.type] || components.default;
+	const classes = useStyles(props.stacked);
 
 	return (
-		<ListItem className={props.classes.marginTopABit}>
-			<ListItemAvatar>
-				<Avatar src={props.message.from.avatar} />
-			</ListItemAvatar>
-			<ListItemText>
-				<Typography variant="body1" component="div" className={props.classes.bold}>
-					{props.message.from.firstName} {props.message.from.lastName}
-				</Typography>
-				<MessageComponent message={props.message} />
-			</ListItemText>
-			<ListItemSecondaryAction>
-				<Typography variant="overline" color="textSecondary">{props.message.time}</Typography>
-			</ListItemSecondaryAction>
-		</ListItem>
-	);
-}
-
-
-
-export const MessageItem2 = (props) => {
-	const MessageComponent = components[props.message.type] || components.default;
-
-
-
-	return (
-		<ListItem className={props.classes.marginTopABit}>
-			<ListItemText>
-				<Grid container>
-					<Grid item className={props.classes.avatar}>
+		<ListItem className={classes.messageItem}>
+			<ListItemText className={classes.messageItemText}>
+				{props.stacked ? null : <Grid container>
+					<Grid item className={classes.avatar}>
 						<Avatar src={props.message.from.avatar} />
 					</Grid>
-					<Grid item className={props.classes.titleAndTime}>
-						<Typography variant="body1" component="div" className={props.classes.author}>
+					<Grid item className={classes.titleAndTime}>
+						<Typography variant="body1" component="div" className={classes.author}>
 							{props.message.from.firstName} {props.message.from.lastName}
 						</Typography>
-						<Typography className={props.classes.time} variant="overline" color="textSecondary">{props.message.time}</Typography>
+						<Typography className={classes.time} variant="overline" color="textSecondary">{props.message.time}</Typography>
 					</Grid>
-				</Grid>
+				</Grid>}
 				<MessageComponent message={props.message} />
 			</ListItemText>
 		</ListItem>
 	);
 }
-
-
-export const MessageItem = MessageItem2;
