@@ -34,7 +34,7 @@ import { SocketIOProvider, useSocket } from "use-socketio";
 
 const App = (props) => {
 	const sock = useSocket('auth', () => {
-		sock.socket.emit('auth', ApiClient.getToken());
+		sock.socket.emit('auth', ApiClient.getInstance().getToken());
 	});
 
 	return (

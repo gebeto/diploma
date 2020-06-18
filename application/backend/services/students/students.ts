@@ -44,7 +44,11 @@ export const getStudentById = async (id) => {
 export const getStudentByEmailAndPassword = async (email: string, password: string) => {
 	const student = students.find(s => s.email === email);
 	
-	if (!student || student.password !== password) {
+	if (!student) {
+		return undefined;
+	}
+
+	if (student.password !== password) {
 		return null;
 	}
 

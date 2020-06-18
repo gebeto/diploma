@@ -1,10 +1,13 @@
 import * as React from 'react';
 import axios from 'axios';
 
+import * as events from 'events';
+
 
 export const API = {
 	PREFIX: "/api",
 };
+
 
 export const API_AS_JSON = res => {
 	if (res.status >= 500) {
@@ -13,25 +16,69 @@ export const API_AS_JSON = res => {
 	return res.data;
 }
 
+export const CATCH = err => {
+	console.error(err);
+	if (err.response.status === 403) {
+		ApiClient.logout();
+		window.location.reload();
+	}
+	return err.response;
+}
+
+
+const isNullOrUndefined = value => value === "null" || value === "undefined";
 
 export class ApiClient {
 	private static instance: ApiClient;
 
 	private token: string;
+	private user: any;
+	private static emitter = new events.EventEmitter();
+
+	public static emitUnauthorized() {
+		ApiClient.emitter.emit("unauthorized");
+	}
 
 	private constructor() {
 		this.token = localStorage.getItem("token");
-		if (this.token === "null") {
+		if (isNullOrUndefined(this.token)) {
 			localStorage.removeItem("token");
+		}
+
+		this.user = JSON.parse(localStorage.getItem("user"));
+		if (isNullOrUndefined(this.user)) {
+			localStorage.removeItem("user");
+		}
+
+		if (this.token && this.user) {
+			console.log("INITIAL AUTHORIZED");
+			ApiClient.emitter.emit("authorized", this);
+		} else {
+			console.log("INITIAL UNAUTHORIZED");
+			ApiClient.emitter.emit("unauthorized", this);
 		}
 	}
 
-	public static getToken(): string {
-		return ApiClient.getInstance().token;
+	public static onAuthorized(cb) {
+		ApiClient.emitter.on("authorized", cb);
+	}
+
+	public static onUnauthorized(cb) {
+		ApiClient.emitter.on("unauthorized", cb);
+	}
+
+	public getToken(): string {
+		return this.token;
+	}
+
+	public getUser(): string {
+		return this.user;
 	}
 
 	public static getInstance(): ApiClient {
-		if (!ApiClient.instance) {
+		if (ApiClient.instance) {
+
+		} else {
 			ApiClient.instance = new ApiClient();
 		}
 
@@ -42,22 +89,37 @@ export class ApiClient {
 		return !!this.token;
 	}
 
-	public async login(email, password) {
+	private async login(email, password) {
 		try {
 			const response = await this.POST<any>("/auth/login", { email, password });
+			if (response.error) {
+				throw response;
+			}
 			this.token = response.token;
+			this.user = response.user;
 			localStorage.setItem("token", this.token);
+			localStorage.setItem("user", JSON.stringify(this.user));
+			ApiClient.emitter.emit("authorized", this);
 			return response;
 		} catch(err) {
-			// console.error("FETCH ERROR", err);
 			throw err;
 		}
 		return null;
 	}
 
-	public async logout() {
+	private async logout() {
+		this.token = undefined;
 		localStorage.removeItem("token");
+		ApiClient.emitter.emit("unauthorized", this);
 		return true;
+	}
+
+	public static login(email, password) {
+		return ApiClient.getInstance().login(email, password);
+	}
+
+	public static logout() {
+		return ApiClient.getInstance().logout();
 	}
 
 	public async POST<T>(url, data) {
@@ -65,7 +127,8 @@ export class ApiClient {
 			headers: {
 				"Authorization": `Bearer ${this.token}`,
 			}
-		}).then(API_AS_JSON) as Promise<T>;
+		// }).then(API_AS_JSON) as Promise<T>;
+		}).catch(CATCH).then(API_AS_JSON) as Promise<T>;
 	}
 
 	public async GET<T>(url) {
@@ -73,9 +136,11 @@ export class ApiClient {
 			headers: {
 				"Authorization": `Bearer ${this.token}`,
 			}
-		}).then(API_AS_JSON) as Promise<T>;
+		}).catch(CATCH).then(API_AS_JSON) as Promise<T>;
 	}
 }
+
+(window as any).ApiClient = ApiClient;
 
 // const api = ApiClient.getInstance();
 // api.login("yaroslav.nychkalo@gmail.com", "test").then(r => {

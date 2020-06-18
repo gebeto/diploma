@@ -41,55 +41,88 @@ export const useInput = () => {
 }
 
 const useAuthApiRequest = makeBasicApiRequest(async (email: string, password: string) => {
-	const login = await ApiClient.getInstance().login(email, password);
+	const login = await ApiClient.login(email, password).catch(err => err);
 	return login;
 });
 
 const authError = {
 	error: true,
-	helperText: "Невірний пароль або такого акаунту не існує!"
+	helperText: "Incorrect password!"
 }
 
-export const AuthRaw = (props) => {
-	const isAuth = ApiClient.getInstance().isAuthorized();
+const useAuth = () => {
+	const [isAuth, setIsAuth] = React.useState(ApiClient.getInstance().isAuthorized());
+
+	React.useEffect(() => {
+		ApiClient.onAuthorized(() => {
+			console.log("AUTH");
+			setIsAuth(true);
+		});
+
+		ApiClient.onUnauthorized(() => {
+			console.log("UNAUTH");
+			setIsAuth(false);
+		});
+	}, []);
+
+	return isAuth;
+}
+
+export const Auth = (props) => {
+	const isAuth = useAuth();
 
 	const auth = useAuthApiRequest();
 
 	const [ login, handleLoginChange ] = useInput();
 	const [ password, handlePasswordChange ] = useInput();
 
-	const handleLogin = React.useCallback(() => {
-		auth.fetch(login, password).then(res => {
-			props.userReceived(res.user);
-		});
+	const handleLogin = React.useCallback((e: any) => {
+		if (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+		auth.fetch(login, password);
 	}, [login, password]);
 
 	const classes = useStyles();
 
+	const errorFields = auth.state.response && auth.state.response.error && auth.state.response.error.fields;
+
 	return (isAuth ? props.children :
-		<Box height="70vh" boxSizing="border-box">
+		<Box height="70vh" boxSizing="border-box" component="form" onSubmit={handleLogin}>
 			<Grid className={classes.wrapper} container alignItems="center" justify="center">
 				<Grid className={classes.fields} container item xs={10} sm={5} md={3} xl={2} spacing={3} direction="column">
 					<Grid item xs={12}>
-						<Typography variant="h1" component="h1" align="center">Вхід</Typography>
+						<Typography variant="h3" component="h3" align="center">Студпост</Typography>
 					</Grid>
 					<Grid item xs={12}>
 						<TextField 
 							value={login}
 							onChange={handleLoginChange}
 							fullWidth
-							label="Логін"
+							label="Email"
 							variant="outlined"
-							type="text"
+							type="email"
 							name="email"
-							{...(auth.state.isFetchingError ? authError : null)}
+							error={errorFields && errorFields.email}
+							helperText={errorFields && errorFields.email}
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<TextField value={password} onChange={handlePasswordChange} fullWidth label="Пароль" variant="outlined" type="password" name="password" />
+						<TextField
+							value={password}
+							onChange={handlePasswordChange}
+							fullWidth
+							label="Password"
+							variant="outlined"
+							type="password"
+							name="password"
+							error={errorFields && errorFields.password}
+							helperText={errorFields && errorFields.password}
+						/>
 					</Grid>
 					<Grid item xs={12}>
-						<Button  onClick={handleLogin} fullWidth variant="outlined" color="primary" size="large">Увійти</Button>
+						<Button type="submit" onClick={handleLogin} fullWidth variant="outlined" color="primary" size="large">Login</Button>
 					</Grid>
 				</Grid>
 			</Grid>
@@ -99,12 +132,3 @@ export const AuthRaw = (props) => {
 		</Box>
 	);
 }
-
-
-export const Auth = connect(
-	(state) => ({
-		user: state.user,
-	}),
-	{ userReceived: userSlice.actions.userReceived }
-)(AuthRaw)
-

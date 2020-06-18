@@ -1,6 +1,8 @@
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { configureStore } from '@reduxjs/toolkit';
 
+import { ApiClient } from '../api/utils/ApiClient';
+
 import { userSlice } from './slice-user';
 
 import { studentsSlice } from '../pages/students/slice';
@@ -31,6 +33,16 @@ export const store = configureStore({
 
 
 (window as any).__STORE = store;
+
+
+ApiClient.onAuthorized((client) => {
+   store.dispatch(userSlice.actions.login(client.getUser()));
+});
+
+ApiClient.onUnauthorized((client) => {
+   store.dispatch(userSlice.actions.logout());
+});
+
 
 (window as any).updateSchedule = (schedule) => {
 	store.dispatch(scheduleSlice.actions.updated(schedule));
