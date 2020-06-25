@@ -32,7 +32,7 @@ app.use(
 		secret: SECRET_KEY,
 	})
 	.unless({
-		path: [/^\/api\/auth/, "/"]
+		path: [/^\/api\/auth/, "/", "/api/schedule/schedule.ics"]
 	})
 );
 

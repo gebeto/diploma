@@ -20,6 +20,7 @@ export const createLesson = (order, date, subject, academic, pavilion, subjectTy
 }
 
 export const createDay = (date = "08/24/2019") => {
+	console.log('CREATE', date);
 	const d = new Date(date);
 	return [
 		createLesson(1, d, subjects[1], academics[0], pavilions[5], subjectTypes[0], "303"),
@@ -34,7 +35,7 @@ export const createDays = (count) => {
 	const result = [];
 	(new Array(count).fill(1))
 		.forEach((item, index) => {
-			result.push(...createDay(`08/1${index}/2020`))
+			result.push(...createDay(`06/2${index + 3}/2020`))
 		});
 	return result;
 }

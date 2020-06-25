@@ -5,6 +5,8 @@ import {
 	academics, subjects, pavilions, subjectTypes,
 } from '../../services/schedule/index';
 
+import { createSchedule } from '../../services/schedule/ics';
+
 
 const scheduleRouter = new Router({ prefix: "/schedule" });
 
@@ -45,6 +47,13 @@ scheduleRouter.post('/update-lesson', async (ctx, next) => {
 		item: item,
 	};
 	await next();
+});
+
+
+scheduleRouter.get('/schedule.ics', async (ctx, next) => {
+	const sched = await getSchedule();
+	ctx.body = createSchedule("ПЗ-41з", sched);
+	ctx.type = "text/calendar";
 });
 
 

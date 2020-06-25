@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
 import { ScheduleList } from './ScheduleList';
@@ -13,12 +16,17 @@ import { scheduleSlice, loadSchedule } from './slice';
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		title: {
-			marginBottom: '0.4em',
+			// marginBottom: '0.4em',
+			marginBottom: '0',
+			lineHeight: 1,
 
 			[theme.breakpoints.down('xs')]: {
 				fontSize: '3.4em',
 			}
 		},
+		mgb1: {
+			marginBottom: '14px',
+		}
 	}),
 );
 
@@ -46,9 +54,18 @@ export const ScheduleRaw = (props) => {
 
 	return (
 		<React.Fragment>
-			<Typography variant="h2" className={classes.title}>
-				Розклад Занять
-			</Typography>
+			<Grid container justify="space-between" alignItems="center" className={classes.mgb1}>
+				<Grid item xs>
+					<Typography variant="h4" className={classes.title}>
+						Розклад Занять
+					</Typography>
+				</Grid>
+				<Grid item xs container justify="flex-end">
+					<IconButton href={`webcal://${window.location.host}/api/schedule/schedule.ics`} target="_blank">
+						<DateRangeIcon color="primary" />
+					</IconButton>
+				</Grid>
+			</Grid>
 			<ScheduleList schedule={props.schedule} handleEditLesson={handleEditLessonOpen} />
 			{lesson && <LessonEditModal lesson={lesson} handleClose={handleEditLessonClose} isOpened={!!lesson} />}
 		</React.Fragment>
