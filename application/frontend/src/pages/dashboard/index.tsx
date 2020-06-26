@@ -14,7 +14,7 @@ export const Dashboard = (props) => {
 			</Typography>
 			<Grid container spacing={2}>
 				<Grid item xs={12}>
-					<Alert severity="error">Захист дипломної роботи відбудеться онлайн 20.02.2020!</Alert>
+					<Alert severity="error">Захист дипломної роботи відбудеться онлайн 26.06.2020 о 09:00!</Alert>
 				</Grid>
 				<Grid item xs={12}>
 					<Alert severity="info">Будь ласка оберіть варіант контрольної роботи з предмету!</Alert>

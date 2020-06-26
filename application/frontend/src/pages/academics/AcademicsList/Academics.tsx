@@ -125,7 +125,7 @@ export const Academics = (props: AcademicsProps) => {
 		<List
 			className={classes.root}
 			subheader={
-				<ListSubheader className={classes.subheader} component="div">
+				<ListSubheader disableSticky className={classes.subheader} component="div">
 					<Grid container justify="space-between" alignContent="center">
 						<span>Викладачі</span>
 						<AcademicAddButtonModal />

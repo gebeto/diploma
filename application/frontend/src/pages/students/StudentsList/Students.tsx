@@ -74,19 +74,19 @@ export const Student = (props: StudentProps) => {
 					</React.Fragment>
 				}
 			/>
-			<Hidden xsDown implementation="css">
+			{/*<Hidden xsDown implementation="css">*/}
 				<ListItemSecondaryAction>
 					<IconButton href={`tel:${props.student.phone}`} edge="end" aria-label="call">
 						<CallIcon />
 					</IconButton>
-					<IconButton edge="end" aria-label="chat">
-						<ChatIcon />
-					</IconButton>
+					{/*<IconButton edge="end" aria-label="chat">
+											<ChatIcon />
+										</IconButton>*/}
 					<IconButton href={`mailto:${props.student.email}`} edge="end" aria-label="email">
 						<EmailIcon />
 					</IconButton>
 				</ListItemSecondaryAction>
-			</Hidden>
+			{/*</Hidden>*/}
 		</ListItem>
 	);
 }
@@ -103,7 +103,7 @@ export const Students = (props: IStudentsProps) => {
 		<List
 			className={classes.root}
 			subheader={
-				<ListSubheader className={classes.subheader} component="div">
+				<ListSubheader disableSticky className={classes.subheader} component="div">
 					<Grid container justify="space-between" alignContent="center">
 						<span>Студенти</span>
 						{/*<IconButton><PersonAddIcon /></IconButton>*/}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
+import Alert from '@material-ui/lab/Alert';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DateRangeIcon from '@material-ui/icons/DateRange';
@@ -53,19 +54,20 @@ export const ScheduleRaw = (props) => {
 
 	return (
 		<React.Fragment>
-			<Grid container justify="space-between" alignItems="center" className={classes.mgb1}>
-				<Grid item xs>
-					<Typography variant="h4" className={classes.title}>
-						Розклад Занять
-					</Typography>
+			<Typography variant="h4" gutterBottom>
+				Доброго дня!
+			</Typography>
+			<Grid container spacing={2}>
+				<Grid item xs={12}>
+					<Alert severity="error">Захист дипломної роботи відбудеться онлайн 26.06.2020 о 09:00!</Alert>
 				</Grid>
-				<Grid item xs container justify="flex-end">
-					<IconButton href={`webcal://${window.location.host}/api/schedule/schedule.ics`} target="_blank">
-						<DateRangeIcon color="primary" />
-					</IconButton>
+				{/*<Grid item xs={12}>
+					<Alert severity="info">Будь ласка оберіть варіант контрольної роботи з предмету!</Alert>
+				</Grid>*/}
+				<Grid item xs={12} lg={6}>
+					<ScheduleList schedule={props.schedule} handleEditLesson={handleEditLessonOpen} />
 				</Grid>
 			</Grid>
-			<ScheduleList schedule={props.schedule} handleEditLesson={handleEditLessonOpen} />
 			{lesson && <LessonEditModal lesson={lesson} handleClose={handleEditLessonClose} isOpened={!!lesson} />}
 		</React.Fragment>
 	);

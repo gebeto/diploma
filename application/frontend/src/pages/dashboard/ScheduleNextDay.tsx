@@ -20,7 +20,6 @@ const useNextDayApiRequest = makeApiRequest(async () => {
 	};
 });
 
-
 export const ScheduleNextDay = () => {
 	const req = useNextDayApiRequest();
 
@@ -29,12 +28,4 @@ export const ScheduleNextDay = () => {
 	}
 
 	return null;
-
-	return (
-		<ScheduleDay
-			title={`Найближчі заняття: ${formatDate(req.state.response.schedule.date)}`}
-			schedule={req.state.response.schedule}
-			handleEditLesson={() => {}}
-		/>
-	);
 }

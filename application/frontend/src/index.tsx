@@ -19,7 +19,8 @@ import { store } from './store/';
 import { Navigation, NavigationConnected } from './components/Navigation/';
 import { Auth } from './components/Auth/';
 
-import Dashboard from './pages/dashboard/';
+// import Dashboard from './pages/dashboard/';
+import Dashboard from './pages/dashboard-2/';
 import Chat from './pages/chat/';
 import Schedule from './pages/schedule/';
 import Students from './pages/students/';

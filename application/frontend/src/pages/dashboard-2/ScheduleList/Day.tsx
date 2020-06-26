@@ -47,7 +47,7 @@ export const ScheduleDay = (props: ScheduleDayProps) => {
 			subheader={
 				<ListSubheader disableSticky className={classes.subheader} component="div">
 					<Typography variant="inherit" color={props.schedule.date >= today ? "primary" : "secondary"}>
-						{props.title || formatDate(props.schedule.date)}
+						{`Найближчі заняття: ${formatDate(props.schedule.date)}`}
 					</Typography>
 				</ListSubheader>
 			}

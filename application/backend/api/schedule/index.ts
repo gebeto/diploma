@@ -21,14 +21,11 @@ scheduleRouter.post('/get', async (ctx, next) => {
 
 
 scheduleRouter.post('/getNextDay', async (ctx, next) => {
-	const lessonsAll = (await getSchedule());
-	const lessons = lessonsAll.slice(lessonsAll.length - 4);
+	const lessonsAll = await getSchedule();
+	const lessons = lessonsAll;
 	ctx.body = {
-		item: {
-			id: 1,
-			date: lessons[0].date,
-			lessons: lessons,
-		},
+		schedule: lessons,
+		academics, subjects, pavilions, subjectTypes
 	};
 	await next();
 });
@@ -39,7 +36,7 @@ scheduleRouter.post('/update-lesson', async (ctx, next) => {
 
 	item.classroom = ctx.request.body.classroom;
 	item.order = Number(ctx.request.body.order);
-	item.date = ctx.request.body.date;
+	item.date = new Date(ctx.request.body.date);
 	item.type = Number(ctx.request.body.type);
 
 	ctx.body = {

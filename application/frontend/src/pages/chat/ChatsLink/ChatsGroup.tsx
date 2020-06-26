@@ -17,7 +17,7 @@ export const ChatsGroup = (props: { title: string; classes: any; onClick: any; c
 
 	return (
 		<List component="div" disablePadding subheader={
-			<ListSubheader onClick={toggleOpen} className={props.classes.nested}>
+			<ListSubheader disableSticky onClick={toggleOpen} className={props.classes.nested}>
 				<Grid container justify="space-between" alignItems="center">
 					{props.title}
 					<ExpandIcon expanded={open} />

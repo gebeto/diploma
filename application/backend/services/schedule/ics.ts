@@ -36,7 +36,7 @@ export function formatLesson(lesson: any) {
 		start: start,
 		duration: { hours: 1, minutes: 35 },
 		title: subjects.find(s => s.id === lesson.subject).title,
-		location: `${pavilions[lesson.pavilion].title} - ${subjectTypes[lesson.type].title} - ${academicName(academics.find(ac => ac.id === lesson.academic))}`,
+		location: `${pavilions[lesson.pavilion].title} - ${subjectTypes.find(s => s.id === lesson.type).title} - ${academicName(academics.find(ac => ac.id === lesson.academic))}`,
 		uid: `${subjects.find(s => s.id === lesson.subject).title}-${date.join('-')}-${academicName(academics.find(ac => ac.id === lesson.academic))}-${lesson.order}@nulp.ua`,
 		geo: pavilions.find(p => p.id === lesson.pavilion).location,
 		categories: ['nulp', 'нулп'],
