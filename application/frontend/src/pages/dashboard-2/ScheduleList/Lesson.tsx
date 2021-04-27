@@ -25,7 +25,7 @@ export interface ScheduleLessonProps {
 	handleEditLesson?: any;
 }
 
-const orderTimes = {
+const orderTimes: Record<IScheduleLesson["order"], string> = {
 	1: "8:30 − 10:05",
 	2: "10:20 − 11:55",
 	3: "12:10 − 13:45",
@@ -63,7 +63,7 @@ export const ScheduleLessonRaw = (props: ScheduleLessonProps) => {
 
 
 export const ScheduleLesson = connect(
-	(state, ownProps) => ({
+	(state: any, ownProps: any) => ({
 		subject: state.subject.byId[ownProps.lesson.subject],
 		academic: state.academic.byId[ownProps.lesson.academic],
 		pavilion: state.pavilion.byId[ownProps.lesson.pavilion],

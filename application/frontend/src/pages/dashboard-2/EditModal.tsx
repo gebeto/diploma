@@ -26,10 +26,10 @@ export const useStyles = makeStyles((theme: Theme) =>
 
 
 const TypeSelect = connect(
-	state => ({
+	(state: any) => ({
 		subjectTypes: subjectTypeSlice.selectors.itemsSelector(state, {}),
 	})
-)((props) => {
+)((props: any) => {
 	return (
 		<SelectField
 			values={props.values}
@@ -100,7 +100,8 @@ export const LessonForm = (props) => {
 
 
 interface LessonEditModalProps {
-	lesson: any;
+	lesson?: any;
+	isOpened: boolean;
 	updateLesson: (lesson: any) => any;
 	handleClose: () => any;
 }
@@ -108,7 +109,7 @@ interface LessonEditModalProps {
 
 const LessonEditModalForm = withFormModal<LessonEditModalProps>(
 	ModalEditFormSm,
-	props => props.lesson ? `${props.lesson.date} ${props.lesson.order}` : 'Предмет',
+	(props: any) => props.lesson ? `${props.lesson.date} ${props.lesson.order}` : 'Предмет',
 	{	
 		defaultValues(props) {
 			return {

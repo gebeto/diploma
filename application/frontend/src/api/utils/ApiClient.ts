@@ -9,14 +9,14 @@ export const API = {
 };
 
 
-export const API_AS_JSON = res => {
+export const API_AS_JSON = (res: any) => {
 	if (res.status >= 500) {
 		throw new Error(`Server error ${res.status}: ${res.statusText}. Please try again later or contact developers to fix this problem.`)
 	}
 	return res.data;
 }
 
-export const CATCH = err => {
+export const CATCH = (err: any) => {
 	console.error(err);
 	if (err.response.status === 403) {
 		ApiClient.logout();
@@ -26,12 +26,12 @@ export const CATCH = err => {
 }
 
 
-const isNullOrUndefined = value => value === "null" || value === "undefined";
+const isNullOrUndefined = (value: any) => value === "null" || value === "undefined";
 
 export class ApiClient {
 	private static instance: ApiClient;
 
-	private token: string;
+	private token?: string;
 	private user: any;
 	private static emitter = new events.EventEmitter();
 
@@ -40,12 +40,12 @@ export class ApiClient {
 	}
 
 	private constructor() {
-		this.token = localStorage.getItem("token");
+		this.token = localStorage.getItem("token") || undefined;
 		if (isNullOrUndefined(this.token)) {
 			localStorage.removeItem("token");
 		}
 
-		this.user = JSON.parse(localStorage.getItem("user"));
+		this.user = JSON.parse(localStorage.getItem("user") || "{}");
 		if (isNullOrUndefined(this.user)) {
 			localStorage.removeItem("user");
 		}
@@ -59,16 +59,16 @@ export class ApiClient {
 		}
 	}
 
-	public static onAuthorized(cb) {
+	public static onAuthorized(cb: any) {
 		ApiClient.emitter.on("authorized", cb);
 	}
 
-	public static onUnauthorized(cb) {
+	public static onUnauthorized(cb: any) {
 		ApiClient.emitter.on("unauthorized", cb);
 	}
 
 	public getToken(): string {
-		return this.token;
+		return this.token!;
 	}
 
 	public getUser(): string {
@@ -89,7 +89,7 @@ export class ApiClient {
 		return !!this.token;
 	}
 
-	private async login(email, password) {
+	async login(email: string, password: string) {
 		try {
 			const response = await this.POST<any>("/auth/login", { email, password });
 			if (response.error) {
@@ -97,7 +97,7 @@ export class ApiClient {
 			}
 			this.token = response.token;
 			this.user = response.user;
-			localStorage.setItem("token", this.token);
+			localStorage.setItem("token", this.token!);
 			localStorage.setItem("user", JSON.stringify(this.user));
 			ApiClient.emitter.emit("authorized", this);
 			return response;
@@ -107,14 +107,14 @@ export class ApiClient {
 		return null;
 	}
 
-	private async logout() {
+	async logout() {
 		this.token = undefined;
 		localStorage.removeItem("token");
 		ApiClient.emitter.emit("unauthorized", this);
 		return true;
 	}
 
-	public static login(email, password) {
+	public static login(email: string, password: string) {
 		return ApiClient.getInstance().login(email, password);
 	}
 
@@ -122,7 +122,7 @@ export class ApiClient {
 		return ApiClient.getInstance().logout();
 	}
 
-	public async POST<T>(url, data) {
+	public async POST<T>(url: string, data: any) {
 		return axios.post(API.PREFIX + url, data, {
 			headers: {
 				"Authorization": `Bearer ${this.token}`,
@@ -131,7 +131,7 @@ export class ApiClient {
 		}).catch(CATCH).then(API_AS_JSON) as Promise<T>;
 	}
 
-	public async GET<T>(url) {
+	public async GET<T>(url: string) {
 		return axios.get(API.PREFIX + url, {
 			headers: {
 				"Authorization": `Bearer ${this.token}`,

@@ -28,7 +28,7 @@ import { ButtonModal } from '../../../components/ButtonModal';
 import { useModalArray } from '../../../components/Modal/';
 
 
-export const AcademicAddButtonModal = (props) => {
+export const AcademicAddButtonModal: React.FC = (props) => {
 	const [ isModalOpened, handleModalOpen, handleModalClose ] = useModalArray();
 
 	return (

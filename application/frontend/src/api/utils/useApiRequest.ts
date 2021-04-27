@@ -25,7 +25,7 @@ interface DispatchWithAction extends React.DispatchWithoutAction {
 	payload: any;
 }
 
-function reducer(state, { type, payload }: DispatchWithAction) {
+function reducer(state: any, { type, payload }: DispatchWithAction) {
 	switch (type) {
 		case IS_FETCHING:
 			return {
@@ -61,7 +61,7 @@ function reducer(state, { type, payload }: DispatchWithAction) {
 	return state;
 }
 
-export function useApiRequest(requester) {
+export function useApiRequest(requester: any) {
 	const [ state, dispatch ] = React.useReducer<React.Reducer<UseApiRequestState, any>>(reducer, initialState);
 
 	const setFetching = React.useCallback((isFetching) => {
@@ -99,7 +99,7 @@ export function useApiRequest(requester) {
 }
 
 
-export const makeBasicApiRequest = (requester, isFetching = false) => {
+export const makeBasicApiRequest = (requester: any, isFetching = false) => {
 	const initState = {
 		...initialState,
 		isFetching: isFetching,
@@ -146,10 +146,10 @@ export const makeBasicApiRequest = (requester, isFetching = false) => {
 }
 
 
-export const makeApiRequest = (requester) => {
+export const makeApiRequest = (requester: any) => {
 	const useBasicApiReq = makeBasicApiRequest(requester, true);
 
-	return (...params) => {
+	return (...params: any) => {
 		const state = useBasicApiReq();
 
 		React.useEffect(() => {

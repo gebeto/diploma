@@ -4,7 +4,7 @@ import { Navigation } from './Navigation';
 export { Navigation }
 
 export const NavigationConnected = connect(
-	state => {
+	(state: any) => {
 		return {
 			user: state.user,
 		}

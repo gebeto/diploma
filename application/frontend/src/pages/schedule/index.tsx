@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export const ScheduleRaw = (props) => {
+export const ScheduleRaw = (props: any) => {
 	const classes = useStyles();
 
 	React.useEffect(() => {

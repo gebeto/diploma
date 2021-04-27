@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 });
 
 
-export const ScheduleListRaw = (props) => {
+export const ScheduleListRaw = (props: any) => {
 	const classes = useStyles();
 
 	return (
@@ -34,7 +34,7 @@ export const ScheduleListRaw = (props) => {
 
 const mapStateToPropsFabric = () => {
 	const scheduleSelector = scheduleSlice.selectors.makeGetScheduleSelector();
-	return (state, ownProps) => {
+	return (state: any, ownProps: any) => {
 		const schedule = scheduleSelector(state, ownProps);
 		return {
 			isLoading: state.schedule.isFetching,

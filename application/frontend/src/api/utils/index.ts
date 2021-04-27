@@ -29,21 +29,21 @@ export interface ResponseDelete {
 }
 
 
-export const handleResponseError = res => {
+export const handleResponseError = (res: any) => {
 	if (res.error) {
 		throw res;
 	}
 	return res;
 }
 
-export const API_AS_JSON = res => {
+export const API_AS_JSON = (res: any) => {
 	if (res.status >= 500) {
 		throw new Error(`Server error ${res.status}: ${res.statusText}. Please try again later or contact developers to fix this problem.`)
 	}
 	return res.data;
 }
 
-export const API_GET = <T = any>(url) => ApiClient.getInstance().GET<T>(url);
+export const API_GET = <T = any>(url: string) => ApiClient.getInstance().GET<T>(url);
 export const API_POST = <T = any>(url: string, data?: any) => ApiClient.getInstance().POST<T>(url, data);
 
 
@@ -67,7 +67,7 @@ export function onlyLastFetchResult<T extends (...args: any[]) => any>(fetcher: 
 	return (...args: Parameters<T>): ReturnType<T> => {
 		const startTime = Date.now();
 		currentTime = startTime;
-		return fetcher(...args).then(result => {
+		return fetcher(...args).then((result: any) => {
 			if (currentTime !== startTime) return undefined;
 			return result;
 		});

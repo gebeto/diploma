@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "db:init": "ts-node setup.ts",
     "start": "ts-node index.ts",
     "dev": "nodemon --exec ts-node index.ts",
     "test": "jest",

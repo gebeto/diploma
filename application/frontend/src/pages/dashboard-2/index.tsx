@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export const ScheduleRaw = (props) => {
+export const ScheduleRaw = (props: any) => {
 	const classes = useStyles();
 
 	React.useEffect(() => {
@@ -44,7 +44,7 @@ export const ScheduleRaw = (props) => {
 
 	const [ lesson, setLesson ] = React.useState(null);
 
-	const handleEditLessonOpen = (lesson) => {
+	const handleEditLessonOpen = (lesson: any) => {
 		setLesson(lesson);
 	}
 

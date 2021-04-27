@@ -13,7 +13,8 @@ import { updateAcademic } from '../../slice';
 
 
 interface AcademicEditModalProps {
-	academic: any;
+	academic?: any;
+	isOpened?: boolean;
 	updateAcademic: (academic: any) => any;
 	handleClose: () => any;
 }

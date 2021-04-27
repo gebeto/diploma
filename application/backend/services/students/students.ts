@@ -28,7 +28,7 @@ export const students = [
 		phone: "0939758432",
 		avatar: getAvatarUrl("Андрій", 50),
 		// avatar: "https://pbs.twimg.com/profile_images/622151044831776768/BQ5ifWI__400x400.png",
-		email: "test@gmail.com",
+		email: "test@test.com",
 		password: "test",
 	} as IStudent,
 ];

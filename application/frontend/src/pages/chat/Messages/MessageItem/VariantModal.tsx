@@ -121,7 +121,7 @@ export const VariantDialogRaw = (props: VariantDialogProps) => {
 
 
 export const VariantDialog = connect(
-	(state) => ({
+	(state: any) => ({
 		user: state.user,
 	})
 )(VariantDialogRaw);

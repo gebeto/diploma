@@ -15,7 +15,7 @@ export const useModal = () => {
 }
 
 export const useModalArray = () => {
-	const [isModalOpened, setIsModalOpened] = React.useState(false);
+	const [isModalOpened, setIsModalOpened] = React.useState<boolean>(false);
 
 	const handleModalOpen = React.useCallback((e?: any) => {
 		setIsModalOpened(true)
@@ -29,5 +29,9 @@ export const useModalArray = () => {
 		isModalOpened,
 		handleModalOpen,
 		handleModalClose,
+	] as [
+		typeof isModalOpened,
+		typeof handleModalOpen,
+		typeof handleModalClose,
 	]
 }

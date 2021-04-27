@@ -21,7 +21,7 @@ export const StudentsListRaw = (props) => (
 );
 
 export const StudentsList = connect(
-	(state, ownProps) => ({
+	(state: any, ownProps: any) => ({
 		students: studentsSlice.selectors.itemsSelector(state, ownProps),
 		isLoading: state.students.isFetching,
 	})

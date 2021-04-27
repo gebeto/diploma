@@ -1,5 +1,0 @@
-FROM node:12.13.1-alpine3.9 as builder
-
-WORKDIR /frontend
-
-CMD ./start-dev.sh

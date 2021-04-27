@@ -13,7 +13,8 @@ import { addAcademic } from '../../slice';
 
 
 interface AcademicAddModalProps {
-	academic: any;
+	academic?: any;
+	isOpened?: boolean;
 	addAcademic: (academic: any) => any;
 	handleClose: () => any;
 }

@@ -103,7 +103,7 @@ export const MessageFieldRaw = (props) => {
 
 
 export const MessageField = connect(
-	state => ({
+	(state: any) => ({
 		user: state.user,
 	})
 )(MessageFieldRaw);

@@ -1,32 +1,32 @@
 import { API_POST, ResponseAll, ResponseOne } from "../utils";
 import { IAcademic } from './academics';
 
-export interface ISubject {
+export type ISubject = {
 	id: number;
 	title: string;
 }
 
-export interface ISubjectType {
+export type ISubjectType = {
 	id: number;
 	title: string;
 }
 
-export interface IPavilion {
+export type IPavilion = {
 	id: number;
 	title: string;
 }
 
-export interface IScheduleLesson {
+export type IScheduleLesson = {
 	id: number;
 	order: number;
 	classroom: string;
-	type: ISubjectType.id;
-	subject: ISubject.id;
-	academic: IAcademic.id;
-	pavilion: IPavilion.id;
+	type: ISubjectType["id"];
+	subject: ISubject["id"];
+	academic: IAcademic["id"];
+	pavilion: IPavilion["id"];
 }
 
-export interface IScheduleDay {
+export type IScheduleDay = {
 	id: number;
 	date: Date;
 	lessons: IScheduleLesson[];
