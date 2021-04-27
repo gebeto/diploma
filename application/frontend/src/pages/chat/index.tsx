@@ -26,7 +26,8 @@ export const Chat = (props) => {
 	
 	const messages = useMessagesGetRequest(chatId);
 
-	const messageIO = useSocket(`message ${chatId}`, newMessage => {
+	console.log(`message ${chatId}`);
+	useSocket(`message ${chatId}`, newMessage => {
 		messages.setResponse({
 			...messages.state.response,
 			messages: [

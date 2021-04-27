@@ -11,7 +11,9 @@ services:
 
   backend:
     tty: true
-    build: ./backend
+    build:
+      context: ./backend
+      target: production
     environment:
       DOCKER: 1
       POSTGRES_USER: database
@@ -27,14 +29,16 @@ services:
 
   nginx:
     build: ./nginx
+    links:
+      - backend
+      - frontend
     ports:
       - 8000:8000
 
   pgbouncer:
-    # restart: always
     image: pgbouncer/pgbouncer
-    ports:
-      - 6432:6432
+    # ports:
+    #   - 6432:6432
     environment:
       PGBOUNCER_LISTEN_PORT: 6432
       PGBOUNCER_LISTEN_ADDR: pgbouncer

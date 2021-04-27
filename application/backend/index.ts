@@ -5,7 +5,7 @@ import * as bodyParser from 'koa-bodyparser';
 import * as jwt from 'koa-jwt';
 
 import * as http from 'http';
-import * as socket from 'socket.io';
+import { Server } from "socket.io";
 
 import { SECRET_KEY, PORT } from './config';
 
@@ -17,7 +17,15 @@ import { decodeToken } from './services/auth/index';
 const app = new Koa();
 
 const server = http.createServer(app.callback())
-const io = socket(server);
+const io = new Server(server, {
+	// transports: ["polling", "websocket"],
+	cors: {
+		origin: "*",
+		methods: ["GET", "POST"],
+		allowedHeaders: ["my-custom-header"],
+		credentials: true
+	}
+});
 
 
 // Configure koa

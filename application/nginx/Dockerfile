@@ -1,6 +1,8 @@
-FROM nginx:alpine
+FROM nginx:alpine as development
+COPY nginx.dev.conf /etc/nginx/conf.d/default.conf
+EXPOSE 89
 
-# COPY html /home/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+FROM nginx:alpine as production
+COPY nginx.prod.conf /etc/nginx/conf.d/default.conf
 EXPOSE 89

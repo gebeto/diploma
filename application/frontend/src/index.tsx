@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider, connect } from 'react-redux'
-import { SocketIOProvider } from "use-socketio";
+import { Provider } from 'react-redux'
+import { SocketIOProvider } from 'use-socketio';
 
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
